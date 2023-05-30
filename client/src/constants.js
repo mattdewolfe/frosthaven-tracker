@@ -1,0 +1,1 @@
+// Define some const variables and export.
