@@ -11,7 +11,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <h3>The Home Page</h3>
+            <h3>Bonfire?</h3>
             <br />
             <div>
                 {`The Random Number: ${randomNumber}`}
