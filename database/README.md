@@ -94,9 +94,6 @@ PROFILES_<environment>=(
 )
 ```
 
-These credentials can be gathered by the `terraform/0-database` outputs. The user must be the `master_user` unless another
-role is created with `usage` and `create` grants.
-
 > NOTE: When creating a `PROFILES_local` entry, set the `hostname::` value to be `host.docker.internal`. This will allow the Docker service that you will run to locate the `parliament-db` service on the host machine.
 
 > WARNING: For Windows users, make sure the line endings for this file are set to LF and **NOT** CRLF.

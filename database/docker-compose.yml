@@ -2,26 +2,8 @@ version: '3.2'
 
 services:
   bake:
-    image: postgres:13.4-alpine3.14@sha256:e64f134c27b0bd74728ce511b0205fa10ea4d1e68aadd18bde123ac26982ef8e
+    image: postgres:15-alpine3.18
     container_name: frdb-bake
+    env_file: .env.local
     volumes:
       - .:/workspace:cached
-    command:
-      [
-        "/workspace/bake.sh",
-        "--config",
-        "/workspace/.bakerc",
-        "--mode",
-        "${BAKE_MODE}",
-        "--environment",
-        "${BAKE_ENV}",
-        "--database",
-        "parliament",
-        "--driver",
-        "postgres",
-        "--migration-file",
-        "${BAKE_MIGRATION}",
-        "--path",
-        "/workspace",
-        "-y"
-      ]

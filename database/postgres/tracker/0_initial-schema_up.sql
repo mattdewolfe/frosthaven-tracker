@@ -11,7 +11,7 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
-CREATE SCHEMA IF NOT EXISTS parliament;
+CREATE SCHEMA IF NOT EXISTS tracker;
 
 --
 -- Create Version
@@ -102,10 +102,10 @@ CREATE TABLE tracker.scenario (
        CACHE 1
     ) NOT NULL,
     name TEXT NOT NULL,
-    scenario_number NUMBER,
-    outcome NUMBER,
+    scenario_INTEGER INTEGER,
+    outcome INTEGER,
     PRIMARY KEY (id),
-    CONSTRAINT outcome_fkey FOREIGN KEY ("outcome") REFERENCES parliament.scenario_outcome(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT outcome_fkey FOREIGN KEY ("outcome") REFERENCES tracker.scenario_outcome(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 -- 
@@ -121,11 +121,11 @@ CREATE TABLE tracker.player_character (
        CACHE 1
     ) NOT NULL,
     name TEXT NOT NULL UNIQUE,
-    class_id NUMBER,
-    xp NUMBER,
-    level NUMBER,
-    perks NUMBER,
-    masteries NUMBER,
+    class_id INTEGER,
+    xp INTEGER,
+    level INTEGER,
+    perks INTEGER,
+    masteries INTEGER,
     PRIMARY KEY (id),
     CONSTRAINT class_id_fkey FOREIGN KEY ("class_id") REFERENCES tracker.character_class(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -145,7 +145,7 @@ CREATE TABLE tracker.player (
     player_name TEXT NOT NULL UNIQUE,
     characters JSON DEFAULT '[]',
     scenarios JSON DEFAULT '[]',
-    current_character NUMBER,
+    current_character INTEGER,
     PRIMARY KEY (id)
 );
 
