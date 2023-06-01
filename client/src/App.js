@@ -23,7 +23,8 @@ export function App() {
                         <Route path={RouteMap.HOME} element={<Pages.Home />} />
                         <Route exact path={RouteMap.PLAYERS} element={<Pages.Players />} />
                         <Route exact path={RouteMap.SCENARIOS} element={<Pages.Scenarios />} />
-                        <Route element={<Pages.NotFound />} />
+                        <Route path="example" element={<Pages.Example />} />
+                        <Route path="*" element={<Pages.NotFound />} />
                     </Routes>
                 }
             </div>
