@@ -11,7 +11,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <h3>The Home Page</h3>
+            <h3>A warm light for all mankind to share</h3>
             <br />
             <div>
                 {`The Random Number: ${randomNumber}`}
@@ -23,6 +23,10 @@ const HomePage = () => {
             <div className="pink-div">
                 This is a classNamed div.
             </div>
+            <div className="blue-div">
+                This is ugly.
+            </div>
+            
         </div >
     );
 };
