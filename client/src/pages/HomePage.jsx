@@ -20,7 +20,7 @@ const HomePage = () => {
                     Get New Number
                 </button>
             </div>
-            <div className="orange-div">
+            <div className="pink-div">
                 This is a classNamed div.
             </div>
         </div >

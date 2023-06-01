@@ -1,12 +1,12 @@
 button {
-    padding: 2px;
+    padding: 10px;
     background-color: lightblue;
     color: darkgreen;
 }
 
-.orange-div {
+.pink-div {
     margin-top: 10px;
-    background-color: orange;
+    background-color: rgba(255, 0, 170, 0.487);
     padding: 10px;
     border: 1px solid blue;
 }
