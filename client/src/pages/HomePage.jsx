@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import bonfire from '../assets/bonfire.jpg';
 
 const HomePage = () => {
 
@@ -19,6 +19,9 @@ const HomePage = () => {
                 <button onClick={newRandomNumber}>
                     Get New Number
                 </button>
+            </div>
+            <div>
+            <img src={bonfire} className="Bonfire" alt="a bonfire from dark souls"></img>
             </div>
             <div className="pink-div">
                 This is a classNamed div.

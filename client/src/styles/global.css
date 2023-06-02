@@ -12,8 +12,17 @@ button {
 }
 
 .blue-div {
+    text-align: center;
     margin-top: 10px;
     background-color: blue;
     padding: 10px;
     border:5px solid rgba(255, 0, 170, 0.487);
 }
+
+.Bonfire {
+    height: 500;
+    width: 1000;
+    border-radius: 50;
+    pointer-events: none;
+  }
+
