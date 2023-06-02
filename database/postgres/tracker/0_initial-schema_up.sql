@@ -164,7 +164,7 @@ CREATE TABLE tracker.player (
     characters JSON DEFAULT '[]',
     current_character INTEGER,
     PRIMARY KEY (id),
-    CONSTRAINT current_character_id_fkey FOREIGN KEY ("current_character") REFERENCES tracker.character(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT current_character_id_fkey FOREIGN KEY ("current_character") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --
@@ -192,7 +192,7 @@ CREATE TABLE tracker.character_event (
     traps_sprung INTEGER,
     PRIMARY KEY (id),
     CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.character(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE tracker.creature_killed (
@@ -209,14 +209,15 @@ CREATE TABLE tracker.creature_killed (
     creature_level INTEGER DEFAULT 1,
     scenario_level INTEGER DEFAULT 1,
     overkill INTEGER DEFAULT 0,
-    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.character(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT creature_id_fkey FOREIGN KEY ("creature_id") REFERENCES tracker.creature_class(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT character_level_fkey FOREIGN KEY ("creature_level") REFERENCES tracker.creature_level(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 INSERT INTO tracker.creature_level (name) VALUES ('Normal'), ('Elite'), ('Boss'), ('Objective'), ('Other');
 
-INSERT INTO tracker.creature_class (name, iconUrl) VALUES ('Abael Herder', '/images/abael-herder.png'), 
+INSERT INTO tracker.creature_class (name, iconUrl) VALUES 
+('Abael Herder', '/images/abael-herder.png'), 
 ('Abael Scout', '/images/algox-scout.png'),
 ('Algox Archer', '/images/algox-archer.png'),
 ('Algox Guard', '/images/algox-guard.png'),
@@ -270,7 +271,7 @@ INSERT INTO tracker.creature_class (name, iconUrl) VALUES ('Abael Herder', '/ima
 ('[b]Fish King', '/images/fish-king.png'),
 ('[b]Fracture of the Deep', '/images/fracture-of-the-deep.png'),
 ('[b]Harbringer of Shadow', '/images/harbringer-of-shadow.png'),
-('[b]Lord of Chaos', '/images/lord-of-chaos.png')
+('[b]Lord of Chaos', '/images/lord-of-chaos.png'),
 ('[b]Orphan', '/images/orphan.png'),
 ('[b]Prince of Frost', '/images/prince-of-frost.png'),
 ('[b]Program Directory', '/images/program-directory.png'),
