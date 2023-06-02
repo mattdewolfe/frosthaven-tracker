@@ -29,6 +29,13 @@ const HomePage = () => {
             <div className="blue-div">
                 This is ugly.
             </div>
+            <a
+            className="players-link"
+            href="./players"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Players Page
+            </a>
             
         </div >
     );
