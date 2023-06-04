@@ -22,10 +22,12 @@ body {
     list-style-type: none;
     display: flex;
     gap: 1rem;
+    font-size: 125%;
 }
 
 .site-title {
-    font-size: 2rem;
+    font-size: 2.3rem;
+    
 }
 
 .nav a {
@@ -44,6 +46,16 @@ body {
 
 .nav li:hover {
     background-color: #777;
+}
+
+.warm {
+    text-shadow: 2px 2px 10px rgb(116, 78, 50);
+    font-size: 2rem;
+    position: absolute;
+    top: 40%;
+    left: 20%;
+    right: 5%;
+    bottom: 5%; 
 }
 
 .app {

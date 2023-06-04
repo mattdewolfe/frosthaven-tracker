@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Pages from "./pages";
 import RouteMap from "./routes";
-import Navbar from "./Navbar";
+import Navbar from "./components/Navbar";
 import "./styles/global.css";
 
 export function App() {
@@ -15,7 +15,7 @@ export function App() {
         
         
         <BrowserRouter>
-            <Navbar>
+            <Navbar></Navbar>
                 <div style={{ width: "100%", height: "100%" }}>
                     {
                         loading === true &&
@@ -32,7 +32,7 @@ export function App() {
                         </Routes>
                     }
                 </div>
-            </Navbar>
+            
         </BrowserRouter>
         
     );
