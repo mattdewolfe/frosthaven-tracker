@@ -1,9 +1,11 @@
 version: '3.2'
 
 services:
-  bake:
+  fr-db:
     image: postgres:15-alpine3.18
-    container_name: frdb-bake
+    container_name: fr-db
     env_file: .env.local
+    ports:
+      - 5432:5432
     volumes:
       - .:/workspace:cached

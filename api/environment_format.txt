@@ -1,0 +1,12 @@
+// You will need to setup .env files for local development.
+// These should NEVER be committed to the source repo as that would expose credentials for backend services.
+// Create '.env.staging' in the same folder as this file, then populate each with the following variables
+
+DB_HOST={uri for db host}
+DB_PORT={port that host is listening on}
+DB_NAME={main db name}
+DB_USER={user name for db connection}
+DB_PASSWORD={password for db connection}
+PORT={optional: the port this server will listen on, default: 3000}
+
+// MD, May 19, 2021
