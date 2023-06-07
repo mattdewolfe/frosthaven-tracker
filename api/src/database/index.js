@@ -10,18 +10,27 @@ pgPromise.pg.types.setTypeParser(1700, parseFloat);
  */
 let db = null;
 
+
 export function getDb() {
+
     if (db) {
         return db;
     }
 
     db = pgPromise({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        database: process.env.DB_NAME,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
+        host: "localhost",
+        port: "5432",
+        database: "tracker",
+        user: "master",
+        password: "password",
+        // host: process.env.DB_HOST || "localhost",
+        // port: process.env.DB_PORT || "5432",
+        // database: process.env.DB_NAME || "tracker",
+        // user: process.env.DB_USER || "master",
+        // password: process.env.DB_PASSWORD || "password",
     });
+
+    console.log(db);
 
     return db;
 }

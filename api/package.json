@@ -7,9 +7,9 @@
     "lint": "eslint ./src",
     "build": "rimraf build && mkdirp build && babel src -d build --copy-files --include-dotfiles && cp -r node_modules package.json build/",
     "start": "npx nodemon --exec \"node -r esm src/bin/www.js\"",
-    "local": "npx cross-env NODE_ENV=local DEBUG=parliament-api:* nodemon --exec \"node -r esm src/bin/www.js\"",
-    "dev": "cross-env NODE_ENV=dev DEBUG=parliament-api:* nodemon --exec \"node -r esm src/bin/www.js\"",
-    "staging": "cross-env NODE_ENV=staging DEBUG=parliament-api:* nodemon --exec \"node -r esm src/bin/www.js\"",
+    "local": "npx cross-env NODE_ENV=local DEBUG=fr-api:* nodemon -L --exec \"node -r esm src/bin/www.js\"",
+    "dev": "cross-env NODE_ENV=dev DEBUG=fr-api:* nodemon --exec \"node -r esm src/bin/www.js\"",
+    "staging": "cross-env NODE_ENV=staging DEBUG=fr-api:* nodemon --exec \"node -r esm src/bin/www.js\"",
     "test": "echo No tests!"
   },
   "dependencies": {

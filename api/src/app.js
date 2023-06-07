@@ -1,13 +1,9 @@
 import express from 'express';
-import { getCurrentInvoke } from '@vendia/serverless-express';
-import expressMiddleware from '@vendia/serverless-express/src/middleware';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
-import url from 'url';
 import router from './routes/index.js';
 import jsonErrorHandler from './middleware/jsonErrorHandler';
-import * as path from 'path';
 
 const app = express();
 
@@ -22,34 +18,6 @@ app.options('*', corsHandler);
 app.use(corsHandler);
 
 app.use(morgan('combined'));
-
-const customDomainAdapterMiddleware = (req, res, next) => {
-    const { event, context } = getCurrentInvoke();
-
-    if (event) {
-        const searchParams = new URLSearchParams(event.queryStringParameters || {});
-        const pathFromPathParameters = event.pathParameters || {};
-
-        let { resource } = event;
-
-        Object.keys(pathFromPathParameters).forEach((param) => {
-            resource = resource.replace(`{${param === 'proxy' ? 'proxy+' : param}}`, pathFromPathParameters[param]);
-        });
-
-        const interpolatedResource = url.parse(path.join(`/${event.requestContext.stage}`, resource), true);
-        interpolatedResource.search = searchParams.toString();
-
-        req.originalUrl = url.format(interpolatedResource);
-    }
-
-    next();
-};
-
-if (process.env.LAMBDA_TASK_ROOT) {
-    app.set('trust proxy', true);
-    app.use(expressMiddleware.eventContext());
-    app.use(customDomainAdapterMiddleware);
-}
 
 app.disable('x-powered-by');
 
@@ -70,7 +38,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/v1', router);
+app.use('/', router);
 app.use(express.static('images'));
 
 app.use(jsonErrorHandler);

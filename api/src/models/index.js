@@ -3,11 +3,13 @@ import CreatureClass from './creatureClass';
 import CreatureLevel from './creatureLevel';
 import CharacterClass from './characterClass';
 import StatusEffect from './statusEffect';
+import Scenario from './scenario';
 
 export {
-    ScenarioOutcome,
     CreatureClass,
     CreatureLevel,
     CharacterClass,
-    StatusEffect
+    StatusEffect,
+    ScenarioOutcome,
+    Scenario
 };
