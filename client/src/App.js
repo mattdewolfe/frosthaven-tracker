@@ -4,7 +4,7 @@ import Pages from "./pages";
 import RouteMap from "./routes";
 import Navbar from "./components/Navbar";
 import "./styles/global.css";
-
+import Background from "./components/Background";
 export function App() {
    
 
@@ -16,6 +16,7 @@ export function App() {
         
         <BrowserRouter>
             <Navbar></Navbar>
+            <Background></Background>
                 <div style={{ width: "100%", height: "100%" }}>
                     {
                         loading === true &&
