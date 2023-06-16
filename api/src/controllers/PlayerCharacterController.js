@@ -1,12 +1,12 @@
 import { getDb } from '../database';
 import BaseController from './BaseController';
-import { Scenario } from '../models';
+import { PlayerCharacter } from '../models';
 import { BadRequestErrorHandler } from '../error-handlers';
 
-export default class ScenarioController extends BaseController {
-    static getAll(req, res, next) {
-        Scenario
-            .getAll({ ...req.query }, getDb())
+export default class PlayerCharacterController extends BaseController {
+    static get(req, res, next) {
+        PlayerCharacter
+            .get({ ...req.query }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
@@ -14,9 +14,9 @@ export default class ScenarioController extends BaseController {
             });
     }
 
-    static getById(req, res, next) {
-        Scenario
-            .getById({ ...req.query }, getDb())
+    static put(req, res, next) {
+        PlayerCharacter
+            .put({ ...req.query }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
@@ -25,11 +25,12 @@ export default class ScenarioController extends BaseController {
     }
 
     static post(req, res, next) {
-        Scenario
+        PlayerCharacter
             .post({ ...req.query }, getDb())
-            .then(async (result) => {
+            .then((result) => {
                 return res.status(200).json(result);
-            }, (e) => {
+            })
+            .catch((e) => {
                 next(BadRequestErrorHandler.constructFromError(e));
             });
     }

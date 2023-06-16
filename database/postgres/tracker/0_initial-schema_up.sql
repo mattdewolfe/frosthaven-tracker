@@ -140,11 +140,14 @@ CREATE TABLE tracker.player_character (
     ) NOT NULL,
     name TEXT NOT NULL UNIQUE,
     class_id INTEGER NOT NULL,
+    player_id INTEGER NOT NULL,
     xp INTEGER,
     level INTEGER,
     perks INTEGER,
     masteries INTEGER,
+    retired BOOLEAN,
     PRIMARY KEY (id),
+    CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT class_id_fkey FOREIGN KEY ("class_id") REFERENCES tracker.character_class(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
