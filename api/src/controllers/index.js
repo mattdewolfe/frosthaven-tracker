@@ -8,6 +8,7 @@ import ScenarioController from './ScenarioController';
 import StatusEffectController from './StatusEffectController';
 import PlayerController from './PlayerController';
 import PlayerCharacterController from './PlayerCharacterController';
+import EventController from './EventController';
 
 export {
     BaseController,
@@ -19,5 +20,6 @@ export {
     ScenarioController,
     StatusEffectController,
     PlayerController,
-    PlayerCharacterController
+    PlayerCharacterController,
+    EventController
 }

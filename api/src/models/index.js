@@ -5,6 +5,8 @@ import CharacterClass from './characterClass';
 import StatusEffect from './statusEffect';
 import Scenario from './scenario';
 import Player from './player';
+import PlayerCharacter from './playerCharacter';
+import Event from './event';
 
 export {
     CreatureClass,
@@ -13,5 +15,7 @@ export {
     StatusEffect,
     ScenarioOutcome,
     Scenario,
-    Player
+    Player,
+    PlayerCharacter,
+    Event
 };
