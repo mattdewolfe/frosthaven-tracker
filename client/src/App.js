@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Pages from "./pages";
 import RouteMap from "./routes";
 import Navbar from "./components/Navbar";
+import 'bootstrap/dist/css/bootstrap.css';
 import "./styles/global.css";
 import Background from "./components/Background";
 export function App() {
