@@ -1,7 +1,8 @@
 const RouteMap = {
     HOME: "/",
     SCENARIOS: "/scenarios",
-    PLAYERS: "/players"
+    PLAYERS: "/players",
+    DEBUG: "/debug"
 };
 
 export default RouteMap;

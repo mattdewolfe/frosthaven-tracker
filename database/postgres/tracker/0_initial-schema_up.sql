@@ -140,7 +140,25 @@ CREATE TABLE tracker.scenario (
     scenario_level INTEGER DEFAULT 1,
     outcome INTEGER,
     PRIMARY KEY (id),
-    CONSTRAINT outcome_fkey FOREIGN KEY ('outcome') REFERENCES tracker.scenario_outcome(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT outcome_fkey FOREIGN KEY ("outcome") REFERENCES tracker.scenario_outcome(id) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- 
+-- Create Player
+--
+CREATE TABLE tracker.player (
+    id INTEGER GENERATED ALWAYS AS IDENTITY (
+       SEQUENCE NAME tracker.player_id_seq
+       START WITH 1
+       INCREMENT BY 1
+       NO MINVALUE
+       NO MAXVALUE
+       CACHE 1
+    ) NOT NULL,
+    name TEXT NOT NULL UNIQUE,
+    characters JSON DEFAULT '[]',
+    current_character INTEGER,
+    PRIMARY KEY (id)
 );
 
 -- 
@@ -164,27 +182,8 @@ CREATE TABLE tracker.player_character (
     masteries INTEGER DEFAULT 0,
     retired BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (id),
-    CONSTRAINT player_id_fkey FOREIGN KEY ('player_id') REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT class_id_fkey FOREIGN KEY ('class_id') REFERENCES tracker.character_class(id) ON UPDATE CASCADE ON DELETE RESTRICT
-);
-
--- 
--- Create Player
---
-CREATE TABLE tracker.player (
-    id INTEGER GENERATED ALWAYS AS IDENTITY (
-       SEQUENCE NAME tracker.player_id_seq
-       START WITH 1
-       INCREMENT BY 1
-       NO MINVALUE
-       NO MAXVALUE
-       CACHE 1
-    ) NOT NULL,
-    player_name TEXT NOT NULL UNIQUE,
-    characters JSON DEFAULT '[]',
-    current_character INTEGER,
-    PRIMARY KEY (id),
-    CONSTRAINT current_character_id_fkey FOREIGN KEY ('current_character') REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT class_id_fkey FOREIGN KEY ("class_id") REFERENCES tracker.character_class(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --
@@ -206,12 +205,12 @@ CREATE TABLE tracker.character_event (
     healing_applied INTEGER,
     healing_received INTEGER,
     hexes_moved INTEGER DEFAULT NULL,
-    elements_generated JSON DEFAULT '[]'.
+    elements_generated JSON DEFAULT '[]',
     cards_burned INTEGER DEFAULT 0,
     tiles_looted INTEGER DEFAULT 0,
     PRIMARY KEY (id),
-    CONSTRAINT player_id_fkey FOREIGN KEY ('player_id') REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT character_id_fkey FOREIGN KEY ('character_id') REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --
@@ -235,9 +234,9 @@ CREATE TABLE tracker.creature_killed (
     creature_level INTEGER DEFAULT 1,
     scenario_level INTEGER DEFAULT 1,
     overkill INTEGER DEFAULT 0,
-    CONSTRAINT character_id_fkey FOREIGN KEY ('character_id') REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT creature_id_fkey FOREIGN KEY ('creature_id') REFERENCES tracker.creature_class(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT character_level_fkey FOREIGN KEY ('creature_level') REFERENCES tracker.creature_level(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT creature_id_fkey FOREIGN KEY ("creature_id") REFERENCES tracker.creature_class(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT character_level_fkey FOREIGN KEY ("creature_level") REFERENCES tracker.creature_level(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --
@@ -280,9 +279,9 @@ CREATE TABLE tracker.damage_dealt (
     burned_card BOOLEAN DEFAULT FALSE,
     damage INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
-    CONSTRAINT character_id_fkey FOREIGN KEY ('character_id') REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
-    CONSTRAINT scenario_fkey FOREIGN KEY ('scenario_id') REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT
-    CONSTRAINT damage_source_fkey FOREIGN KEY ('source_id') REFERENCES tracker.damage_source(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT damage_source_fkey FOREIGN KEY ("source_id") REFERENCES tracker.damage_source(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --
@@ -307,37 +306,37 @@ CREATE TABLE tracker.damage_taken (
     shield INTEGER DEFAULT 0,
     burned_card BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (id),
-    CONSTRAINT character_id_fkey FOREIGN KEY ('character_id') REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
-    CONSTRAINT scenario_fkey FOREIGN KEY ('scenario_id') REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT
-    CONSTRAINT damage_source_fkey FOREIGN KEY ('source_id') REFERENCES tracker.damage_source(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT damage_source_fkey FOREIGN KEY ("source_id") REFERENCES tracker.damage_source(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 INSERT INTO tracker.creature_level (name) VALUES ('Normal'), ('Elite'), ('Boss'), ('Objective'), ('Other');
 
-INSERT INTO tracker.damage_source (name) VALUES ('Creature', 'Player', 'Self', 'Retaliate', 'Wound', 'Bane', 'Terrain', 'Trap', 'Short Rest', 'Scenario', 'Objective', 'Other');
+INSERT INTO tracker.damage_source (name) VALUES ('Creature'), ('Player'), ('Self'), ('Retaliate'), ('Wound'), ('Bane'), ('Terrain'), ('Trap'), ('Short Rest'), ('Scenario'), ('Objective'), ('Other');
 
 INSERT INTO tracker.character_class (name) VALUES ('Drifter'), ('Blink Blade'), ('Boneshaper'), ('Banner Spear'), ('Shadow Walker'), ('Geminate'), ('Frozen Fist'), ('Crashing Tide'), ('Snowspeaker');
 
 INSERT INTO tracker.status_effect (name, iconUrl) VALUES 
-('Poison','/images/conditions/fh-poison.png'), 
-('Pierce','/images/conditions/fh-pierce.png'), 
-('Push','/images/conditions/fh-push.png'),
-('Pull','/images/conditions/fh-pull.png'), 
-('Wound','/images/conditions/fh-wound.png'), 
-('Immobilize','/images/conditions/fh-immobilize.png'),
-('Impair','/images/conditions/fh-impair.png'),
-('Invisible','/images/conditions/fh-invisible.png'),
-('Disarm','/images/conditions/fh-dismar.png'),
-('Stun','/images/conditions/fh-stun.png'), 
-('Bane','/images/conditions/fh-bane.png'), 
-('Brittle','/images/conditions/fh-brittle.png'),
-('Incapacitate','/images/conditions/fh-incapacitate.png'),
-('Muddle','/images/conditions/fh-muddle.png'), 
-('Curse','/images/conditions/fh-curse.png'), 
-('Regenerate','/images/conditions/fh-regenerate.png'), 
-('Ward','/images/conditions/fh-ward.png'), 
-('Bless','/images/conditions/fh-bless.png'), 
-('Strengthen','/images/conditions/fh-strength.png');
+('Poison','/images/status_effects/fh-poison.png'), 
+('Pierce','/images/status_effects/fh-pierce.png'), 
+('Push','/images/status_effects/fh-push.png'),
+('Pull','/images/status_effects/fh-pull.png'), 
+('Wound','/images/status_effects/fh-wound.png'), 
+('Immobilize','/images/status_effects/fh-immobilize.png'),
+('Impair','/images/status_effects/fh-impair.png'),
+('Invisible','/images/status_effects/fh-invisible.png'),
+('Disarm','/images/status_effects/fh-dismar.png'),
+('Stun','/images/status_effects/fh-stun.png'), 
+('Bane','/images/status_effects/fh-bane.png'), 
+('Brittle','/images/status_effects/fh-brittle.png'),
+('Incapacitate','/images/status_effects/fh-incapacitate.png'),
+('Muddle','/images/status_effects/fh-muddle.png'), 
+('Curse','/images/status_effects/fh-curse.png'), 
+('Regenerate','/images/status_effects/fh-regenerate.png'), 
+('Ward','/images/status_effects/fh-ward.png'), 
+('Bless','/images/status_effects/fh-bless.png'), 
+('Strengthen','/images/status_effects/fh-strength.png');
 
 INSERT INTO tracker.element (name, iconUrl) VALUES
 ('Air', '/images/elements/fh-air.png'),
@@ -349,9 +348,7 @@ INSERT INTO tracker.element (name, iconUrl) VALUES
 
 INSERT INTO tracker.scenario_outcome (name) VALUES ('Unplayed'), ('Success'), ('Failure'), ('Ongoing');
 
-INSERT INTO tracker.player (name) VALUES ('Gord', 'Mark', 'Matt');
-
-INSERT INTO tracker.player_character () VALUES ();
+INSERT INTO tracker.player (name) VALUES ('Gord'), ('Mark'), ('Matt');
 
 INSERT INTO tracker.creature_class (name, iconUrl) VALUES 
 ('Abael Herder', '/images/creatures/fh-abael-herder.png'), 
@@ -419,6 +416,6 @@ INSERT INTO tracker.creature_class (name, iconUrl) VALUES
 ('[b]The Relic', '/images/creatures/fh-the-relic.png'),
 ('[b]Vestige of the Imprisoned God', '/images/creatures/fh-vestige-of-the-imprisoned-god.png');
 
-INSERT INTO tracker.version ('release_id', 'file_path') VALUES (0, '0_initial-schema');
+INSERT INTO tracker.version (release_id, file_path) VALUES (0, '0_initial-schema');
 
 COMMIT;

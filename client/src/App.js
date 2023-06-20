@@ -23,6 +23,7 @@ export function App() {
                         <Route path={RouteMap.HOME} element={<Pages.Home />} />
                         <Route exact path={RouteMap.PLAYERS} element={<Pages.Players />} />
                         <Route exact path={RouteMap.SCENARIOS} element={<Pages.Scenarios />} />
+                        <Route exact path={RouteMap.DEBUG} element={<Pages.Debug />} />
                         <Route element={<Pages.NotFound />} />
                     </Routes>
                 }

@@ -1,0 +1,1 @@
+psql -U master -d tracker -f ./postgres/tracker/0_initial-schema_up.sql

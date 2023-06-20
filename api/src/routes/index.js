@@ -7,7 +7,7 @@ import eventRoutes from "./eventRoutes";
 const router = Router();
 
 router.use('/', indexRoutes);
-router.use('/enum', enumRoutes);
+router.use('/enums', enumRoutes);
 router.use('/players', playerRoutes);
 router.use('/events', eventRoutes);
 
