@@ -14,8 +14,11 @@ enumRoutes.get('/creature_levels', CreatureLevelController.getAll);
 enumRoutes.get('/creature_classes', CreatureClassController.getAll);
 enumRoutes.get('/character_classes', CharacterClassController.getAll);
 enumRoutes.get('/status_effects', StatusEffectController.getAll);
+<<<<<<< HEAD
 // TODO:
 //enumRoutes.get('/damage_sources', );
 //enumRoutes.get('/elements', );
+=======
+>>>>>>> dev
 
 export default enumRoutes;
