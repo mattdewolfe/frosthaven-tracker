@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useEnumsApi } from "../hooks";
+import { useEnumsApi } from "../api";
 import HostedImage from "../components/HostedImage";
 
 const DebugPage = () => {
@@ -7,9 +7,12 @@ const DebugPage = () => {
     const styles = Object.freeze({
         columnStyle: {
             display: "flex",
-            width: "25%",
+            minWidth: "20%",
             flexDirection: "column",
-            gap: 5
+            gap: 4,
+            border: "1px solid lightgrey",
+            borderRadius: 4,
+            padding: 4
         },
         rowStyle: {
             display: "flex",
@@ -20,11 +23,12 @@ const DebugPage = () => {
         }
     });
 
-    const { getStatusEffects, getElements, getCreatureClasses } = useEnumsApi();
+    const { getStatusEffects, getElements, getCreatureClasses, getCharacterClasses } = useEnumsApi();
 
     const [statusEffects, setStatusEffects] = useState([]);
     const [elements, setElements] = useState([]);
     const [creatureClasses, setCreatureClasses] = useState([]);
+    const [characterClasses, setCharacterClasses] = useState([]);
 
     const handleStatusEffects = (error, data) => {
         if (error) {
@@ -53,10 +57,20 @@ const DebugPage = () => {
         }
     }
 
+    const handleCharacterClasses = (error, data) => {
+        if (error) {
+            console.warn(error);
+        }
+        else {
+            setCharacterClasses([...data]);
+        }
+    }
+
     useEffect(() => {
         getStatusEffects(handleStatusEffects);
         getElements(handleElements);
         getCreatureClasses(handleCreatureClasses);
+        getCharacterClasses(handleCharacterClasses);
     }, []);
 
     return (
@@ -65,7 +79,8 @@ const DebugPage = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-evenly",
-            overflow: "auto"
+            overflow: "auto",
+            marginTop: 10
         }}>
             <div style={styles.columnStyle}>
                 <h3>Status Effects</h3>
@@ -110,6 +125,25 @@ const DebugPage = () => {
                 <br />
                 {
                     creatureClasses.map((status, idx) => {
+                        const { name = "?", iconUrl = "" } = status;
+
+                        return (
+                            <div style={styles.rowStyle}
+                                key={`${name}_${idx}`}>
+                                {name}
+                                <HostedImage style={{ width: 32, height: 32, objectFit: "contain" }}
+                                    src={iconUrl} />
+                            </div>
+                        );
+                    })
+                }
+            </div>
+
+            <div style={styles.columnStyle}>
+                <h3>Character Classes</h3>
+                <br />
+                {
+                    characterClasses.map((status, idx) => {
                         const { name = "?", iconUrl = "" } = status;
 
                         return (

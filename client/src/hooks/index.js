@@ -1,5 +1,11 @@
-import useEnumsApi from "./useEnumsApi";
+import useIsMounted from "./useIsMounted";
+import useMountedDispatch from "./useMountedDispatch";
+import usePlatformDetection from "./usePlatformDetection";
+import useWindowDimensions from "./useWindowDimensions";
 
 export {
-    useEnumsApi
+    useIsMounted,
+    useWindowDimensions,
+    usePlatformDetection,
+    useMountedDispatch
 };

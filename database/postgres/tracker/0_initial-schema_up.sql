@@ -315,7 +315,24 @@ INSERT INTO tracker.creature_level (name) VALUES ('Normal'), ('Elite'), ('Boss')
 
 INSERT INTO tracker.damage_source (name) VALUES ('Creature'), ('Player'), ('Self'), ('Retaliate'), ('Wound'), ('Bane'), ('Terrain'), ('Trap'), ('Short Rest'), ('Scenario'), ('Objective'), ('Other');
 
-INSERT INTO tracker.character_class (name) VALUES ('Drifter'), ('Blink Blade'), ('Boneshaper'), ('Banner Spear'), ('Shadow Walker'), ('Geminate'), ('Frozen Fist'), ('Crashing Tide'), ('Snowspeaker');
+INSERT INTO tracker.character_class (name, icon_url) VALUES 
+('Blink Blade', '/images/characters/fh-blink-blade.png'), 
+('Banner Spear', '/images/characters/fh-banner-spear.png'), 
+('Boneshaper', '/images/characters/fh-boneshaper.png'), 
+('Crashing Tide', '/images/characters/fh-crashing-tide.png'), 
+('Deathwalker', '/images/characters/fh-deathwalker.png'), 
+('DW', '/images/characters/fh-locked-character.png'), 
+('Drifter', '/images/characters/fh-drifter.png'), 
+('Frozen Fist', '/images/characters/fh-frozen-fist.png'), 
+('Geminate', '/images/characters/fh-geminate.png'), 
+('HI', '/images/characters/fh-locked-character.png'), 
+('IN', '/images/characters/fh-locked-character.png'), 
+('ME', '/images/characters/fh-locked-character.png'), 
+('PA', '/images/characters/fh-locked-character.png'), 
+('PY', '/images/characters/fh-locked-character.png'), 
+('SH', '/images/characters/fh-locked-character.png'), 
+('SN', '/images/characters/fh-locked-character.png'), 
+('TR', '/images/characters/fh-locked-character.png');
 
 INSERT INTO tracker.status_effect (name, icon_url) VALUES 
 ('Bane','/images/status_effects/fh-bane.png'), 
