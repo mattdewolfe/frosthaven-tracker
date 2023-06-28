@@ -1,6 +1,6 @@
 import Model, { QueryVariableType } from '../Model';
 
-export default class CreatureClass extends Model {
+export default class Element extends Model {
     constructor(props) {
         super();
 

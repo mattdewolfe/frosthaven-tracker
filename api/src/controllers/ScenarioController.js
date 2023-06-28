@@ -23,7 +23,6 @@ export default class ScenarioController extends BaseController {
                 next(BadRequestErrorHandler.constructFromError(e));
             });
     }
-<<<<<<< HEAD
 
     static post(req, res, next) {
         Scenario
@@ -34,6 +33,4 @@ export default class ScenarioController extends BaseController {
                 next(BadRequestErrorHandler.constructFromError(e));
             });
     }
-=======
->>>>>>> dev
 }

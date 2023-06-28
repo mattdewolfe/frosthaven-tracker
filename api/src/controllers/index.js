@@ -6,12 +6,10 @@ import CharacterClassController from './CharacterClassController';
 import ScenarioOutcomeController from './ScenarioOutcomeController';
 import ScenarioController from './ScenarioController';
 import StatusEffectController from './StatusEffectController';
-<<<<<<< HEAD
 import PlayerController from './PlayerController';
 import PlayerCharacterController from './PlayerCharacterController';
 import EventController from './EventController';
-=======
->>>>>>> dev
+import ElementController from './ElementController';
 
 export {
     BaseController,
@@ -21,12 +19,9 @@ export {
     CharacterClassController,
     ScenarioOutcomeController,
     ScenarioController,
-<<<<<<< HEAD
     StatusEffectController,
     PlayerController,
     PlayerCharacterController,
-    EventController
-=======
-    StatusEffectController
->>>>>>> dev
+    EventController,
+    ElementController
 }

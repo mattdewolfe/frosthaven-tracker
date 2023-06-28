@@ -6,7 +6,6 @@ import router from './routes/index.js';
 import jsonErrorHandler from './middleware/jsonErrorHandler';
 import path from 'path';
 
-
 const app = express();
 
 const corsHandler = cors({
@@ -40,10 +39,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/images', express.static(path.join(__dirname, 'public')));
 
-app.use('/images', express.static('public'));
 app.use('/', router);
-app.use(express.static('images'));
 
 app.use(jsonErrorHandler);
 

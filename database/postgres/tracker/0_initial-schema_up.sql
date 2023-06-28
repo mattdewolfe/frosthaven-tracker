@@ -36,7 +36,7 @@ CREATE TABLE tracker.character_class (
        CACHE 1
     ) NOT NULL,
     name TEXT NOT NULL UNIQUE,
-    iconUrl TEXT,
+    icon_url TEXT,
     PRIMARY KEY (id)
 );
 
@@ -53,7 +53,7 @@ CREATE TABLE tracker.status_effect (
        CACHE 1
     ) NOT NULL,
     name TEXT NOT NULL UNIQUE,
-    iconUrl TEXT,
+    icon_url TEXT,
     PRIMARY KEY (id)
 );
 
@@ -70,7 +70,7 @@ CREATE TABLE tracker.element (
        CACHE 1
     ) NOT NULL,
     name TEXT NOT NULL UNIQUE,
-    iconUrl TEXT,
+    icon_url TEXT,
     PRIMARY KEY (id)
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE tracker.creature_class (
        CACHE 1
     ) NOT NULL,
     name TEXT NOT NULL,
-    iconUrl TEXT,
+    icon_url TEXT,
     PRIMARY KEY (id)
 );
 
@@ -317,28 +317,27 @@ INSERT INTO tracker.damage_source (name) VALUES ('Creature'), ('Player'), ('Self
 
 INSERT INTO tracker.character_class (name) VALUES ('Drifter'), ('Blink Blade'), ('Boneshaper'), ('Banner Spear'), ('Shadow Walker'), ('Geminate'), ('Frozen Fist'), ('Crashing Tide'), ('Snowspeaker');
 
-INSERT INTO tracker.status_effect (name, iconUrl) VALUES 
-('Poison','/images/status_effects/fh-poison.png'), 
-('Pierce','/images/status_effects/fh-pierce.png'), 
-('Push','/images/status_effects/fh-push.png'),
-('Pull','/images/status_effects/fh-pull.png'), 
-('Wound','/images/status_effects/fh-wound.png'), 
+INSERT INTO tracker.status_effect (name, icon_url) VALUES 
+('Bane','/images/status_effects/fh-bane.png'), 
+('Bless','/images/status_effects/fh-bless.png'), 
+('Brittle','/images/status_effects/fh-brittle.png'),
+('Curse','/images/status_effects/fh-curse.png'), 
+('Disarm','/images/status_effects/fh-disarm.png'),
 ('Immobilize','/images/status_effects/fh-immobilize.png'),
 ('Impair','/images/status_effects/fh-impair.png'),
 ('Invisible','/images/status_effects/fh-invisible.png'),
-('Disarm','/images/status_effects/fh-dismar.png'),
-('Stun','/images/status_effects/fh-stun.png'), 
-('Bane','/images/status_effects/fh-bane.png'), 
-('Brittle','/images/status_effects/fh-brittle.png'),
-('Incapacitate','/images/status_effects/fh-incapacitate.png'),
 ('Muddle','/images/status_effects/fh-muddle.png'), 
-('Curse','/images/status_effects/fh-curse.png'), 
+('Pierce','/images/status_effects/fh-pierce.png'), 
+('Poison','/images/status_effects/fh-poison.png'), 
+('Pull','/images/status_effects/fh-pull.png'), 
+('Push','/images/status_effects/fh-push.png'),
 ('Regenerate','/images/status_effects/fh-regenerate.png'), 
+('Strengthen','/images/status_effects/fh-strengthen.png'),
+('Stun','/images/status_effects/fh-stun.png'), 
 ('Ward','/images/status_effects/fh-ward.png'), 
-('Bless','/images/status_effects/fh-bless.png'), 
-('Strengthen','/images/status_effects/fh-strength.png');
+('Wound','/images/status_effects/fh-wound.png');
 
-INSERT INTO tracker.element (name, iconUrl) VALUES
+INSERT INTO tracker.element (name, icon_url) VALUES
 ('Air', '/images/elements/fh-air.png'),
 ('Dark', '/images/elements/fh-dark.png'),
 ('Earth', '/images/elements/fh-earth.png'),
@@ -350,7 +349,7 @@ INSERT INTO tracker.scenario_outcome (name) VALUES ('Unplayed'), ('Success'), ('
 
 INSERT INTO tracker.player (name) VALUES ('Gord'), ('Mark'), ('Matt');
 
-INSERT INTO tracker.creature_class (name, iconUrl) VALUES 
+INSERT INTO tracker.creature_class (name, icon_url) VALUES 
 ('Abael Herder', '/images/creatures/fh-abael-herder.png'), 
 ('Abael Scout', '/images/creatures/fh-algox-scout.png'),
 ('Algox Archer', '/images/creatures/fh-algox-archer.png'),
@@ -372,7 +371,7 @@ INSERT INTO tracker.creature_class (name, iconUrl) VALUES
 ('Forest Imp', '/images/creatures/fh-forest-imp.png'),
 ('Forst Demon', '/images/creatures/fh-frost-demon.png'),
 ('Frozen Corpse', '/images/creatures/fh-frozen-corpse.png'),
-('Harrower Infester', '/images/creatures/fh-harrow-infester.png'),
+('Harrower Infester', '/images/creatures/fh-harrower-infester.png'),
 ('Hound', '/images/creatures/fh-hound.png'),
 ('Ice Wraith', '/images/creatures/fh-ice-wraith.png'),
 ('Lightning Eel', '/images/creatures/fh-lightning-eel.png'),
@@ -380,15 +379,15 @@ INSERT INTO tracker.creature_class (name, iconUrl) VALUES
 ('Living Doom', '/images/creatures/fh-living-doom.png'),
 ('Living Spirit', '/images/creatures/fh-living-spirit.png'),
 ('Lurker Clawcrusher', '/images/creatures/fh-lurker-clawcrusher.png'),
-('Lurker Mindsnapper', '/images/creatures/fh-lurker-mindsnapper.png'),
+('Lurker Mindsnipper', '/images/creatures/fh-lurker-mindsnipper.png'),
 ('Lurker Soldier', '/images/creatures/fh-lurker-soldier.png'),
 ('Lurker Wavethrower', '/images/creatures/fh-lurker-wavethrower.png'),
 ('Night Demon', '/images/creatures/fh-night-demon.png'),
 ('Ooze', '/images/creatures/fh-ooze.png'),
 ('Piranha Pig', '/images/creatures/fh-piranha-pig.png'),
 ('Polar Bear', '/images/creatures/fh-polar-bear.png'),
-('Rendering Drake', '/images/creatures/fh-rendering-drake.png'),
-('Robotic Boltshooter', '/images/creatures/fh-robot-boltshooter.png'),
+('Rending Drake', '/images/creatures/fh-rending-drake.png'),
+('Robotic Boltshooter', '/images/creatures/fh-robotic-boltshooter.png'),
 ('Ruined Machine', '/images/creatures/fh-ruined-machine.png'),
 ('Savvas Icestorm', '/images/creatures/fh-savvas-icestorm.png'),
 ('Savvas Lavaflow', '/images/creatures/fh-savvas-lavaflow.png'),

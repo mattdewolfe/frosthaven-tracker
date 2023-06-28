@@ -13,7 +13,7 @@ export default class Model {
     }
 
     static constructFromObject(object) {
-        return new this(formatUnderToCamel(object));
+        return new this(object);
     }
 
     // Used when iterating over variable names from HTTP request, this should be

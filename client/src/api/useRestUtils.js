@@ -1,7 +1,7 @@
 import RestError from "../utils/RestError";
 
 class RestOptions {
-    constructor({ jsonBody = true, camelCaseKeys = true }) {
+    constructor({ jsonBody = true, camelCaseKeys = false }) {
         // Boolean (false in multipart rest calls)
         this.jsonBody = jsonBody;
         // Boolean

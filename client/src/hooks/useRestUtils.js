@@ -30,7 +30,7 @@ const log = window?.DEV_MODE === true ?
 // API Key and UserData is appended to calls as needed. MD - May 30/2022
 function useRestUtils() {
 
-    const apiBase = window?.API_URL || "http://localhost:3002/v1/";
+    const apiBase = window?.API_URL || "http://localhost:3002";
 
     // Returns Header Object with X-APIKey, or undefined
     function apiKeyHeader() {
