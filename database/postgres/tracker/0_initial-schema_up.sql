@@ -207,7 +207,7 @@ CREATE TABLE tracker.character_event (
     hexes_moved INTEGER DEFAULT NULL,
     elements_generated JSON DEFAULT '[]',
     cards_burned INTEGER DEFAULT 0,
-    tiles_looted INTEGER DEFAULT 0,
+    tokens_looted INTEGER DEFAULT 0,
     PRIMARY KEY (id),
     CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT

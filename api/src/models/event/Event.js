@@ -4,15 +4,14 @@ export default class Event extends Model {
     constructor({
         player_id,
         character_id,
-        damage_dealt,
-        damage_received,
-        damage_shielded,
         status_applied = [],
         status_received = [],
         healing_applied,
         healing_received,
         hexes_moved,
-        traps_sprung,
+        elements_generated = [],
+        cards_burned = 0,
+        tokens_looted = 0
     }) {
         super();
 
@@ -20,12 +19,6 @@ export default class Event extends Model {
         this.player_id = player_id;
         // number
         this.character_id = character_id;
-        // number
-        this.damage_dealt = damage_dealt;
-        // number
-        this.damage_received = damage_received;
-        // number
-        this.damage_shielded = damage_shielded;
         // array[ids]
         this.status_applied = status_applied;
         // array[ids]
@@ -36,8 +29,12 @@ export default class Event extends Model {
         this.healing_received = healing_received;
         // number
         this.hexes_moved = hexes_moved;
+        // array
+        this.elements_generated = elements_generated;
         // number
-        this.traps_sprung = traps_sprung;
+        this.cards_burned = cards_burned;
+        // number
+        this.tokens_looted = tokens_looted;
     }
 
     static checkQueryVariableType(name) {
