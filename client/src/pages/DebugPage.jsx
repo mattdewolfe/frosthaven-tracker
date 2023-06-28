@@ -19,7 +19,14 @@ const DebugPage = () => {
             width: "100%",
             flexDirection: "row",
             justifyContent: "space-between",
-            gap: 10
+            gap: 10,
+            textAlign: "center",
+            fontSize: "1.25rem"
+        },
+        entryImage: {
+            width: 50,
+            height: 50,
+            objectFit: "contain"
         }
     });
 
@@ -93,7 +100,7 @@ const DebugPage = () => {
                             <div style={styles.rowStyle}
                                 key={`${name}_${idx}`}>
                                 {name}
-                                <HostedImage style={{ width: 32, height: 32, objectFit: "contain" }}
+                                <HostedImage style={styles.entryImage}
                                     src={iconUrl} />
                             </div>
                         );
@@ -112,7 +119,7 @@ const DebugPage = () => {
                             <div style={styles.rowStyle}
                                 key={`${name}_${idx}`}>
                                 {name}
-                                <HostedImage style={{ width: 32, height: 32, objectFit: "contain" }}
+                                <HostedImage style={styles.entryImage}
                                     src={iconUrl} />
                             </div>
                         );
@@ -131,7 +138,7 @@ const DebugPage = () => {
                             <div style={styles.rowStyle}
                                 key={`${name}_${idx}`}>
                                 {name}
-                                <HostedImage style={{ width: 32, height: 32, objectFit: "contain" }}
+                                <HostedImage style={styles.entryImage}
                                     src={iconUrl} />
                             </div>
                         );
@@ -150,7 +157,7 @@ const DebugPage = () => {
                             <div style={styles.rowStyle}
                                 key={`${name}_${idx}`}>
                                 {name}
-                                <HostedImage style={{ width: 32, height: 32, objectFit: "contain" }}
+                                <HostedImage style={styles.entryImage}
                                     src={iconUrl} />
                             </div>
                         );

@@ -316,7 +316,7 @@ INSERT INTO tracker.creature_level (name) VALUES ('Normal'), ('Elite'), ('Boss')
 INSERT INTO tracker.damage_source (name) VALUES ('Creature'), ('Player'), ('Self'), ('Retaliate'), ('Wound'), ('Bane'), ('Terrain'), ('Trap'), ('Short Rest'), ('Scenario'), ('Objective'), ('Other');
 
 INSERT INTO tracker.character_class (name, icon_url) VALUES 
-('Blink Blade', '/images/characters/fh-blink-blade.png'), 
+('Blink Blade', '/images/characters/fh-blinkblade.png'), 
 ('Banner Spear', '/images/characters/fh-banner-spear.png'), 
 ('Boneshaper', '/images/characters/fh-boneshaper.png'), 
 ('Crashing Tide', '/images/characters/fh-crashing-tide.png'), 
