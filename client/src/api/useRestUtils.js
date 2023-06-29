@@ -86,18 +86,18 @@ function useRestUtils() {
         return execute(url, request, options);
     }
 
-    async function patchRequest(url, data = null, options = defaultRestOptions) {
+    async function putRequest(url, data = null, options = defaultRestOptions) {
         if (!url || typeof (url) !== "string") {
             throw new Error("Invalid POST Request, missing URL");
         }
 
         const request = {
-            method: "PATCH",
+            method: "PUT",
             body: options.jsonBody ? JSON.stringify(data) : data,
             headers: headers(options)
         };
 
-        log("PATCH", url);
+        log("PUT", url);
 
         return execute(url, request, options);
     }
@@ -179,7 +179,7 @@ function useRestUtils() {
         multipartRestOptions,
         getRequest,
         postRequest,
-        patchRequest,
+        putRequest,
         deleteRequest,
         callbackWrapper
     };
