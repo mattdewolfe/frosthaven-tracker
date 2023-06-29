@@ -16,8 +16,8 @@ export function App() {
         
         
         <BrowserRouter>
-            <Navbar></Navbar>
-            <Background></Background>
+            <Navbar />
+            
                 <div style={{ width: "100%", height: "100%" }}>
                     {
                         loading === true &&
