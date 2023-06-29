@@ -1,5 +1,3 @@
-// Basic error class for RestErrors from API calls.
-
 class RestError extends Error {
     constructor(status = 0, errorCode = "", message = "", field = "", errors = []) {
         super(message);

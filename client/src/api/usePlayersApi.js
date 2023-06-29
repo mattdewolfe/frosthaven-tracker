@@ -1,14 +1,10 @@
 import useRestUtils from "./useRestUtils";
-import { MockPlayers } from "./mockData";
 
 function usePlayersApi() {
-    const { getRequest, postRequest, callbackWrapper } = useRestUtils();
+    const { getRequest, postRequest, putRequest, callbackWrapper } = useRestUtils();
 
     function getAllPlayers(callback) {
-        // These end points do not exist, so instead we will fake the response with mock data.
-        callback?.(null, MockPlayers);
-
-        //callbackWrapper(getRequest("/players"), callback);
+        callbackWrapper(getRequest("/players"), callback);
     }
 
     function getPlayerById(id, callback) {
@@ -19,10 +15,15 @@ function usePlayersApi() {
         callbackWrapper(postRequest("/players", data), callback);
     }
 
+    function updatePlayer(data, callback) {
+        callbackWrapper(putRequest("/players", data), callback);
+    }
+
     return {
         getAllPlayers,
         getPlayerById,
-        postNewPlayer
+        postNewPlayer,
+        updatePlayer
     };
 }
 

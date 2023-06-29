@@ -4,6 +4,10 @@ import CreatureLevel from './creatureLevel';
 import CharacterClass from './characterClass';
 import StatusEffect from './statusEffect';
 import Scenario from './scenario';
+import Player from './player';
+import PlayerCharacter from './playerCharacter';
+import Event from './event';
+import Element from './element';
 
 export {
     CreatureClass,
@@ -11,5 +15,9 @@ export {
     CharacterClass,
     StatusEffect,
     ScenarioOutcome,
-    Scenario
+    Player,
+    PlayerCharacter,
+    Event,
+    Scenario,
+    Element
 };

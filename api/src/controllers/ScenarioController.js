@@ -23,4 +23,14 @@ export default class ScenarioController extends BaseController {
                 next(BadRequestErrorHandler.constructFromError(e));
             });
     }
+
+    static post(req, res, next) {
+        Scenario
+            .post({ ...req.query }, getDb())
+            .then(async (result) => {
+                return res.status(200).json(result);
+            }, (e) => {
+                next(BadRequestErrorHandler.constructFromError(e));
+            });
+    }
 }

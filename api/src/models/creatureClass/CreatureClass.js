@@ -17,12 +17,12 @@ export default class CreatureClass extends Model {
         /**
          * @type {string}
          */
-        this.iconUrl = props.iconUrl;
+        this.icon_url = props.icon_url;
     }
 
     static checkQueryVariableType(name) {
         if (name === 'name' ||
-            name === 'iconUrl') {
+            name === 'icon_url') {
             return QueryVariableType.String;
         }
 

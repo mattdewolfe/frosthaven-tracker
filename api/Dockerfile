@@ -9,7 +9,7 @@ RUN apk add dumb-init
 WORKDIR /usr/src/app
 COPY --chown=node:node package*.json ./
 
-RUN npm install -g npm@8.1.0 \
+RUN npm install -g \
     && npm install
 
 COPY --chown=node:node . .

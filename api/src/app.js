@@ -4,13 +4,14 @@ import morgan from 'morgan';
 import cors from 'cors';
 import router from './routes/index.js';
 import jsonErrorHandler from './middleware/jsonErrorHandler';
+import path from 'path';
 
 const app = express();
 
 const corsHandler = cors({
-    allowedHeaders: ['Content-Type,Authorization,X-Api-Key'],
-    exposedHeaders: ['Content-Type,Authorization,X-Api-Key'],
-    origin: ['http://192.168.2.34:3002', 'http://localhost:3002'],
+    allowedHeaders: ['Content-Type,Authorization,X-ApiKey'],
+    exposedHeaders: ['Content-Type,Authorization,X-ApiKey'],
+    origin: ['http://192.168.2.34:1234', 'http://localhost:1234'],
     methods: 'OPTIONS,POST,PUT,DELETE,GET'
 });
 
@@ -38,8 +39,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/images', express.static(path.join(__dirname, 'public')));
+
 app.use('/', router);
-app.use(express.static('images'));
 
 app.use(jsonErrorHandler);
 

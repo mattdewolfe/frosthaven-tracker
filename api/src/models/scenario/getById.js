@@ -10,9 +10,11 @@ export default async ({ id } = {}, client) => {
     const query = `SELECT * FROM tracker.scenario WHERE id =${id};`;
 
     return oneOrNoneQuery(client, query)
-        .then((records) => {
-            /* eslint-disable-next-line no-param-reassign */
-            return Array.from(records.items)
-                .map((item) => Scenario.constructFromObject(item));
+        .then((record) => {
+            if (record) {
+                return Scenario.constructFromObject(record);
+            }
+
+            return null;
         });
-};
+}

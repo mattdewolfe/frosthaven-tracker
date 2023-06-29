@@ -9,7 +9,7 @@ if (process.env.DEBUG) {
     dotenv.config({ path: `./.env.${process.env.APP_TARGET}` });
 }
 
-const debug = debugLib('parliament-api:server');
+const debug = debugLib('fr-api:server');
 
 const port = process.env.PORT || '3002';
 const server = http.createServer(app);
