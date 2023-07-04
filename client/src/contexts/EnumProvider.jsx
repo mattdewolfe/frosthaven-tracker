@@ -124,11 +124,11 @@ const EnumProvider = ({ children }) => {
     useEffect(() => {
         getStatusEffects(handleStatusEffects);
         getScenarioOutcomes(handleScenarioOutcomes);
-        // getCharacterClasses(handleCharacterClasses);
-        // getCreatureClasses(handleCreatureClasses);
-        // getDamageSources(handleDamageSources);
-        // getCreatureLevels(handleCreatureLevels);
-        // getElements(handleElements);
+        getCharacterClasses(handleCharacterClasses);
+        getCreatureClasses(handleCreatureClasses);
+        getDamageSources(handleDamageSources);
+        getCreatureLevels(handleCreatureLevels);
+        getElements(handleElements);
     }, []);
 
     return (
