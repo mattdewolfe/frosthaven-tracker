@@ -23,6 +23,9 @@ export default function Navbar() {
             <Link to={RouteMap.EXAMPLE}>
                 Example
             </Link>
+            <Link to={RouteMap.DEBUG}>
+                Debug
+            </Link>
             </li>
                 
             

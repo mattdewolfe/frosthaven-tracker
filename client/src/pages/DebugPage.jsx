@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useEnumsApi } from "../api";
 import HostedImage from "../components/HostedImage";
+import NewChar from "../components/CreateCharDrop";
+import Elements from "../components/Elements";
 
 const DebugPage = () => {
 
@@ -89,6 +91,7 @@ const DebugPage = () => {
             overflow: "auto",
             marginTop: 10
         }}>
+
             <div style={styles.columnStyle}>
                 <h3>Status Effects</h3>
                 <br />
@@ -107,6 +110,10 @@ const DebugPage = () => {
                     })
                 }
             </div>
+
+            <NewChar />
+
+            <Elements />
 
             <div style={styles.columnStyle}>
                 <h3>Elements</h3>

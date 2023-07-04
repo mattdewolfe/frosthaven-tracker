@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-
 import Dropdown from 'react-bootstrap/Dropdown';
 
-function GenericDropdown() {
+function NewChar() {
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Something
+        Create Character
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
@@ -18,4 +16,4 @@ function GenericDropdown() {
   );
 }
 
-export default GenericDropdown;
+export default NewChar;
