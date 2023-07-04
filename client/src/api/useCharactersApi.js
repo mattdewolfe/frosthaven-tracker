@@ -7,19 +7,19 @@ function useCharactersApi() {
         callbackWrapper(getRequest("/characters"), callback);
     }
 
-    function getCharactersByPlayerId(id, callback) {
+    function getCharactersByPlayerId(callback, id) {
         callbackWrapper(getRequest(`/characters?playerId=${id}`), callback);
     }
 
-    function getCharacterById(id, callback) {
+    function getCharacterById(callback, id) {
         callbackWrapper(getRequest(`/characters?id=${id}`), callback);
     }
 
-    function postNewCharacter(data, callback) {
+    function postNewCharacter(callback, data) {
         callbackWrapper(postRequest(`/characters`, data), callback);
     }
 
-    function updateCharacter(data, callback) {
+    function updateCharacter(callback, data) {
         callbackWrapper(putRequest(`/characters`, data), callback);
     }
 

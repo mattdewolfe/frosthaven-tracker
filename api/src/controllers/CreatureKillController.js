@@ -1,11 +1,11 @@
 import { getDb } from '../database';
 import BaseController from './BaseController';
-import { Scenario } from '../models';
+import { CreatureKilled } from '../models';
 import { BadRequestErrorHandler } from '../error-handlers';
 
-export default class ScenarioController extends BaseController {
-    static get(req, res, next) {
-        Scenario
+export default class CreatureKillController extends BaseController {
+    static getAll(req, res, next) {
+        CreatureKilled
             .getAll({ ...req.query }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
@@ -14,22 +14,23 @@ export default class ScenarioController extends BaseController {
             });
     }
 
-    static post(req, res, next) {
-        Scenario
-            .post({ ...req.query }, getDb())
-            .then(async (result) => {
-                return res.status(200).json(result);
+    static put(req, res, next) {
+        CreatureKilled
+            .put({ ...req.query }, getDb())
+            .then(async (records) => {
+                return res.status(200).json(records);
             }, (e) => {
                 next(BadRequestErrorHandler.constructFromError(e));
             });
     }
 
-    static put(req, res, next) {
-        Scenario
-            .put({ ...req.query }, getDb())
-            .then(async (result) => {
+    static post(req, res, next) {
+        CreatureKilled
+            .post({ ...req.query }, getDb())
+            .then((result) => {
                 return res.status(200).json(result);
-            }, (e) => {
+            })
+            .catch((e) => {
                 next(BadRequestErrorHandler.constructFromError(e));
             });
     }

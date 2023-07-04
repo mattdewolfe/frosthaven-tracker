@@ -1,14 +1,14 @@
 import { getDb } from '../database';
 import BaseController from './BaseController';
-import { Scenario } from '../models';
+import { DamageSource } from '../models';
 import { BadRequestErrorHandler } from '../error-handlers';
 
-export default class IndexController extends BaseController {
+export default class DamageSourceController extends BaseController {
     static getAll(req, res, next) {
-        Scenario
+        DamageSource
             .getAll({ ...req.query }, getDb())
-            .then(async (familyRecords) => {
-                return res.status(200).json(familyRecords);
+            .then(async (records) => {
+                return res.status(200).json(records);
             }, (e) => {
                 next(BadRequestErrorHandler.constructFromError(e));
             });

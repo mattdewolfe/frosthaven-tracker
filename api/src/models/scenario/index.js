@@ -1,11 +1,11 @@
 import Scenario from './Scenario';
-import getAll from './getAll';
-import getById from './getById';
+import get from './get';
 import post from './post';
+import put from './put';
 
 export default {
     Scenario,
-    getAll,
-    getById,
-    post
+    get,
+    post,
+    put
 };

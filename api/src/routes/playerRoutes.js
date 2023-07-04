@@ -1,8 +1,8 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
     PlayerCharacterController,
     PlayerController
-} from "../controllers";
+} from '../controllers';
 
 const playerRoutes = Router();
 

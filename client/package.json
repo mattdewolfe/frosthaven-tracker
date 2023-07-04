@@ -11,6 +11,7 @@
     "build": "parcel build"
   },
   "dependencies": {
+    "@parcel/core": "^2.9.3",
     "@popperjs/core": "^2.11.7",
     "bootstrap": "^5.3.0",
     "camelcase-keys": "^8.0.2",

@@ -1,4 +1,4 @@
-import { paginateResults, DEFAULT_PAGE, DEFAULT_LIMIT } from '../helpers';
+import { paginateResults, DEFAULT_PAGE } from '../helpers';
 import CreatureClass from './CreatureClass';
 
 export default async ({ limit, page } = {}, client) => {
@@ -6,7 +6,7 @@ export default async ({ limit, page } = {}, client) => {
     const query = `SELECT * FROM tracker.creature_class;`;
 
     return paginateResults(client, client.manyOrNone, query, {}, {
-        limit: limit || DEFAULT_LIMIT,
+        limit: limit || 99,
         page: page || DEFAULT_PAGE,
     })
         .then((records) => {

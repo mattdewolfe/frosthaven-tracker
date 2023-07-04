@@ -1,15 +1,17 @@
-import { Router } from "express";
-import indexRoutes from "./indexRoutes";
-import enumRoutes from "./enumRoutes";
-import playerRoutes from "./playerRoutes";
-import eventRoutes from "./eventRoutes";
+import { Router } from 'express';
+import indexRoutes from './indexRoutes';
+import enumRoutes from './enumRoutes';
+import playerRoutes from './playerRoutes';
+import statRoutes from './statRoutes';
+import scenarioRoutes from './scenarioRoutes';
 
 const router = Router();
 
 router.use('/', indexRoutes);
 router.use('/enums', enumRoutes);
 router.use('/players', playerRoutes);
-router.use('/events', eventRoutes);
+router.use('/stats', statRoutes);
+router.use('/scenarios', scenarioRoutes);
 
 // Handle 404 errors
 router.use((req, res) => {
