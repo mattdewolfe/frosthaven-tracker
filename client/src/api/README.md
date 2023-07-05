@@ -3,7 +3,7 @@
 ## Overview
 Here is the general concept of our API hooks.
 
-First, all of the hooks inside of the api folder are built on the functionality of the `useRestUtils.js` file. In this hook we have the structure for the various HTTP requests (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) that we will make. Any unique error handling or header checks that we may want to do should also happen inside here. Responses are handled inside of this file, and passed along to callback methods.
+First, all of the hooks inside of the api folder are built on the functionality of the `useRestUtils.js` file. In this hook we have the structure for the various HTTP requests (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) that we will make. Any unique error handling or header checks that we may want to do should also happen inside here. All the requests in here return promises, which are resolved/rejected after parsing the response of the request.
 
 ### Supported Requests
 * GET, POST, PUT, DELETE, OPTIONS
