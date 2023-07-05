@@ -34,21 +34,12 @@ const EnumProvider = ({ children }) => {
     const [elements, setElements] = useState({});
     const [creatureLevels, setCreatureLevels] = useState({});
 
-    const convertToEnumObject = (array, keyPropertyName = 'id') => {
-        let result = {};
-        for (let entry of array) {
-            result[entry[keyPropertyName]] = entry;
-        }
-
-        return result;
-    }
-
     const handleStatusEffects = (error, data) => {
         if (error) {
             console.warn(error);
         }
         else if (isMounted()) {
-            setStatusEffects(convertToEnumObject(data));
+            setStatusEffects([...data]);
         }
 
         setLoading(prev => prev - 1);
@@ -59,7 +50,7 @@ const EnumProvider = ({ children }) => {
             console.warn(error);
         }
         else if (isMounted()) {
-            setScenarioOutcomes(convertToEnumObject(data));
+            setScenarioOutcomes([...data]);
         }
 
         setLoading(prev => prev - 1);
@@ -70,7 +61,7 @@ const EnumProvider = ({ children }) => {
             console.warn(error);
         }
         else if (isMounted()) {
-            setCharacterClasses(convertToEnumObject(data));
+            setCharacterClasses([...data]);
         }
 
         setLoading(prev => prev - 1);
@@ -81,7 +72,7 @@ const EnumProvider = ({ children }) => {
             console.warn(error);
         }
         else if (isMounted()) {
-            setCreatureClasses(convertToEnumObject(data));
+            setCreatureClasses([...data]);
         }
 
         setLoading(prev => prev - 1);
@@ -92,7 +83,7 @@ const EnumProvider = ({ children }) => {
             console.warn(error);
         }
         else if (isMounted()) {
-            setDamageSources(convertToEnumObject(data));
+            setDamageSources([...data]);
         }
 
         setLoading(prev => prev - 1);
@@ -103,7 +94,7 @@ const EnumProvider = ({ children }) => {
             console.warn(error);
         }
         else if (isMounted()) {
-            setCreatureLevels(convertToEnumObject(data));
+            setCreatureLevels([...data]);
         }
 
         setLoading(prev => prev - 1);
@@ -114,7 +105,7 @@ const EnumProvider = ({ children }) => {
             console.warn(error);
         }
         else if (isMounted()) {
-            setElements(convertToEnumObject(data));
+            setElements([...data]);
         }
 
         setLoading(prev => prev - 1);

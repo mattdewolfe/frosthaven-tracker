@@ -4,6 +4,7 @@ import { Row, Col, Container, Button } from 'react-bootstrap';
 import { useIsMounted } from '../hooks';
 import { useScenariosApi } from '../api';
 import { EnumContext } from '../contexts';
+import { convertArrayToObject } from '../utils/Conversion';
 
 const ScenarioEntry = ({ data, style, allOutcomes }) => {
     const { name, scenarioNumber, scenarioLevel, outcome, id } = data;
@@ -36,6 +37,14 @@ const ScenariosPage = () => {
     const { scenarioOutcomes } = useContext(EnumContext);
     const [scenarios, setScenarios] = useState([]);
 
+    const outcomesObject = useMemo(() => {
+        if (scenarioOutcomes) {
+            return convertArrayToObject(scenarioOutcomes, 'id');
+        }
+
+        return {};
+    }, [scenarioOutcomes]);
+
     const getScenarios = () => {
         getAllScenarios((error, data) => {
             if (error) {
@@ -51,10 +60,10 @@ const ScenariosPage = () => {
 
     const ongoingOutcomeId = useMemo(() => {
         if (scenarioOutcomes) {
-            for (let key in scenarioOutcomes) {
-                if (scenarioOutcomes[key].name === 'Ongoing') {
-                    console.log('return the key')
-                    return key;
+            for (let entry of scenarioOutcomes) {
+                console.log(entry);
+                if (entry?.name === 'Ongoing') {
+                    return entry?.id;
                 }
             }
         }
@@ -102,7 +111,7 @@ const ScenariosPage = () => {
                         scenarios.map((e, idx) => {
                             if (e?.outcome != ongoingOutcomeId) {
                                 return (
-                                    <ScenarioEntry key={`${e?.id}_${idx}_all`} data={e} allOutcomes={scenarioOutcomes} />
+                                    <ScenarioEntry key={`${e?.id}_${idx}_all`} data={e} allOutcomes={outcomesObject} />
                                 );
                             }
                             return null;
@@ -115,7 +124,7 @@ const ScenariosPage = () => {
                         scenarios.map((e, idx) => {
                             if (e?.outcome == ongoingOutcomeId) {
                                 return (
-                                    <ScenarioEntry key={`${e?.id}_${idx}_ongoing`} data={e} allOutcomes={scenarioOutcomes} />
+                                    <ScenarioEntry key={`${e?.id}_${idx}_ongoing`} data={e} allOutcomes={outcomesObject} />
                                 );
                             }
                             return null;
