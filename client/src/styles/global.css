@@ -14,7 +14,6 @@ body {
     align-items: stretch;
     gap: 2rem;
     padding: 0 1rem;
-    
 }
 
 .nav ul {
@@ -28,7 +27,6 @@ body {
 
 .site-title {
     font-size: 2.3rem;
-    
 }
 
 .nav a {
@@ -37,10 +35,7 @@ body {
     height: 100%;
     display: flex;
     align-items: center;
-    padding: .25rem;
-    
-    
-
+    padding: 0.25rem;
 }
 
 .nav li.active {
@@ -49,7 +44,6 @@ body {
 
 .nav li:hover {
     background-color: #777;
-    
 }
 
 .warm {
@@ -59,22 +53,23 @@ body {
     top: 40%;
     left: 20%;
     right: 5%;
-    bottom: 5%; 
+    bottom: 5%;
 }
 
 .app {
     padding: 4rem;
-  
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
+}
 
+.form-label {
+    font-size: 14;
+    color: lightgrey;
+}
 
-
-
-
-
-
-
+.form-text {
+    font-size: 13;
+    color: black;
+}

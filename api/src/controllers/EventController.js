@@ -26,7 +26,7 @@ export default class EventController extends BaseController {
 
     static put(req, res, next) {
         Event
-            .put({ ...req.query }, getDb())
+            .put({ ...req.query, ...req.body }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
@@ -36,7 +36,7 @@ export default class EventController extends BaseController {
 
     static post(req, res, next) {
         Event
-            .post({ ...req.query }, getDb())
+            .post({ ...req.query, ...req.body }, getDb())
             .then((result) => {
                 return res.status(200).json(result);
             })

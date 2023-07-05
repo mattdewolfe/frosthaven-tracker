@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 
 import { useIsMounted } from '../hooks';
@@ -6,18 +6,24 @@ import { useScenariosApi } from '../api';
 import { EnumContext } from '../contexts';
 
 const ScenarioEntry = ({ data, style, allOutcomes }) => {
-    const { name, number, level, outcome, id } = data;
+    const { name, scenarioNumber, scenarioLevel, outcome, id } = data;
 
-    const displayOutcome = allOutcomes.find(e => {
-        e?.id === outcome
-    });
+    const displayOutcome = allOutcomes ? allOutcomes[outcome] : {};
 
     return (
-        <Row>
-            {name}
-            {number}
-            {level}
-            {displayOutcome?.name}
+        <Row style={{ border: '1px solid grey' }}>
+            <div>
+                Name: {name}
+            </div>
+            <div>
+                Scenario Number: {scenarioNumber}
+            </div>
+            <div>
+                Scenario Level: {scenarioLevel}
+            </div>
+            <div>
+                Outcome: {displayOutcome?.name}
+            </div>
         </Row>
     );
 }
@@ -26,12 +32,9 @@ const ScenariosPage = () => {
 
     const isMounted = useIsMounted();
 
-    const { getAllScenarios } = useScenariosApi();
+    const { getAllScenarios, postNewScenario } = useScenariosApi();
     const { scenarioOutcomes } = useContext(EnumContext);
     const [scenarios, setScenarios] = useState([]);
-    const [scenarioNumber, setScenarioNumber] = useState();
-    const [scenarioName, setScenarioName] = useState();
-    const [scenarioLevel, setScenarioLevel] = useState();
 
     const getScenarios = () => {
         getAllScenarios((error, data) => {
@@ -39,51 +42,91 @@ const ScenariosPage = () => {
                 console.warn(error);
             }
             else {
-                setScenarios([...data]);
+                if (isMounted()) {
+                    setScenarios([...data]);
+                }
             }
         });
     }
+
+    const ongoingOutcomeId = useMemo(() => {
+        if (scenarioOutcomes) {
+            for (let key in scenarioOutcomes) {
+                if (scenarioOutcomes[key].name === 'Ongoing') {
+                    console.log('return the key')
+                    return key;
+                }
+            }
+        }
+
+        return 0;
+    }, [scenarioOutcomes]);
 
     useEffect(() => {
         getScenarios();
     }, []);
 
-    const submitNewScenario = (e) => {
-        e.preventDefault();
+    const handleScenarioCreation = (error, data) => {
+        if (error) {
+            console.warn(error);
+        }
+        else {
+            getScenarios();
+        }
     }
 
-    return null;
+    const submitNewScenario = (e) => {
+        e.preventDefault();
+        if (e.target) {
+            const scenarioNum = e.target[0]?.value;
+            const scenarioLevel = e.target[1]?.value;
+            const scenarioName = e.target[2]?.value;
+            const scenarioOutcome = ongoingOutcomeId || 1;
+
+            postNewScenario(handleScenarioCreation, {
+                scenario_number: scenarioNum,
+                scenario_level: scenarioLevel,
+                outcome: scenarioOutcome,
+                name: scenarioName
+            });
+        }
+    }
 
     return (
         <Container style={{ color: 'white' }}>
             <h3>The Scenarios Page</h3>
             <Row>
                 <Col>
-                    <div style={{ color: 'orange' }}>All Scenarios</div>
+                    <div style={{ color: 'orange' }}>Past Scenarios</div>
                     {
-                        scenarios.map(e => {
-                            return (
-                                <ScenarioEntry data={e} />
-                            )
+                        scenarios.map((e, idx) => {
+                            if (e?.outcome != ongoingOutcomeId) {
+                                return (
+                                    <ScenarioEntry key={`${e?.id}_${idx}_all`} data={e} allOutcomes={scenarioOutcomes} />
+                                );
+                            }
+                            return null;
                         })}
                 </Col>
+
                 <Col>
                     <div style={{ color: 'orange' }}>Active Scenarios</div>
                     {
-                        scenarios.map(e => {
-                            if (e?.outcome === scenarioOutcomes['Ongoing']) {
+                        scenarios.map((e, idx) => {
+                            if (e?.outcome == ongoingOutcomeId) {
                                 return (
-                                    <ScenarioEntry data={e} />
-                                )
+                                    <ScenarioEntry key={`${e?.id}_${idx}_ongoing`} data={e} allOutcomes={scenarioOutcomes} />
+                                );
                             }
-                            return null
+                            return null;
                         })}
                 </Col>
+
                 <Col>
                     <form onSubmit={submitNewScenario}>
                         <Row style={{ color: 'orange' }}>Add Scenario</Row>
-                        <Col>
-                            <div className='form-text'>
+                        <Col >
+                            <div className='form-label'>
                                 Number
                             </div>
                             <input
@@ -94,7 +137,7 @@ const ScenariosPage = () => {
                             />
                         </Col>
                         <Col>
-                            <div className='form-text'>
+                            <div className='form-label'>
                                 Level
                             </div>
                             <input
@@ -105,7 +148,7 @@ const ScenariosPage = () => {
                             />
                         </Col>
                         <Col>
-                            <div className='form-text'>
+                            <div className='form-label'>
                                 Name
                             </div>
                             <input
@@ -116,8 +159,10 @@ const ScenariosPage = () => {
                             />
                         </Col>
 
-                        <div className="flex-row" style={{ marginTop: Spacing.xbig }}>
-                            <Button type="submit" label="Submit" />
+                        <div className="flex-row" style={{ marginTop: 10 }}>
+                            <Button type="submit">
+                                Create
+                            </Button>
                         </div>
                     </form>
                 </Col>

@@ -4,7 +4,7 @@ import Scenario from './Scenario';
 export default async ({ limit, page, id } = {}, client) => {
 
     if (id) {
-        const query = `SELECT * FROM tracker.scenario WHERE id =${id};`;
+        const query = `SELECT * FROM tracker.scenario WHERE id = ${id};`;
         return oneOrNoneQuery(client, query)
             .then((record) => {
                 if (record) {

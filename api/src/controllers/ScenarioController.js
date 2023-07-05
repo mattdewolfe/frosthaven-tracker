@@ -6,7 +6,7 @@ import { BadRequestErrorHandler } from '../error-handlers';
 export default class ScenarioController extends BaseController {
     static get(req, res, next) {
         Scenario
-            .getAll({ ...req.query }, getDb())
+            .get({ ...req.query }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
@@ -16,7 +16,7 @@ export default class ScenarioController extends BaseController {
 
     static post(req, res, next) {
         Scenario
-            .post({ ...req.query }, getDb())
+            .post({ ...req.query, ...req.body }, getDb())
             .then(async (result) => {
                 return res.status(200).json(result);
             }, (e) => {
@@ -26,7 +26,7 @@ export default class ScenarioController extends BaseController {
 
     static put(req, res, next) {
         Scenario
-            .put({ ...req.query }, getDb())
+            .put({ ...req.query, ...req.body }, getDb())
             .then(async (result) => {
                 return res.status(200).json(result);
             }, (e) => {

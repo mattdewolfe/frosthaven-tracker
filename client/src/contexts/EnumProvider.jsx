@@ -1,17 +1,16 @@
 import React, { useState, useEffect, createContext } from "react";
-import { Spinner } from "react-bootstrap/Spinner";
 import { useEnumsApi } from "../api";
 import { useIsMounted } from "../hooks";
 import LoadingWrapper from "../components/LoadingWrapper";
 
 const EnumContext = createContext({
-    statusEffects: [],
-    scenarioOutcomes: [],
-    characterClasses: [],
-    creatureClasses: [],
-    damageSources: [],
-    elements: [],
-    creatureLevels: [],
+    statusEffects: {},
+    scenarioOutcomes: {},
+    characterClasses: {},
+    creatureClasses: {},
+    damageSources: {},
+    elements: {},
+    creatureLevels: {},
     loading: 1,
 });
 
@@ -35,7 +34,7 @@ const EnumProvider = ({ children }) => {
     const [elements, setElements] = useState({});
     const [creatureLevels, setCreatureLevels] = useState({});
 
-    const convertToEnumObject = (array, keyPropertyName = 'name') => {
+    const convertToEnumObject = (array, keyPropertyName = 'id') => {
         let result = {};
         for (let entry of array) {
             result[entry[keyPropertyName]] = entry;

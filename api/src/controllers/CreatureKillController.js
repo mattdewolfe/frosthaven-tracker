@@ -16,7 +16,7 @@ export default class CreatureKillController extends BaseController {
 
     static put(req, res, next) {
         CreatureKilled
-            .put({ ...req.query }, getDb())
+            .put({ ...req.query, ...req.body }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
@@ -26,7 +26,7 @@ export default class CreatureKillController extends BaseController {
 
     static post(req, res, next) {
         CreatureKilled
-            .post({ ...req.query }, getDb())
+            .post({ ...req.query, ...req.body }, getDb())
             .then((result) => {
                 return res.status(200).json(result);
             })
