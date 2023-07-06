@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 import bannerman from '../assets/581588-Armor-Shield.jpg'
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import { useEnumsApi } from "../api";
+import Dropdown from 'react-bootstrap/Dropdown';
+
 
 
 const Players = ({name = "unknown", charclass = "n/a", charname = "n/a", level = 0}) => {
@@ -18,7 +21,90 @@ const Players = ({name = "unknown", charclass = "n/a", charname = "n/a", level =
 }
 
 const PlayersPage = () => {
+    const { getStatusEffects, getElements, getCreatureClasses, getCharacterClasses } = useEnumsApi();
+
+const [statusEffects, setStatusEffects] = useState([]);
+const [elements, setElements] = useState([]);
+const [creatureClasses, setCreatureClasses] = useState([]);
+const [characterClasses, setCharacterClasses] = useState([]);
+
+const handleStatusEffects = (error, data) => {
+    if (error) {
+        console.warn(error);
+    }
+    else {
+        setStatusEffects([...data]);
+    }
+}
+
+const handleElements = (error, data) => {
+    if (error) {
+        console.warn(error);
+    }
+    else {
+        setElements([...data]);
+    }
+}
+
+const handleCreatureClasses = (error, data) => {
+    if (error) {
+        console.warn(error);
+    }
+    else {
+        setCreatureClasses([...data]);
+    }
+}
+
+const handleCharacterClasses = (error, data) => {
+    if (error) {
+        console.warn(error);
+    }
+    else {
+        setCharacterClasses([...data]);
+    }
+}
+
+useEffect(() => {
+    getStatusEffects(handleStatusEffects);
+    getElements(handleElements);
+    getCreatureClasses(handleCreatureClasses);
+    getCharacterClasses(handleCharacterClasses);
+}, []);
+
+console.log(characterClasses)
     return (
+        <>
+        <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Character Classes
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        {
+                            characterClasses.map((entry, idx) => {
+                                return (
+                                    <Dropdown.Item
+                                        key={"status_" + entry?.id}
+                                        eventKey={entry?.id}>
+                                        {entry?.name}
+                                    </Dropdown.Item>
+                                );
+                            })
+                        }
+                    </Dropdown.Menu>
+                </Dropdown>
+                        <select name="status" id="status">
+                    {
+                        statusEffects.map((status, idx) => {
+                            return (
+                                <option key={"status_"+status?.id} value={status?.id}>
+                                    {status?.name}
+                                </option>
+                            )
+                        })
+                    }
+                </select>
+
         <div class="text-primary">
             <div>
                 <h1 className="display-4 text-center py-5 text-danger">The Ravengers!</h1>   
@@ -83,12 +169,11 @@ const PlayersPage = () => {
                     </div>
                 </div>
             </div>
-         
-
 
         </div >
+        </>
         
-        
+  
     );
 };
 

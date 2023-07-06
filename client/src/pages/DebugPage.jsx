@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useEnumsApi } from "../api";
 import HostedImage from "../components/HostedImage";
 import NewChar from "../components/CreateCharDrop";
-import Elements from "../components/Elements";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const DebugPage = () => {
 
@@ -84,7 +84,7 @@ const DebugPage = () => {
 
     return (
         <div style={{
-            color: "white",
+            color: "black",
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-evenly",
@@ -110,10 +110,20 @@ const DebugPage = () => {
                     })
                 }
             </div>
-
+            
             <NewChar />
 
-            <Elements />
+            
+                <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Create Character
+                    </Dropdown.Toggle> 
+
+                    <Dropdown.Menu>
+                        
+                    </Dropdown.Menu>
+                </Dropdown>
+            
 
             <div style={styles.columnStyle}>
                 <h3>Elements</h3>
