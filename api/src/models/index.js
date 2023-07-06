@@ -8,6 +8,8 @@ import Player from './player';
 import PlayerCharacter from './playerCharacter';
 import Event from './event';
 import Element from './element';
+import CreatureKilled from './creatureKilled';
+import DamageSource from './damageSource';
 
 export {
     CreatureClass,
@@ -19,5 +21,7 @@ export {
     PlayerCharacter,
     Event,
     Scenario,
-    Element
+    Element,
+    CreatureKilled,
+    DamageSource
 };

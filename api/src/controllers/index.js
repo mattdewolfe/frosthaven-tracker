@@ -10,6 +10,8 @@ import PlayerController from './PlayerController';
 import PlayerCharacterController from './PlayerCharacterController';
 import EventController from './EventController';
 import ElementController from './ElementController';
+import CreatureKillController from './CreatureKillController';
+import DamageSourceController from './DamageSourceController';
 
 export {
     BaseController,
@@ -23,5 +25,7 @@ export {
     PlayerController,
     PlayerCharacterController,
     EventController,
-    ElementController
+    ElementController,
+    CreatureKillController,
+    DamageSourceController
 }

@@ -1,9 +1,9 @@
 import { paginateResults, DEFAULT_PAGE, DEFAULT_LIMIT } from '../helpers';
-import Scenario from './Scenario';
+import DamageSource from './DamageSource';
 
 export default async ({ limit, page } = {}, client) => {
 
-    const query = `SELECT * FROM tracker.scenario;`;
+    const query = `SELECT * FROM tracker.damage_source;`;
 
     return paginateResults(client, client.manyOrNone, query, {}, {
         limit: limit || DEFAULT_LIMIT,
@@ -12,6 +12,6 @@ export default async ({ limit, page } = {}, client) => {
         .then((records) => {
             /* eslint-disable-next-line no-param-reassign */
             return Array.from(records.items)
-                .map((item) => Scenario.constructFromObject(item));
+                .map((item) => DamageSource.constructFromObject(item));
         });
 };

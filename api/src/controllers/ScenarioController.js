@@ -4,19 +4,9 @@ import { Scenario } from '../models';
 import { BadRequestErrorHandler } from '../error-handlers';
 
 export default class ScenarioController extends BaseController {
-    static getAll(req, res, next) {
+    static get(req, res, next) {
         Scenario
-            .getAll({ ...req.query }, getDb())
-            .then(async (records) => {
-                return res.status(200).json(records);
-            }, (e) => {
-                next(BadRequestErrorHandler.constructFromError(e));
-            });
-    }
-
-    static getById(req, res, next) {
-        Scenario
-            .getById({ ...req.query }, getDb())
+            .get({ ...req.query }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
@@ -26,7 +16,17 @@ export default class ScenarioController extends BaseController {
 
     static post(req, res, next) {
         Scenario
-            .post({ ...req.query }, getDb())
+            .post({ ...req.query, ...req.body }, getDb())
+            .then(async (result) => {
+                return res.status(200).json(result);
+            }, (e) => {
+                next(BadRequestErrorHandler.constructFromError(e));
+            });
+    }
+
+    static put(req, res, next) {
+        Scenario
+            .put({ ...req.query, ...req.body }, getDb())
             .then(async (result) => {
                 return res.status(200).json(result);
             }, (e) => {

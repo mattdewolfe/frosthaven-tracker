@@ -30,8 +30,6 @@ export function getDb() {
         // password: process.env.DB_PASSWORD || "password",
     });
 
-    console.log(db);
-
     return db;
 }
 

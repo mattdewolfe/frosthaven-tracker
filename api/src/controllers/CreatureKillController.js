@@ -1,12 +1,12 @@
 import { getDb } from '../database';
 import BaseController from './BaseController';
-import { PlayerCharacter } from '../models';
+import { CreatureKilled } from '../models';
 import { BadRequestErrorHandler } from '../error-handlers';
 
-export default class PlayerCharacterController extends BaseController {
-    static get(req, res, next) {
-        PlayerCharacter
-            .get({ ...req.query }, getDb())
+export default class CreatureKillController extends BaseController {
+    static getAll(req, res, next) {
+        CreatureKilled
+            .getAll({ ...req.query }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
@@ -15,7 +15,7 @@ export default class PlayerCharacterController extends BaseController {
     }
 
     static put(req, res, next) {
-        PlayerCharacter
+        CreatureKilled
             .put({ ...req.query, ...req.body }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
@@ -25,7 +25,7 @@ export default class PlayerCharacterController extends BaseController {
     }
 
     static post(req, res, next) {
-        PlayerCharacter
+        CreatureKilled
             .post({ ...req.query, ...req.body }, getDb())
             .then((result) => {
                 return res.status(200).json(result);

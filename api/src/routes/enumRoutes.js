@@ -1,12 +1,13 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
     ScenarioOutcomeController,
     CreatureLevelController,
     CreatureClassController,
     CharacterClassController,
     StatusEffectController,
-    ElementController
-} from "../controllers";
+    ElementController,
+    DamageSourceController
+} from '../controllers';
 
 const enumRoutes = Router();
 
@@ -16,9 +17,6 @@ enumRoutes.get('/creature_classes', CreatureClassController.getAll);
 enumRoutes.get('/character_classes', CharacterClassController.getAll);
 enumRoutes.get('/status_effects', StatusEffectController.getAll);
 enumRoutes.get('/elements', ElementController.getAll);
-
-// TODO:
-//enumRoutes.get('/damage_sources', );
-
+enumRoutes.get('/damage_sources', DamageSourceController.getAll);
 
 export default enumRoutes;
