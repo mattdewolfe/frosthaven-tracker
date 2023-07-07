@@ -5,6 +5,7 @@ import playerRoutes from './playerRoutes';
 import statRoutes from './statRoutes';
 import scenarioRoutes from './scenarioRoutes';
 import elementRoutes from './elementRoutes';
+import statusRoutes from './statusRoutes';
 
 const router = Router();
 
@@ -14,6 +15,7 @@ router.use('/players', playerRoutes);
 router.use('/stats', statRoutes);
 router.use('/scenarios', scenarioRoutes);
 router.use('/elements', elementRoutes);
+router.use('/status', statusRoutes);
 
 // Handle 404 errors
 router.use((req, res) => {

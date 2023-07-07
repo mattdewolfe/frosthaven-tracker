@@ -11,6 +11,9 @@ import Element from './element';
 import CreatureKilled from './creatureKilled';
 import DamageSource from './damageSource';
 import ElementGenerated from './elementGenerated';
+import ElementConsumed from './elementConsumed';
+import StatusApplied from './statusApplied';
+import StatusReceived from './statusReceived';
 
 export {
     CreatureClass,
@@ -25,5 +28,8 @@ export {
     Element,
     CreatureKilled,
     DamageSource,
-    ElementGenerated
+    ElementGenerated,
+    ElementConsumed,
+    StatusApplied,
+    StatusReceived
 };
