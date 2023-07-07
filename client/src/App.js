@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/global.css';
 
 import Pages from './pages';
@@ -8,11 +11,25 @@ import RouteMap from './routes';
 import { Background, Navbar } from './components';
 import EnumProvider from './contexts/EnumProvider';
 import PlayerProvider from './contexts/PlayerProvider';
+import { Subs, globalObserver } from './utils/Observers';
 
 export function App() {
 
     // We will use this when we have initial data to fetch.
     const [loading, setLoading] = useState(false);
+
+    const handleToast = (payload) => {
+        const { message } = payload;
+        toast(message, payload);
+    }
+
+    useEffect(() => {
+        const toastSub = globalObserver.subscribe(Subs.REQUEST_TOAST_MESSAGE, handleToast);
+
+        return () => {
+            toastSub.unsubscribeAll();
+        }
+    }, []);
 
     return (
         <EnumProvider>
@@ -37,6 +54,7 @@ export function App() {
                             </Routes>
                         }
                     </div>
+                    <ToastContainer />
                 </BrowserRouter>
             </PlayerProvider>
         </EnumProvider>

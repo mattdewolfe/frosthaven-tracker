@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useElementsApi, useScenariosApi } from "../api";
 import { EnumContext, PlayerContext } from "../contexts";
 import { useIsMounted } from "../hooks";
+import { globalObserver, Subs } from "../utils/Observers";
 
 const DebugPage = () => {
 
@@ -41,6 +40,9 @@ const DebugPage = () => {
     const { statusEffects, characterClasses } = useContext(EnumContext);
     const { players, playerCharacters, createNewCharacter } = useContext(PlayerContext);
     const [activeScenario, setActiveScenario] = useState([]);
+
+    // TODO: Element consumption and status effect routes API routes
+    // TODO: Build out hooks for relevant api calls, consider providers where suitable
 
     useEffect(() => {
         getAllScenarios((error, data) => {
@@ -85,10 +87,12 @@ const DebugPage = () => {
 
             postElementBatch((error, data) => {
                 if (error) {
-                    toast(error);
+                    globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE,
+                        { message: e, type: 'error' });
                 }
                 else {
-                    toast(`${element_ids.length} Elements Generated`);
+                    globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE,
+                        { message: `${element_ids.length} Element(s) Generated`, type: 'success' });
                 }
             }, {
                 scenario_id,
@@ -225,8 +229,6 @@ const DebugPage = () => {
                     </div>
                 </form>
             </Container>
-
-            <ToastContainer />
         </div >
     );
 };
