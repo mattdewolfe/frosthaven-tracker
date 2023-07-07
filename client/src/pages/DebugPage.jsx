@@ -41,9 +41,6 @@ const DebugPage = () => {
     const { players, playerCharacters, createNewCharacter } = useContext(PlayerContext);
     const [activeScenario, setActiveScenario] = useState([]);
 
-    // TODO: Element consumption and status effect routes API routes
-    // TODO: Build out hooks for relevant api calls, consider providers where suitable
-
     useEffect(() => {
         getAllScenarios((error, data) => {
             if (error) {
