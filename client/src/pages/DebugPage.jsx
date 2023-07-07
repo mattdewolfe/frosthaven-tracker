@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useScenariosApi } from "../api";
-import HostedImage from "../components/HostedImage";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useElementsApi, useScenariosApi } from "../api";
 import { EnumContext, PlayerContext } from "../contexts";
 import { useIsMounted } from "../hooks";
-import { Button, Col, Container, Row } from "react-bootstrap";
 
 const DebugPage = () => {
 
@@ -36,6 +37,7 @@ const DebugPage = () => {
     const isMounted = useIsMounted();
 
     const { getAllScenarios } = useScenariosApi();
+    const { postElementBatch } = useElementsApi();
     const { statusEffects, characterClasses } = useContext(EnumContext);
     const { players, playerCharacters, createNewCharacter } = useContext(PlayerContext);
     const [activeScenario, setActiveScenario] = useState([]);
@@ -68,6 +70,35 @@ const DebugPage = () => {
         }
     }
 
+    const submitElementGeneration = (e) => {
+        e.preventDefault();
+        if (e.target) {
+            const player_id = e.target[0]?.value;
+            const character_id = e.target[1]?.value;
+            const scenario_id = 1;
+            let element_ids = [];
+
+            const rndCount = Math.round(1 + Math.random() * 3);
+            for (let i = 0; i < rndCount; i++) {
+                element_ids.push(Math.max(1, Math.round(Math.random() * 6)));
+            }
+
+            postElementBatch((error, data) => {
+                if (error) {
+                    toast(error);
+                }
+                else {
+                    toast(`${element_ids.length} Elements Generated`);
+                }
+            }, {
+                scenario_id,
+                player_id,
+                character_id,
+                element_ids
+            });
+        }
+    }
+
     return (
         <div style={{
             color: "white",
@@ -92,9 +123,7 @@ const DebugPage = () => {
                         );
                     })
                 }
-            </Container>
 
-            <Container style={styles.columnStyle}>
                 <h3>Characters</h3>
                 <br />
                 {
@@ -159,6 +188,45 @@ const DebugPage = () => {
                     </form>
                 </Col>
             </Container>
+            <Container>
+                <form id="createCharacter" onSubmit={submitElementGeneration}>
+                    <div style={{ color: 'orange' }}>Generate Elements</div>
+                    <Col>
+                        <div className='form-label'>
+                            Player
+                        </div>
+                        <select name="players">
+                            {
+                                players.map(c => {
+                                    const { id, name } = c;
+                                    return <option key={id} value={id}>{name}</option>
+                                })
+                            }
+                        </select>
+                    </Col>
+                    <Col>
+                        <div className='form-label'>
+                            Character
+                        </div>
+                        <select name="players">
+                            {
+                                playerCharacters.map(p => {
+                                    const { id, name } = p;
+                                    return <option key={id} value={id}>{name}</option>
+                                })
+                            }
+                        </select>
+                    </Col>
+
+                    <div className="flex-row" style={{ marginTop: 10 }}>
+                        <Button type="submit">
+                            Create
+                        </Button>
+                    </div>
+                </form>
+            </Container>
+
+            <ToastContainer />
         </div >
     );
 };

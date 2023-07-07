@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { ElementController } from '../controllers';
 
-const enumRoutes = Router();
+const elementRoutes = Router();
 
-enumRoutes.get('/generated/', ElementController.getAll);
-enumRoutes.post('/generated', ElementController.postGeneratedBatch);
-enumRoutes.delete('/generated', ElementController.deleteGeneratedById);
-enumRoutes.delete('/generated/scenario', ElementController.deleteGeneratedByScenario);
+elementRoutes.get('/generated', ElementController.getAllGenerated);
 
-export default enumRoutes;
+elementRoutes.post('/generated', ElementController.postGeneratedBatch);
+elementRoutes.delete('/generated', ElementController.deleteGeneratedById);
+elementRoutes.delete('/generated/scenario', ElementController.deleteGeneratedByScenario);
+
+export default elementRoutes;

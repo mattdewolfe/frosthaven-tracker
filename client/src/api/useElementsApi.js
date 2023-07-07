@@ -16,7 +16,7 @@ function useElementsApi() {
         callbackWrapper(deleteRequest(`/elements/generated/scenario?id=${scenarioId}`), callback);
     }
 
-    function postElementBatch(callback, scenario_id, player_id, character_id, element_ids) {
+    function postElementBatch(callback, { scenario_id, player_id, character_id, element_ids } = {}) {
         if (!scenario_id) {
             console.error("Post Element Batch is missing scenario_id");
             return;
@@ -29,7 +29,7 @@ function useElementsApi() {
             console.error("Post Element Batch is missing character_id");
             return;
         }
-        else if (element_ids.length < 1) {
+        else if (element_ids && element_ids.length < 1) {
             console.error("Post Element Batch has no element ids");
             return;
         }
@@ -38,7 +38,7 @@ function useElementsApi() {
             scenario_id,
             player_id,
             character_id,
-            elements: element_ids
+            element_ids
         };
 
         callbackWrapper(postRequest("/elements/generated", body), callback);

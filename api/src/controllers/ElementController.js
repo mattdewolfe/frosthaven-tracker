@@ -16,7 +16,7 @@ export default class ElementController extends BaseController {
 
     static getAllGenerated(req, res, next) {
         ElementGenerated
-            .getAll({ ...req.query }, getDb())
+            .getAllGenerated({ ...req.query }, getDb())
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
@@ -45,6 +45,8 @@ export default class ElementController extends BaseController {
     }
 
     static postGeneratedBatch(req, res, next) {
+        console.log(req);
+
         ElementGenerated
             .postBatch({ ...req.query, ...req.body }, getDb())
             .then(async (records) => {

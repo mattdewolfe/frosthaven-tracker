@@ -1,6 +1,6 @@
 import { noneQuery } from '../helpers';
 
-export default async ({ scenario_id, player_id, character_id, element_ids }, client) => {
+export default async ({ scenario_id, player_id, character_id, element_ids } = {}, client) => {
     if (!scenario_id) {
         throw new Error("Scenario ID is required to add Element Generation");
     }
@@ -14,11 +14,12 @@ export default async ({ scenario_id, player_id, character_id, element_ids }, cli
         throw new Error("No Element Ids provided for adding Element Generation");
     }
 
-    let insertions = [];
-    let elements = element_ids.split(',');
+    console.log(element_ids);
 
-    for (let i = 0; i < elements.length; i++) {
-        insertions.push(`(${scenario_id}, ${player_id}, ${character_id}, ${elements[i]})`);
+    let insertions = [];
+
+    for (let i = 0; i < element_ids.length; i++) {
+        insertions.push(`(${scenario_id}, ${player_id}, ${character_id}, ${element_ids[i]})`);
     }
 
     const query = `INSERT INTO tracker.element_generated(scenario_id, player_id, character_id, element_id) VALUES ${insertions.join(',')};`;
