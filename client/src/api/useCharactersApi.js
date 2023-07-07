@@ -4,23 +4,23 @@ function useCharactersApi() {
     const { getRequest, postRequest, putRequest, callbackWrapper } = useRestUtils();
 
     function getAllCharacters(callback) {
-        callbackWrapper(getRequest("/characters"), callback);
+        callbackWrapper(getRequest("/players/character"), callback);
     }
 
     function getCharactersByPlayerId(callback, id) {
-        callbackWrapper(getRequest(`/characters?playerId=${id}`), callback);
+        callbackWrapper(getRequest(`/players/character?playerId=${id}`), callback);
     }
 
     function getCharacterById(callback, id) {
-        callbackWrapper(getRequest(`/characters?id=${id}`), callback);
+        callbackWrapper(getRequest(`/players/character?id=${id}`), callback);
     }
 
     function postNewCharacter(callback, data) {
-        callbackWrapper(postRequest(`/characters`, data), callback);
+        callbackWrapper(postRequest(`/players/character`, data), callback);
     }
 
     function updateCharacter(callback, data) {
-        callbackWrapper(putRequest(`/characters`, data), callback);
+        callbackWrapper(putRequest(`/players/character`, data), callback);
     }
 
     return {

@@ -8,13 +8,10 @@ export default class Player extends Model {
         this.id = props.id;
 
         // type: string
-        this.player_name = props.player_name;
+        this.name = props.name;
 
         // type: array
         this.characters = props.characters;
-
-        // type: number
-        this.current_character = props.current_character;
     }
 
     static checkQueryVariableType(name) {

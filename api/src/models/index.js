@@ -10,6 +10,7 @@ import Event from './event';
 import Element from './element';
 import CreatureKilled from './creatureKilled';
 import DamageSource from './damageSource';
+import ElementGenerated from './elementGenerated';
 
 export {
     CreatureClass,
@@ -23,5 +24,6 @@ export {
     Scenario,
     Element,
     CreatureKilled,
-    DamageSource
+    DamageSource,
+    ElementGenerated
 };
