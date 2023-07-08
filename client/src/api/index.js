@@ -4,6 +4,7 @@ import useCharactersApi from './useCharactersApi';
 import useEventsApi from './useEventsApi';
 import useScenariosApi from './useScenariosApi';
 import useKillsApi from './useKillsApi';
+import useElementsApi from './useElementsApi';
 
 export {
     usePlayersApi,
@@ -11,5 +12,6 @@ export {
     useCharactersApi,
     useEventsApi,
     useScenariosApi,
-    useKillsApi
+    useKillsApi,
+    useElementsApi
 };

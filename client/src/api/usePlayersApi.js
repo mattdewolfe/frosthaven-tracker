@@ -7,6 +7,10 @@ function usePlayersApi() {
         callbackWrapper(getRequest('/players'), callback);
     }
 
+    function getAllPlayersBasicData(callback) {
+        callbackWrapper(getRequest('/players?basic=true'), callback);
+    }
+
     function getPlayerById(callback, id) {
         callbackWrapper(getRequest(`/players?id=${id}`), callback);
     }
@@ -23,7 +27,8 @@ function usePlayersApi() {
         getAllPlayers,
         getPlayerById,
         postNewPlayer,
-        updatePlayer
+        updatePlayer,
+        getAllPlayersBasicData
     };
 }
 

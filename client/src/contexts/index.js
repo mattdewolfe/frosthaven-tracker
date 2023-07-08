@@ -1,5 +1,7 @@
 import { EnumContext } from "./EnumProvider";
+import { PlayerContext } from "./PlayerProvider";
 
 export {
-    EnumContext
+    EnumContext,
+    PlayerContext
 }

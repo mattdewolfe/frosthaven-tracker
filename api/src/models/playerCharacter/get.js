@@ -16,7 +16,7 @@ export default async ({ limit, page, id, playerId } = {}, client) => {
             });
     }
     else {
-        let allQuery = `SELECT * FROM tracker.player`;
+        let allQuery = `SELECT * FROM tracker.player_character`;
         if (playerId) {
             allQuery += ` WHERE player_id = ${playerId};`;
         }

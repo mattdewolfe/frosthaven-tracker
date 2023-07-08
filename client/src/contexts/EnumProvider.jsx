@@ -122,16 +122,17 @@ const EnumProvider = ({ children }) => {
     }, []);
 
     return (
-        <EnumContext.Provider value={{
-            loading: loading > 0,
-            statusEffects,
-            scenarioOutcomes,
-            characterClasses,
-            creatureClasses,
-            damageSources,
-            elements,
-            creatureLevels
-        }}>
+        <EnumContext.Provider
+            value={{
+                loading: loading > 0,
+                statusEffects,
+                scenarioOutcomes,
+                characterClasses,
+                creatureClasses,
+                damageSources,
+                elements,
+                creatureLevels
+            }}>
             <LoadingWrapper loading={loading > 0}>
                 {children}
             </LoadingWrapper>
