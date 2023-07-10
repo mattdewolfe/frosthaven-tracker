@@ -1,35 +1,35 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { useElementsApi, useScenariosApi } from "../api";
-import { EnumContext, PlayerContext } from "../contexts";
-import { useIsMounted } from "../hooks";
-import { globalObserver, Subs } from "../utils/Observers";
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { useElementsApi, useScenariosApi, useDamageApi } from '../api';
+import { EnumContext, PlayerContext } from '../contexts';
+import { useIsMounted } from '../hooks';
+import { globalObserver, Subs } from '../utils/Observers';
 
 const DebugPage = () => {
 
     const styles = Object.freeze({
         columnStyle: {
-            flexDirection: "column",
+            flexDirection: 'column',
             gap: 4,
-            border: "1px solid lightgrey",
+            border: '1px solid lightgrey',
             borderRadius: 4,
             padding: 4
         },
         rowStyle: {
-            display: "flex",
-            width: "100%",
-            flexDirection: "row",
-            justifyContent: "space-between",
+            display: 'flex',
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
             gap: 4,
-            textAlign: "center",
-            fontSize: "1.25rem",
+            textAlign: 'center',
+            fontSize: '1.25rem',
             border: '0.5px dashed grey',
             marginBottom: 2
         },
         entryImage: {
             width: 50,
             height: 50,
-            objectFit: "contain"
+            objectFit: 'contain'
         }
     });
 
@@ -37,6 +37,7 @@ const DebugPage = () => {
 
     const { getAllScenarios } = useScenariosApi();
     const { postElementBatch } = useElementsApi();
+    const { getAllDamageTaken } = useDamageApi();
     const { statusEffects, characterClasses } = useContext(EnumContext);
     const { players, playerCharacters, createNewCharacter } = useContext(PlayerContext);
     const [activeScenario, setActiveScenario] = useState([]);
@@ -52,8 +53,20 @@ const DebugPage = () => {
                 }
             }
         });
+
+        getAllDamageTaken((error, data) => {
+            console.log(error);
+            console.log(data);
+        })
     }, []);
 
+    const charactersAsArray = useMemo(() => {
+        if (characterClasses) {
+            return Object.values(characterClasses);
+        }
+
+        return [];
+    }, [characterClasses])
     const submitCharacterData = (e) => {
         e.preventDefault();
         if (e.target) {
@@ -102,11 +115,11 @@ const DebugPage = () => {
 
     return (
         <div style={{
-            color: "white",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            overflow: "auto",
+            color: 'white',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            overflow: 'auto',
             marginTop: 10
         }}>
             <Container style={styles.columnStyle}>
@@ -114,7 +127,7 @@ const DebugPage = () => {
                 <br />
                 {
                     players.map((p, idx) => {
-                        const { name = "?" } = p;
+                        const { name = '?' } = p;
 
                         return (
                             <div style={styles.rowStyle}
@@ -129,7 +142,7 @@ const DebugPage = () => {
                 <br />
                 {
                     playerCharacters.map((c, idx) => {
-                        const { name = "?" } = c;
+                        const { name = '?' } = c;
 
                         return (
                             <div style={styles.rowStyle}
@@ -141,16 +154,16 @@ const DebugPage = () => {
                 }
 
                 <Col >
-                    <form id="createCharacter" onSubmit={submitCharacterData}>
+                    <form id='createCharacter' onSubmit={submitCharacterData}>
                         <div style={{ color: 'orange' }}>Add Character</div>
                         <Col >
                             <div className='form-label'>
                                 Name
                             </div>
                             <input
-                                autoComplete="none"
-                                className="form-text"
-                                type="text"
+                                autoComplete='none'
+                                className='form-text'
+                                type='text'
                                 placeholder='character name'
                             />
                         </Col>
@@ -158,9 +171,9 @@ const DebugPage = () => {
                             <div className='form-label'>
                                 Class
                             </div>
-                            <select name="players">
+                            <select name='players'>
                                 {
-                                    characterClasses.map(c => {
+                                    charactersAsArray.map(c => {
                                         const { id, name } = c;
                                         return <option key={id} value={id}>{name}</option>
                                     })
@@ -171,7 +184,7 @@ const DebugPage = () => {
                             <div className='form-label'>
                                 Player
                             </div>
-                            <select name="players">
+                            <select name='players'>
                                 {
                                     players.map(p => {
                                         const { id, name } = p;
@@ -181,8 +194,8 @@ const DebugPage = () => {
                             </select>
                         </Col>
 
-                        <div className="flex-row" style={{ marginTop: 10 }}>
-                            <Button type="submit">
+                        <div className='flex-row' style={{ marginTop: 10 }}>
+                            <Button type='submit'>
                                 Create
                             </Button>
                         </div>
@@ -190,13 +203,13 @@ const DebugPage = () => {
                 </Col>
             </Container>
             <Container>
-                <form id="createCharacter" onSubmit={submitElementGeneration}>
+                <form id='createCharacter' onSubmit={submitElementGeneration}>
                     <div style={{ color: 'orange' }}>Generate Elements</div>
                     <Col>
                         <div className='form-label'>
                             Player
                         </div>
-                        <select name="players">
+                        <select name='players'>
                             {
                                 players.map(c => {
                                     const { id, name } = c;
@@ -209,7 +222,7 @@ const DebugPage = () => {
                         <div className='form-label'>
                             Character
                         </div>
-                        <select name="players">
+                        <select name='players'>
                             {
                                 playerCharacters.map(p => {
                                     const { id, name } = p;
@@ -219,8 +232,8 @@ const DebugPage = () => {
                         </select>
                     </Col>
 
-                    <div className="flex-row" style={{ marginTop: 10 }}>
-                        <Button type="submit">
+                    <div className='flex-row' style={{ marginTop: 10 }}>
+                        <Button type='submit'>
                             Create
                         </Button>
                     </div>

@@ -12,6 +12,7 @@ import EventController from './EventController';
 import ElementController from './ElementController';
 import CreatureKillController from './CreatureKillController';
 import DamageSourceController from './DamageSourceController';
+import DamageRecordsController from './DamageRecordsController';
 
 export {
     BaseController,
@@ -27,5 +28,6 @@ export {
     EventController,
     ElementController,
     CreatureKillController,
-    DamageSourceController
+    DamageSourceController,
+    DamageRecordsController
 }
