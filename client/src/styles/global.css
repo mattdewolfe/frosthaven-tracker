@@ -73,3 +73,15 @@ body {
     font-size: 13;
     color: black;
 }
+
+.clickable-container {
+    border: 1px solid lightgrey;
+    background-color: #b34700;
+    cursor: pointer;
+    border-radius: 8;
+}
+
+.clickable-container:hover {
+    background-color: #e65c00;
+    border: 1px solid #99d6ff;
+}

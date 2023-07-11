@@ -10,6 +10,7 @@ export default class ScenarioController extends BaseController {
             .then(async (records) => {
                 return res.status(200).json(records);
             }, (e) => {
+                console.log(e);
                 next(BadRequestErrorHandler.constructFromError(e));
             });
     }

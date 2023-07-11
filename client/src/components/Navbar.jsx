@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import RouteMap from '../routes';
+import { RouteMap } from '../routes';
 
 export default function Navbar() {
     return <nav className='nav'>

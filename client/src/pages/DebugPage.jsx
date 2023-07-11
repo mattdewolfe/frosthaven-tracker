@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+
+import { Button, Col, Container } from '../components';
 import { useElementsApi, useScenariosApi, useDamageApi } from '../api';
 import { EnumContext, PlayerContext } from '../contexts';
 import { useIsMounted } from '../hooks';

@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './styles/global.css';
 
 import Pages from './pages';
-import RouteMap from './routes';
+import { RouteMap, DynamicRoutes } from './routes';
 import { Background, Navbar } from './components';
 import EnumProvider from './contexts/EnumProvider';
 import PlayerProvider from './contexts/PlayerProvider';
@@ -48,8 +48,9 @@ export function App() {
                                 <Route path={RouteMap.HOME} element={<Pages.Home />} />
                                 <Route exact path={RouteMap.PLAYERS} element={<Pages.Players />} />
                                 <Route exact path={RouteMap.SCENARIOS} element={<Pages.Scenarios />} />
-                                <Route path='example' element={<Pages.Example />} />
+                                <Route exact path={DynamicRoutes.SINGLE_SCENARIO} element={<Pages.SingleScenario />} />
                                 <Route exact path={RouteMap.DEBUG} element={<Pages.Debug />} />
+                                <Route path='example' element={<Pages.Example />} />
                                 <Route path='*' element={<Pages.NotFound />} />
                             </Routes>
                         }
