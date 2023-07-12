@@ -1,33 +1,30 @@
 import React from 'react';
 import { Col, Button } from 'react-bootstrap';
 
-const AddCharacterForm = ({ style, onSubmit, players = [], classes = [] }) => {
+const CreateCharacterForm = ({ style, onSubmit, players = [], classes = [] }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!e.target) {
-            return;
+        if (e.target) {
+            const player_id = e.target[0]?.value;
+            const name = e.target[1]?.value;
+            const class_id = e.target[2]?.value;
+            const level = e.target[3]?.value;
+
+            onSubmit?.({
+                player_id,
+                name,
+                class_id,
+                level
+            });
         }
-
-        const playerId = e.target[0]?.value;
-        const name = e.target[1]?.value;
-        const classId = e.target[2]?.value;
-        const level = e.target[3]?.value;
-
-        onSubmit?.({
-            playerId,
-            name,
-            classId,
-            level
-        });
     }
 
-    console.log(players)
     return (
-        <Col>
+        <Col style={style}>
             <form onSubmit={handleSubmit}>
-                <div style={{ color: 'orange' }}>Create Character</div>
+                <h3 style={{ color: 'orange' }}>Create Character</h3>
 
                 <Col>
                     <select
@@ -91,4 +88,4 @@ const AddCharacterForm = ({ style, onSubmit, players = [], classes = [] }) => {
     );
 }
 
-export default AddCharacterForm;
+export default CreateCharacterForm;

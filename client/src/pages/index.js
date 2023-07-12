@@ -5,6 +5,7 @@ import NotFound from './PageNotFound';
 import Debug from './DebugPage';
 import Example from './ExamplePage';
 import SingleScenario from './SingleScenarioPage';
+import SingleCharacter from './SingleCharacterPage';
 
 const Pages = {
     Home,
@@ -13,7 +14,8 @@ const Pages = {
     Debug,
     NotFound,
     Example,
-    SingleScenario
+    SingleScenario,
+    SingleCharacter
 };
 
 export default Pages;

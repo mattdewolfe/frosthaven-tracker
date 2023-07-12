@@ -83,7 +83,7 @@ const ScenariosPage = () => {
         navigate(FormatDynamicRoute(DynamicRoutes.SINGLE_SCENARIO, data?.id));
     }
 
-    const handleSubmitScenario = (e) => {
+    const handleSubmitScenario = (data) => {
         e.preventDefault();
         if (e.target) {
             const scenarioNum = e.target[0]?.value;

@@ -1,5 +1,5 @@
-import AddCharacterForm from './AddCharacterForm';
+import CreateCharacterForm from './CreateCharacterForm';
 
 export {
-    AddCharacterForm
+    CreateCharacterForm
 }

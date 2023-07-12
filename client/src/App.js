@@ -27,7 +27,7 @@ export function App() {
         const toastSub = globalObserver.subscribe(Subs.REQUEST_TOAST_MESSAGE, handleToast);
 
         return () => {
-            toastSub.unsubscribeAll();
+            toastSub.remove();
         }
     }, []);
 
@@ -37,6 +37,7 @@ export function App() {
                 <BrowserRouter>
                     <Navbar />
                     <Background />
+
                     <div style={{ width: '100%', height: '100%' }}>
                         {
                             loading === true &&
@@ -49,6 +50,8 @@ export function App() {
                                 <Route exact path={RouteMap.PLAYERS} element={<Pages.Players />} />
                                 <Route exact path={RouteMap.SCENARIOS} element={<Pages.Scenarios />} />
                                 <Route exact path={DynamicRoutes.SINGLE_SCENARIO} element={<Pages.SingleScenario />} />
+                                <Route exact path={DynamicRoutes.SINGLE_CHARACTER} element={<Pages.SingleCharacter />} />
+
                                 <Route exact path={RouteMap.DEBUG} element={<Pages.Debug />} />
                                 <Route path='example' element={<Pages.Example />} />
                                 <Route path='*' element={<Pages.NotFound />} />

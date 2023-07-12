@@ -2,9 +2,28 @@ import React from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
 
 const CreateScenarioForm = ({ style, onSubmit }) => {
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (e.target) {
+            const scenario_number = e.target[0]?.value;
+            const scenario_level = e.target[1]?.value;
+            const name = e.target[2]?.value;
+            const outcome = ongoingOutcomeId || 1;
+
+            onSubmit?.({
+                scenario_number,
+                scenario_level,
+                name,
+                outcome
+            });
+        }
+    }
+
     return (
-        <Col>
-            <form onSubmit={onSubmit}>
+        <Col style={style}>
+            <form onSubmit={handleSubmit}>
                 <Row style={{ color: 'orange' }}>Add Scenario</Row>
                 <Col >
                     <div className='form-label'>

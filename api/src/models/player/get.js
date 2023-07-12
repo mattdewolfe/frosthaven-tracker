@@ -68,7 +68,8 @@ export default async ({ limit, page, id, basic } = {}, client) => {
         SELECT 
             p.id,
             p.name,
-            COALESCE(string_agg (CAST(pc.class_id AS varchar), ', '), '') as characters
+            COALESCE(string_agg (CAST(pc.id AS varchar), ', '), '') as characters,
+            COALESCE(string_agg (CAST(pc.class_id AS varchar), ', '), '') as classes
         FROM 
         tracker.player p,
         tracker.player_character pc

@@ -85,3 +85,11 @@ body {
     background-color: #e65c00;
     border: 1px solid #99d6ff;
 }
+
+.light-text {
+    color: lightgrey;
+}
+
+.dark-text {
+    color: rgba(30, 40, 50)
+}

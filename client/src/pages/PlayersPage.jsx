@@ -1,38 +1,92 @@
 import React, { useContext, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { EnumContext, PlayerContext } from '../contexts';
-import { AddCharacterForm } from '../components/players';
+import { Container, Row, Col } from "../components";
+import { CreateCharacterForm } from '../components/players';
+import { convertArrayToObject } from '../utils/Conversion';
+import { DynamicRoutes, FormatDynamicRoute } from '../routes';
 
-const Player = ({ name = 'unknown', classes }) => {
+const Player = ({ style, data = {}, classMap }) => {
+
+    const navigate = useNavigate();
+    const { name, characterData, id } = data;
+
+    const handleSelectCharacter = () => {
+        navigate(FormatDynamicRoute(DynamicRoutes.SINGLE_CHARACTER, id));
+    }
 
     return (
-        <>
-            <h1>Name: {name}</h1>
-        </>
-    )
+        <Col style={style}>
+            <h3>Name: {name}</h3>
+            {
+                characterData.map(pc => {
+                    const { name, classId, level, retired } = pc;
+                    return (
+                        <Row
+                            style={{
+                                marginTop: 10,
+                                borderRadius: 8,
+                                padding: 4,
+                                border: '1px solid lightblue'
+                            }}
+                            className='clickable-container'
+                            onClick={handleSelectCharacter}
+                            key={name + classId + level}>
+                            <Row>{`Character: ${name}`}</Row>
+                            <Row>{classMap[classId]?.name}</Row>
+                            <Row>{`Level: ${level}`}</Row>
+                            <Row>{`Retired: ${retired ? 'YES' : 'NO'}`}</Row>
+                        </Row>
+                    );
+                })
+            }
+        </Col>
+    );
 }
 
 const PlayersPage = () => {
 
-    const { players, playerCharacters } = useContext(PlayerContext);
+    const { players, playerCharacters, createNewCharacter } = useContext(PlayerContext);
     const { characterClasses } = useContext(EnumContext);
 
     const handleCreateCharacter = (data) => {
-        // TODO: Post character data to API via context.
+        createNewCharacter(data)
     }
 
+    const classMap = useMemo(() => {
+        return convertArrayToObject(characterClasses);
+    }, [characterClasses]);
+
+    const displayData = useMemo(() => {
+        return players.map(e => {
+            return {
+                ...e,
+                characterData: playerCharacters.filter(pc => pc.playerId === e.id)
+            }
+        })
+    }, [players, playerCharacters]);
+
     return (
-        <div className='text-primary'>
-            <h3 className='display-4 text-center py-5'>The Ravengers!</h3>
-            <div>
+        <Container className='light-text'>
+            <h3 className='display-4 text-primary text-center py-5'>The Ravengers!</h3>
+            <Row>
+
                 {
-                    playerCharacters.map(e => <Player data={e} />)
+                    displayData.map((e, idx) => <Player
+                        style={{ marginTop: 10 }}
+                        key={e?.name + idx}
+                        data={e}
+                        classMap={classMap} />)
                 }
-            </div>
-            <AddCharacterForm
-                players={players}
-                classes={characterClasses}
-                onSubmit={handleCreateCharacter} />
-        </div >
+
+                <Col>
+                    <CreateCharacterForm
+                        players={players}
+                        classes={characterClasses}
+                        onSubmit={handleCreateCharacter} />
+                </Col>
+            </Row>
+        </Container >
     );
 };
 

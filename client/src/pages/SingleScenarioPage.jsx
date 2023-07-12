@@ -10,6 +10,7 @@ const SingleScenarioPage = () => {
 
     const { scenarioOutcomes, loadingEnums } = useContext(EnumContext);
     const { activePlayerCharacters } = useContext(PlayerContext);
+
     const { getScenarioById, updateScenario } = useScenariosApi();
     const [loading, setLoading] = useState(true);
     const [scenario, setScenario] = useState(null);
@@ -34,9 +35,14 @@ const SingleScenarioPage = () => {
 
         if (newOutcome) {
             updateScenario((error, data) => {
-                setScenario(prev => {
-                    return { ...prev, outcome: newOutcome }
-                });
+                if (error) {
+                    globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, variant: 'error' });
+                }
+                else {
+                    setScenario(prev => {
+                        return { ...prev, outcome: newOutcome }
+                    });
+                }
             }, {
                 id: scenario?.id,
                 outcome: newOutcome
