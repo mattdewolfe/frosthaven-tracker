@@ -62,7 +62,7 @@ const SingleScenarioPage = () => {
 
     return (
         <LoadingWrapper loading={loading}>
-            <Container>
+            <Container style={{ marginTop: 10 }}>
                 <Row className='light-border'>
                     <h3 className='header-text'>
                         {`Scenario: ${scenario?.name} (${scenario?.scenarioNumber})`}

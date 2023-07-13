@@ -11,8 +11,8 @@ const Player = ({ style, data = {}, classMap }) => {
     const navigate = useNavigate();
     const { name, characterData, id } = data;
 
-    const handleSelectCharacter = () => {
-        navigate(FormatDynamicRoute(DynamicRoutes.SINGLE_CHARACTER, id));
+    const handleSelectCharacter = (pcId) => {
+        navigate(FormatDynamicRoute(DynamicRoutes.SINGLE_CHARACTER, pcId));
     }
 
     return (
@@ -20,7 +20,7 @@ const Player = ({ style, data = {}, classMap }) => {
             <h3 className='header-text'>Name: {name}</h3>
             {
                 characterData.map(pc => {
-                    const { name, classId, level, retired } = pc;
+                    const { name, classId, level, retired, id } = pc;
                     return (
                         <Row
                             style={{
@@ -30,7 +30,7 @@ const Player = ({ style, data = {}, classMap }) => {
                                 border: '1px solid lightblue'
                             }}
                             className='clickable-container'
-                            onClick={handleSelectCharacter}
+                            onClick={() => handleSelectCharacter(id)}
                             key={name + classId + level}>
                             <Row>{`Character: ${name}`}</Row>
                             <Row>{classMap[classId]?.name}</Row>
