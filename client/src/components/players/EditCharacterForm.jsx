@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Col, Button, Row } from 'react-bootstrap';
+import { Col, Button, ToggleButton } from 'react-bootstrap';
 import HostedImage from '../HostedImage';
 
 const EditCharacterForm = ({ style, onSave, character = {}, classes = [] }) => {
@@ -62,8 +62,10 @@ const EditCharacterForm = ({ style, onSave, character = {}, classes = [] }) => {
         <Col style={style}>
 
             <Col>
-                <div>
-                    {`Class: ${characterClass?.name}`}
+                <div
+                    className='header-text'
+                    style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <h4>{`Class: ${characterClass?.name}`}</h4>
                     <HostedImage
                         src={characterClass?.iconUrl}
                         style={{ width: 32, height: 50, marginLeft: 10 }} />
@@ -74,6 +76,7 @@ const EditCharacterForm = ({ style, onSave, character = {}, classes = [] }) => {
                 className='form-label'
                 style={{ display: "flex", flexDirection: "row", marginTop: 6, gap: 6, textAlign: "center" }}>Enable Edits:
                 <input
+                    id="toggle-one"
                     autoComplete='none'
                     className='form-text'
                     type='checkbox'

@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.css';
-import './styles/global.css';
+import './styles';
 
 import Pages from './pages';
 import { RouteMap, DynamicRoutes } from './routes';

@@ -31,7 +31,8 @@ const SingleScenarioPage = () => {
 
     const onChangeOutcome = (e) => {
         e.preventDefault();
-        const newOutcome = e.target[0]?.value;
+        const newLevel = e.target[0]?.value;
+        const newOutcome = e.target[1]?.value;
 
         if (newOutcome) {
             updateScenario((error, data) => {
@@ -40,11 +41,12 @@ const SingleScenarioPage = () => {
                 }
                 else {
                     setScenario(prev => {
-                        return { ...prev, outcome: newOutcome }
+                        return { ...prev, outcome: newOutcome, scenarioLevel: newLevel }
                     });
                 }
             }, {
                 id: scenario?.id,
+                scenario_level: newLevel,
                 outcome: newOutcome
             });
         }
@@ -61,26 +63,54 @@ const SingleScenarioPage = () => {
     return (
         <LoadingWrapper loading={loading}>
             <Container>
-                <Row style={{ color: 'lightgrey' }}>
-                    <h3 >{`Scenario: ${scenario?.name} (${scenario?.scenarioNumber})`}</h3>
-                    <Col>{`Outcome: ${outcome}`}</Col>
-                    <Col>{`Level: ${scenario?.scenarioLevel}`}</Col>
+                <Row className='light-border'>
+                    <h3 className='header-text'>
+                        {`Scenario: ${scenario?.name} (${scenario?.scenarioNumber})`}
+                    </h3>
+
+                    <Col style={{ color: 'lightgrey' }}>
+                        <Col>{`Outcome: ${outcome}`}</Col>
+                        <Col>{`Level: ${scenario?.scenarioLevel}`}</Col>
+                    </Col>
+
                     <Col>
                         <form onSubmit={onChangeOutcome}>
+                            <Col>
+                                <div className='form-label'>
+                                    New Level:
+                                    <input
+                                        style={{ marginLeft: 10 }}
+                                        autoComplete='none'
+                                        className='form-text'
+                                        type='text'
+                                        defaultValue={scenario?.scenarioLevel}
+                                        placeholder='Scenario Level'
+                                    />
+                                </div>
+
+                            </Col>
                             <Col >
-                                <select name='outcomes'>
-                                    {
-                                        scenarioOutcomes.map(c => {
-                                            const { id, name } = c;
-                                            return <option key={id} value={id}>{name}</option>
-                                        })
-                                    }
-                                </select>
-                                <Button style={{ width: 100, marginLeft: 10 }} type='submit'>
-                                    Save
-                                </Button>
+                                <div className='form-label'>
+                                    New Outcome:
+                                    <select
+                                        name='outcomes'
+                                        style={{ marginLeft: 10 }}>
+                                        {
+                                            scenarioOutcomes.map(c => {
+                                                const { id, name } = c;
+                                                return <option key={id} value={id}>{name}</option>
+                                            })
+                                        }
+                                    </select>
+
+                                </div>
                             </Col>
                         </form>
+                    </Col>
+                    <Col>
+                        <Button style={{ width: 150 }} type='submit'>
+                            Save Changes
+                        </Button>
                     </Col>
                 </Row>
             </Container>

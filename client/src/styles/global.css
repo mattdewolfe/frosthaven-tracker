@@ -76,20 +76,17 @@ body {
 
 .clickable-container {
     border: 1px solid lightgrey;
-    background-color: #b34700;
+    background-color: rgba(153, 92, 0, 0.7);
     cursor: pointer;
     border-radius: 8;
 }
 
 .clickable-container:hover {
-    background-color: #e65c00;
+    background-color: rgba(204, 122, 0, 0.3);
     border: 1px solid #99d6ff;
 }
 
-.light-text {
-    color: lightgrey;
-}
-
-.dark-text {
-    color: rgba(30, 40, 50)
+.light-border {
+    border: 1px solid lightgrey;
+    border-radius: 8;
 }

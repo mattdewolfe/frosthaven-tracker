@@ -1,0 +1,11 @@
+.header-text {
+    color: orange;
+}
+
+.light-text {
+    color: lightgrey;
+}
+
+.dark-text {
+    color: rgba(30, 40, 50)
+}

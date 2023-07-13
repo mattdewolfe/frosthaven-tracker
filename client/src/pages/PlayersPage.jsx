@@ -17,7 +17,7 @@ const Player = ({ style, data = {}, classMap }) => {
 
     return (
         <Col style={style}>
-            <h3>Name: {name}</h3>
+            <h3 className='header-text'>Name: {name}</h3>
             {
                 characterData.map(pc => {
                     const { name, classId, level, retired } = pc;
@@ -69,8 +69,7 @@ const PlayersPage = () => {
     return (
         <Container className='light-text'>
             <h3 className='display-4 text-primary text-center py-5'>The Ravengers!</h3>
-            <Row>
-
+            <Row style={{ gap: 10 }}>
                 {
                     displayData.map((e, idx) => <Player
                         style={{ marginTop: 10 }}

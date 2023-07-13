@@ -56,7 +56,6 @@ const ScenariosPage = () => {
     const ongoingOutcomeId = useMemo(() => {
         if (scenarioOutcomes) {
             for (let entry of scenarioOutcomes) {
-                console.log(entry);
                 if (entry?.name === 'Ongoing') {
                     return entry?.id;
                 }
