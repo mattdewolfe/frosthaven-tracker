@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { usePlayersApi } from "../api";
+import React, { useState, useEffect } from 'react';
+import { usePlayersApi } from '../api';
 
 const ExamplePage = () => {
 
     const styles = Object.freeze({
         row: {
-            display: "flex", flexDirection: "row", border: "1px solid lightblue", gap: 4, marginTop: 2
+            display: 'flex', flexDirection: 'row', border: '1px solid lightblue', gap: 4, marginTop: 2
         },
         entry: {
-            fontSize: 14, marginRight: 10, textAlign: "left"
+            fontSize: 14, marginRight: 10, textAlign: 'left'
         }
     });
 
@@ -19,8 +19,6 @@ const ExamplePage = () => {
     // Define a callback method for our rest request. 
     // These are setup so that error is always the first parameter, and response data is the second.
     const handlePlayerData = (error, data) => {
-        console.log(data);
-
         if (error) {
             // Shit went south. Display the error and wipe out existing data.
             setData([]);
@@ -58,7 +56,7 @@ const ExamplePage = () => {
                 // You map over the array, receiving each entry and index and return the element you want rendered.
                 // Things to note: each element needs a unique key (the console will complain about this if you miss it)
                 data.map((entry, idx) => {
-                    const { name, id, characterId, charactersPlayed, dateCreated = "unknown" } = entry;
+                    const { name, id, characterId, charactersPlayed, dateCreated = 'unknown' } = entry;
                     // ^ This is object deconstruction. Extremely useful for grabbing properties that you expect to exist, while giving defaults as fallbacks.
                     // In this case, dateCreated does not exist on these entries - but I've given it a default value.
 

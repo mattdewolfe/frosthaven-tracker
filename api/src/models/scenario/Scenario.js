@@ -4,6 +4,8 @@ export default class Scenario extends Model {
     constructor(props) {
         super();
 
+        console.log(props);
+
         /**
          * @type {number}
          */

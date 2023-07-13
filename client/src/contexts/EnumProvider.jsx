@@ -2,16 +2,17 @@ import React, { useState, useEffect, createContext } from "react";
 import { useEnumsApi } from "../api";
 import { useIsMounted } from "../hooks";
 import LoadingWrapper from "../components/LoadingWrapper";
+import { convertArrayToObject } from "../utils/Conversion";
 
 const EnumContext = createContext({
-    statusEffects: {},
-    scenarioOutcomes: {},
-    characterClasses: {},
-    creatureClasses: {},
-    damageSources: {},
-    elements: {},
-    creatureLevels: {},
-    loading: 1,
+    statusEffects: [],
+    scenarioOutcomes: [],
+    characterClasses: [],
+    creatureClasses: [],
+    damageSources: [],
+    elements: [],
+    creatureLevels: [],
+    loadingEnums: false,
 });
 
 const EnumProvider = ({ children }) => {
@@ -26,13 +27,13 @@ const EnumProvider = ({ children }) => {
         getElements } = useEnumsApi();
 
     const [loading, setLoading] = useState(7);
-    const [statusEffects, setStatusEffects] = useState({});
-    const [scenarioOutcomes, setScenarioOutcomes] = useState({});
-    const [characterClasses, setCharacterClasses] = useState({});
-    const [creatureClasses, setCreatureClasses] = useState({});
-    const [damageSources, setDamageSources] = useState({});
-    const [elements, setElements] = useState({});
-    const [creatureLevels, setCreatureLevels] = useState({});
+    const [statusEffects, setStatusEffects] = useState([]);
+    const [scenarioOutcomes, setScenarioOutcomes] = useState([]);
+    const [characterClasses, setCharacterClasses] = useState([]);
+    const [creatureClasses, setCreatureClasses] = useState([]);
+    const [damageSources, setDamageSources] = useState([]);
+    const [elements, setElements] = useState([]);
+    const [creatureLevels, setCreatureLevels] = useState([]);
 
     const handleStatusEffects = (error, data) => {
         if (error) {
@@ -124,7 +125,7 @@ const EnumProvider = ({ children }) => {
     return (
         <EnumContext.Provider
             value={{
-                loading: loading > 0,
+                loadingEnums: loading > 0,
                 statusEffects,
                 scenarioOutcomes,
                 characterClasses,

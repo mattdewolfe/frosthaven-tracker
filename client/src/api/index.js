@@ -5,6 +5,7 @@ import useEventsApi from './useEventsApi';
 import useScenariosApi from './useScenariosApi';
 import useKillsApi from './useKillsApi';
 import useElementsApi from './useElementsApi';
+import useDamageApi from './useDamageApi';
 
 export {
     usePlayersApi,
@@ -13,5 +14,6 @@ export {
     useEventsApi,
     useScenariosApi,
     useKillsApi,
-    useElementsApi
+    useElementsApi,
+    useDamageApi
 };

@@ -1,10 +1,10 @@
-import useRestUtils from "./useRestUtils";
+import useRestUtils from './useRestUtils';
 
 function useCharactersApi() {
     const { getRequest, postRequest, putRequest, callbackWrapper } = useRestUtils();
 
     function getAllCharacters(callback) {
-        callbackWrapper(getRequest("/players/character"), callback);
+        callbackWrapper(getRequest('/players/character'), callback);
     }
 
     function getCharactersByPlayerId(callback, id) {

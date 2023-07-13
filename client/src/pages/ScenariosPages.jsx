@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { Row, Col, Container, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 import { useIsMounted } from '../hooks';
 import { useScenariosApi } from '../api';
 import { EnumContext } from '../contexts';
-import { convertArrayToObject } from '../utils/Conversion';
+import { DynamicRoutes, FormatDynamicRoute } from '../routes';
+import { LoadingWrapper, Row, Container } from '../components';
+import { CreateScenarioForm, ScenarioList } from '../components/scenario';
 
 const ScenarioEntry = ({ data, style, allOutcomes }) => {
     const { name, scenarioNumber, scenarioLevel, outcome, id } = data;
@@ -32,18 +34,11 @@ const ScenarioEntry = ({ data, style, allOutcomes }) => {
 const ScenariosPage = () => {
 
     const isMounted = useIsMounted();
+    const navigate = useNavigate();
 
     const { getAllScenarios, postNewScenario } = useScenariosApi();
-    const { scenarioOutcomes } = useContext(EnumContext);
+    const { scenarioOutcomes, loadingEnums } = useContext(EnumContext);
     const [scenarios, setScenarios] = useState([]);
-
-    const outcomesObject = useMemo(() => {
-        if (scenarioOutcomes) {
-            return convertArrayToObject(scenarioOutcomes, 'id');
-        }
-
-        return {};
-    }, [scenarioOutcomes]);
 
     const getScenarios = () => {
         getAllScenarios((error, data) => {
@@ -84,7 +79,11 @@ const ScenariosPage = () => {
         }
     }
 
-    const submitNewScenario = (e) => {
+    const handleScenarioClicked = (data) => {
+        navigate(FormatDynamicRoute(DynamicRoutes.SINGLE_SCENARIO, data?.id));
+    }
+
+    const handleSubmitScenario = (data) => {
         e.preventDefault();
         if (e.target) {
             const scenarioNum = e.target[0]?.value;
@@ -102,81 +101,24 @@ const ScenariosPage = () => {
     }
 
     return (
-        <Container style={{ color: 'white' }}>
-            <h3>The Scenarios Page</h3>
-            <Row>
-                <Col>
-                    <div style={{ color: 'orange' }}>Past Scenarios</div>
-                    {
-                        scenarios.map((e, idx) => {
-                            if (e?.outcome != ongoingOutcomeId) {
-                                return (
-                                    <ScenarioEntry key={`${e?.id}_${idx}_all`} data={e} allOutcomes={outcomesObject} />
-                                );
-                            }
-                            return null;
-                        })}
-                </Col>
+        <LoadingWrapper loading={loadingEnums}>
+            <Container style={{ color: 'white' }}>
+                <h3>The Scenarios Page</h3>
+                <Row>
+                    <ScenarioList
+                        scenarios={scenarios.filter(e => e?.outcome !== ongoingOutcomeId)}
+                        title='Past Scenarios'
+                        onScenarioClicked={handleScenarioClicked} />
 
-                <Col>
-                    <div style={{ color: 'orange' }}>Active Scenarios</div>
-                    {
-                        scenarios.map((e, idx) => {
-                            if (e?.outcome == ongoingOutcomeId) {
-                                return (
-                                    <ScenarioEntry key={`${e?.id}_${idx}_ongoing`} data={e} allOutcomes={outcomesObject} />
-                                );
-                            }
-                            return null;
-                        })}
-                </Col>
+                    <ScenarioList
+                        scenarios={scenarios.filter(e => e?.outcome == ongoingOutcomeId)}
+                        title='Active Scenarios'
+                        onScenarioClicked={handleScenarioClicked} />
 
-                <Col>
-                    <form onSubmit={submitNewScenario}>
-                        <Row style={{ color: 'orange' }}>Add Scenario</Row>
-                        <Col >
-                            <div className='form-label'>
-                                Number
-                            </div>
-                            <input
-                                autoComplete="none"
-                                className="form-text"
-                                type="text"
-                                placeholder='Scenario Number'
-                            />
-                        </Col>
-                        <Col>
-                            <div className='form-label'>
-                                Level
-                            </div>
-                            <input
-                                autoComplete="none"
-                                className="form-text"
-                                type="text"
-                                placeholder='Scenario Level'
-                            />
-                        </Col>
-                        <Col>
-                            <div className='form-label'>
-                                Name
-                            </div>
-                            <input
-                                autoComplete="none"
-                                className="form-text"
-                                type="text"
-                                placeholder='Scenario Name'
-                            />
-                        </Col>
-
-                        <div className="flex-row" style={{ marginTop: 10 }}>
-                            <Button type="submit">
-                                Create
-                            </Button>
-                        </div>
-                    </form>
-                </Col>
-            </Row >
-        </Container >
+                    <CreateScenarioForm onSubmit={handleSubmitScenario} />
+                </Row >
+            </Container >
+        </LoadingWrapper>
     );
 };
 

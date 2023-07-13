@@ -1,84 +1,92 @@
-import React, { useState } from "react";
-import Card from 'react-bootstrap/Card';
-import bannerman from '../assets/581588-Armor-Shield.jpg'
+import React, { useContext, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { EnumContext, PlayerContext } from '../contexts';
+import { Container, Row, Col } from "../components";
+import { CreateCharacterForm } from '../components/players';
+import { convertArrayToObject } from '../utils/Conversion';
+import { DynamicRoutes, FormatDynamicRoute } from '../routes';
 
+const Player = ({ style, data = {}, classMap }) => {
 
-const Players = ({name = "unknown", charclass = "n/a", charname = "n/a", level = 0}) => {
+    const navigate = useNavigate();
+    const { name, characterData, id } = data;
+
+    const handleSelectCharacter = () => {
+        navigate(FormatDynamicRoute(DynamicRoutes.SINGLE_CHARACTER, id));
+    }
+
     return (
-        <>
-            <h1>Name: {name}</h1>
-            <h2>Character class: {charclass}</h2>
-            <h2>Character: {charname}</h2>
-            <h3>Level: {level}</h3>
-
-        </>
-    )
+        <Col style={style}>
+            <h3>Name: {name}</h3>
+            {
+                characterData.map(pc => {
+                    const { name, classId, level, retired } = pc;
+                    return (
+                        <Row
+                            style={{
+                                marginTop: 10,
+                                borderRadius: 8,
+                                padding: 4,
+                                border: '1px solid lightblue'
+                            }}
+                            className='clickable-container'
+                            onClick={handleSelectCharacter}
+                            key={name + classId + level}>
+                            <Row>{`Character: ${name}`}</Row>
+                            <Row>{classMap[classId]?.name}</Row>
+                            <Row>{`Level: ${level}`}</Row>
+                            <Row>{`Retired: ${retired ? 'YES' : 'NO'}`}</Row>
+                        </Row>
+                    );
+                })
+            }
+        </Col>
+    );
 }
 
 const PlayersPage = () => {
-    return (
-        <div class="text-primary">
-            <div>
-                <h1 className="display-4 text-center py-5 text-danger">The Ravengers!</h1>   
-            </div>
-            <div class="row my-5 align-items-center justify-content-center">
-                <div className="div col-8 col-lg-4 col-xl-3">
-                    <div className="div card border-0">
-                        <div className="div card-body text-center py-4">
-                            <div className="h4 card-title display-3">
-                            Matt
-                            </div>
-                            <div className="display-6 card subtitle my2 border-0">
-                               Andrew the Bannerspear   
-                            </div>
-                            <p class="card-text text-muted pt-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                             Laboriosam at facere suscipit, sunt repudiandae eaque nemo quae saepe ex temporibus?
-                             </p>
-                        </div>
-                    </div>
-                
-                </div>
-                <div className="div col-8 col-lg-4 col-xl-3">
-                    <div className="div card border-0">
-                        <div className="div card-body text-center py-4">
-                            <div className="h4 card-title display-3">
-                            Gord
-                            </div>
-                            <div className="display-6 card subtitle my2 border-0">
-                               Trashcan the Drifter   
-                            </div>
-                            <p class="card-text text-muted pt-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                             Laboriosam at facere suscipit, sunt repudiandae eaque nemo quae saepe ex temporibus?
-                             </p>
-                        </div>
-                    </div>
-                
-                </div>
-                <div className="div col-8 col-lg-4 col-xl-3">
-                    <div className="div card border-0">
 
-                        <div className="div card-body text-center py-4">
-                            <div className="h4 card-title display-3">
-                            Mark
-                            </div>
-                            <div className="display-6 card subtitle my2 border-0">
-                               Gimpy the Frozenfist   
-                            </div>
-                            <p class="card-text text-muted pt-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                             Laboriosam at facere suscipit, sunt repudiandae eaque nemo quae saepe ex temporibus?
-                             </p>
-                        </div>
-                    </div>
-                
-                </div>
-            </div>
-                    
-            <h4>example placeholders</h4>
-            <Players name={'Matthew'} charname={'Not Andrew'} level={'3'} />
-            <Players name={'Gord'} charname={'Def not Andrew'} level={'5'} />
-            <Players/>
-            
-        </div >
+    const { players, playerCharacters, createNewCharacter } = useContext(PlayerContext);
+    const { characterClasses } = useContext(EnumContext);
+
+    const handleCreateCharacter = (data) => {
+        createNewCharacter(data)
+    }
+
+    const classMap = useMemo(() => {
+        return convertArrayToObject(characterClasses);
+    }, [characterClasses]);
+
+    const displayData = useMemo(() => {
+        return players.map(e => {
+            return {
+                ...e,
+                characterData: playerCharacters.filter(pc => pc.playerId === e.id)
+            }
+        })
+    }, [players, playerCharacters]);
+
+    return (
+        <Container className='light-text'>
+            <h3 className='display-4 text-primary text-center py-5'>The Ravengers!</h3>
+            <Row>
+
+                {
+                    displayData.map((e, idx) => <Player
+                        style={{ marginTop: 10 }}
+                        key={e?.name + idx}
+                        data={e}
+                        classMap={classMap} />)
+                }
+
+                <Col>
+                    <CreateCharacterForm
+                        players={players}
+                        classes={characterClasses}
+                        onSubmit={handleCreateCharacter} />
+                </Col>
+            </Row>
+        </Container >
     );
 };
 

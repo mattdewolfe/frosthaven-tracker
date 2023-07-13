@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, useMemo, createContext } from "react";
 import { useCharactersApi, usePlayersApi } from "../api";
 import { useIsMounted } from "../hooks";
 import { LoadingWrapper } from "../components";
@@ -6,6 +6,7 @@ import { LoadingWrapper } from "../components";
 const PlayerContext = createContext({
     players: [],
     playerCharacters: [],
+    activeCharacters: [],
     loading: true,
     createNewCharacter: (data) => { }
 });
@@ -64,12 +65,17 @@ const PlayerProvider = ({ children }) => {
         postNewCharacter(handlePlayerCreation, playerData);
     }
 
+    const activeCharacters = useMemo(() => {
+        return playerCharacters.filter(e => !e?.retired);
+    }, [playerCharacters]);
+
     return (
         <PlayerContext.Provider
             value={{
                 loading: loading > 0,
                 players,
                 playerCharacters,
+                activeCharacters,
                 createNewCharacter
             }}>
             <LoadingWrapper loading={loading > 0}>

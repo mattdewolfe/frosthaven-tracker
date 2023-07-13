@@ -7,6 +7,7 @@ import noneQuery from './noneQuery';
 import ResponseCode from './responseCodes';
 import paginateResults from './paginateResults';
 import oneOrNoneQuery from './oneOrNoneQuery';
+import getSelectStatementKeys from './getSelectStatementKeys';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 50;
@@ -22,5 +23,6 @@ export {
     sanitize,
     noneQuery,
     paginateResults,
-    oneOrNoneQuery
+    oneOrNoneQuery,
+    getSelectStatementKeys
 };

@@ -1,4 +1,4 @@
-import { paginateResults, DEFAULT_PAGE, DEFAULT_LIMIT } from '../helpers';
+import { paginateResults, DEFAULT_PAGE, DEFAULT_LIMIT, oneOrNoneQuery } from '../helpers';
 import Scenario from './Scenario';
 
 export default async ({ limit, page, id } = {}, client) => {

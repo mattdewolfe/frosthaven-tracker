@@ -1,6 +1,6 @@
-import camelcaseKeys from "camelcase-keys";
-import { getApiKey, setApiKey } from "../utils/ApiKey";
-import RestError from "../utils/RestError";
+import camelcaseKeys from 'camelcase-keys';
+import { getApiKey, setApiKey } from '../utils/ApiKey';
+import RestError from '../utils/RestError';
 
 class RestOptions {
     constructor({ jsonBody = true, camelCaseKeys = true }) {
@@ -30,18 +30,18 @@ const log = window?.DEV_MODE === true ?
 // API Key and UserData is appended to calls as needed. MD - May 30/2022
 function useRestUtils() {
 
-    const apiBase = window?.API_URL || "http://localhost:3002";
+    const apiBase = window?.API_URL || 'http://localhost:3002';
 
     // Returns Header Object with X-APIKey, or undefined
     function apiKeyHeader() {
         const apiKey = getApiKey();
 
         if (apiKey) {
-            log("Using API Key", apiKey);
-            return { "X-APIKey": apiKey };
+            log('Using API Key', apiKey);
+            return { 'X-APIKey': apiKey };
         }
 
-        return "";
+        return '';
     }
 
     async function execute(url, request, options) {
@@ -53,76 +53,76 @@ function useRestUtils() {
     }
 
     function headers(options) {
-        return options.jsonBody ? { "content-type": "application/json", ...apiKeyHeader() } :
+        return options.jsonBody ? { 'content-type': 'application/json', ...apiKeyHeader() } :
             { ...apiKeyHeader() }
     }
 
     async function getRequest(url, options = defaultRestOptions) {
         if (!url) {
-            throw new Error("Invalid GET Request, missing URL");
+            throw new Error('Invalid GET Request, missing URL');
         }
 
         const request = {
-            method: "GET",
+            method: 'GET',
             headers: { ...apiKeyHeader() }
         };
 
-        log("GET", url);
+        log('GET', url);
 
         return execute(url, request, options);
     }
 
     async function postRequest(url, data = null, options = defaultRestOptions) {
-        if (!url || typeof (url) !== "string") {
-            throw new Error("Invalid POST Request, missing URL");
+        if (!url || typeof (url) !== 'string') {
+            throw new Error('Invalid POST Request, missing URL');
         }
 
         const request = {
-            method: "POST",
+            method: 'POST',
             body: options.jsonBody ? JSON.stringify(data) : data,
             headers: headers(options)
         };
-        log("POST", url);
+        log('POST', url);
         return execute(url, request, options);
     }
 
     async function putRequest(url, data = null, options = defaultRestOptions) {
-        if (!url || typeof (url) !== "string") {
-            throw new Error("Invalid POST Request, missing URL");
+        if (!url || typeof (url) !== 'string') {
+            throw new Error('Invalid POST Request, missing URL');
         }
 
         const request = {
-            method: "PUT",
+            method: 'PUT',
             body: options.jsonBody ? JSON.stringify(data) : data,
             headers: headers(options)
         };
 
-        log("PUT", url);
+        log('PUT', url);
 
         return execute(url, request, options);
     }
 
     async function deleteRequest(url, data = null, options = defaultRestOptions) {
-        if (!url || typeof (url) !== "string") {
-            throw new Error("Invalid DELETE Request, missing URL");
+        if (!url || typeof (url) !== 'string') {
+            throw new Error('Invalid DELETE Request, missing URL');
         }
 
         const request = {
-            method: "DELETE",
+            method: 'DELETE',
             body: options.jsonBody ? JSON.stringify(data) : data,
             headers: headers(options)
         };
 
-        log("DELETE", url);
+        log('DELETE', url);
 
         return execute(url, request, options);
     }
 
     async function processResponse(response, options) {
-        log("RESPONSE", response.status);
+        log('RESPONSE', response.status);
         if (response.ok) {
             if (response.status >= 200 && response.status <= 299) {
-                setApiKey(response.headers.get("X-APIKey"));
+                setApiKey(response.headers.get('X-APIKey'));
             }
 
             if (response.status === 204) {
@@ -131,16 +131,16 @@ function useRestUtils() {
         }
         else {
             if (response.status >= 400 && response.status <= 499) {
-                setApiKey(response.headers.get("X-APIKey"));
+                setApiKey(response.headers.get('X-APIKey'));
 
                 const errorJson = camelcaseKeys(await response.json(), { deep: true });
-                log("Error JSON payload:", errorJson);
+                log('Error JSON payload:', errorJson);
 
                 // Presently this logic is not needed.
                 /*if (response.status === 422) {
                     // In the event of an ERROR from the API, combined with a Not Logged In message - the user credentials are now
                     // invalid but are still cached on the web side. We need to force a page reload.
-                    if (errorJson.errorCode === "ERROR" && errorJson.message.toLowerCase().indexOf("not logged in") !== -1) {
+                    if (errorJson.errorCode === 'ERROR' && errorJson.message.toLowerCase().indexOf('not logged in') !== -1) {
                         // Comment this line of code because the page keeps reloading, not sure if we need to clear the credentials caching
                         window.location.reload();
                     }
@@ -154,7 +154,7 @@ function useRestUtils() {
                     throw new RestError(response.status, errorJson.errorCode, errorJson.message, errorJson.field, []);
                 }
             } else {
-                throw new RestError(response.status, "", response.statusText);
+                throw new RestError(response.status, '', response.statusText);
             }
         }
         if (options.jsonBody) {
