@@ -8,14 +8,15 @@ const PlayerContext = createContext({
     playerCharacters: [],
     activeCharacters: [],
     loading: true,
-    createNewCharacter: (data) => { }
+    createNewCharacter: (data) => { },
+    updatePlayerCharacter: (id, data) => { }
 });
 
 const PlayerProvider = ({ children }) => {
     const isMounted = useIsMounted();
 
     const { getAllPlayersBasicData } = usePlayersApi();
-    const { getAllCharacters, postNewCharacter } = useCharactersApi();
+    const { getAllCharacters, postNewCharacter, updateCharacter } = useCharactersApi();
 
     const [loading, setLoading] = useState(2);
     const [players, setPlayers] = useState([])
@@ -29,7 +30,7 @@ const PlayerProvider = ({ children }) => {
             setPlayers(prev => [...data]);
         }
 
-        setLoading(prev => prev - 1);
+        setLoading(prev => Math.max(0, prev - 1));
     }
 
     const handleCharacters = (error, data) => {
@@ -40,7 +41,16 @@ const PlayerProvider = ({ children }) => {
             setPlayerCharacters([...data]);
         }
 
-        setLoading(prev => prev - 1);
+        setLoading(prev => Math.max(0, prev - 1));
+    }
+
+    const handleCharacterUpdate = (error, data) => {
+        if (error) {
+            console.warn(error);
+        }
+        else {
+            getAllCharacters(handleCharacters);
+        }
     }
 
     const refreshData = () => {
@@ -65,6 +75,13 @@ const PlayerProvider = ({ children }) => {
         postNewCharacter(handlePlayerCreation, playerData);
     }
 
+    const updatePlayerCharacter = (id, characterData) => {
+        updateCharacter(handleCharacterUpdate, {
+            id,
+            ...characterData
+        });
+    }
+
     const activeCharacters = useMemo(() => {
         return playerCharacters.filter(e => !e?.retired);
     }, [playerCharacters]);
@@ -76,7 +93,8 @@ const PlayerProvider = ({ children }) => {
                 players,
                 playerCharacters,
                 activeCharacters,
-                createNewCharacter
+                createNewCharacter,
+                updatePlayerCharacter
             }}>
             <LoadingWrapper loading={loading > 0}>
                 {children}

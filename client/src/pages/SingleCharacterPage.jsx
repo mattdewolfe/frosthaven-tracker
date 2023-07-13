@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCharactersApi } from '../api';
 import { Subs, globalObserver } from '../utils/Observers';
-import { LoadingWrapper, Container, Row, Col, Button } from '../components';
+import { LoadingWrapper, Container, Row } from '../components';
 import { EnumContext, PlayerContext } from '../contexts';
+import { EditCharacterForm } from '../components/players';
 
 const SingleCharacterPage = () => {
     const { id } = useParams();
 
     const { characterClasses } = useContext(EnumContext);
-    const { activePlayerCharacters } = useContext(PlayerContext);
+    const { activePlayerCharacters, updatePlayerCharacter } = useContext(PlayerContext);
 
     const { getCharacterById } = useCharactersApi();
 
@@ -30,27 +31,18 @@ const SingleCharacterPage = () => {
         }, id);
     }, [id]);
 
-    const onUpdateCharacter = (e) => {
-        // Update character data.
-    }
+    const handleSaveChanges = useCallback((data) => {
+        updatePlayerCharacter(id, data);
+    }, [id]);
 
     return (
         <LoadingWrapper loading={loading}>
             <Container>
                 <Row style={{ color: 'lightgrey' }}>
-                    <h3 >{`Character: ${character?.name}`}</h3>
-                    <Col>{`Level: ${character?.level}`}</Col>
-
-                    <Col>
-                        <form onSubmit={onUpdateCharacter}>
-                            <Col >
-
-                                <Button style={{ width: 100, marginLeft: 10 }} type='submit'>
-                                    Save
-                                </Button>
-                            </Col>
-                        </form>
-                    </Col>
+                    <EditCharacterForm
+                        onSave={handleSaveChanges}
+                        character={character}
+                        classes={characterClasses} />
                 </Row>
             </Container>
         </LoadingWrapper >

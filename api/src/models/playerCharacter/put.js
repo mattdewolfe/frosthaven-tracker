@@ -4,7 +4,7 @@ import PlayerCharacter from './PlayerCharacter';
 export default async (params = {}, client) => {
 
     if (!params.id) {
-        throw new Error('Device ID must be provided and be of type integer');
+        throw new Error('Character ID must be provided');
     }
 
     // Grab the id from params and remove it before batch parsing
