@@ -5,7 +5,8 @@ import { useIsMounted } from '../hooks';
 import { useScenariosApi } from '../api';
 import { EnumContext } from '../contexts';
 import { DynamicRoutes, FormatDynamicRoute } from '../routes';
-import { LoadingWrapper, Row, Container } from '../components';
+import { LoadingWrapper } from '../components/core';
+import { Row, Container } from '../components';
 import { CreateScenarioForm, ScenarioList } from '../components/scenario';
 
 const ScenarioEntry = ({ data, style, allOutcomes }) => {

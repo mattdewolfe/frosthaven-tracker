@@ -8,7 +8,7 @@ import './styles';
 
 import Pages from './pages';
 import { RouteMap, DynamicRoutes } from './routes';
-import { Background, Navbar } from './components';
+import { Background, Navbar } from './components/core';
 import EnumProvider from './contexts/EnumProvider';
 import PlayerProvider from './contexts/PlayerProvider';
 import { Subs, globalObserver } from './utils/Observers';

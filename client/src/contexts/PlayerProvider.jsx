@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo, createContext } from "react";
-import { useCharactersApi, usePlayersApi } from "../api";
-import { useIsMounted } from "../hooks";
-import { LoadingWrapper } from "../components";
+import React, { useState, useEffect, useMemo, createContext } from 'react';
+import { useCharactersApi, usePlayersApi } from '../api';
+import { useIsMounted } from '../hooks';
+import { LoadingWrapper } from '../components/core';
 
 const PlayerContext = createContext({
     players: [],

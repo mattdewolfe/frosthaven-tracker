@@ -2,18 +2,21 @@ import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useScenariosApi } from '../api';
 import { Subs, globalObserver } from '../utils/Observers';
-import { LoadingWrapper, Container, Row, Col, Button } from '../components';
+import { Container } from '../components';
+import { LoadingWrapper } from '../components/core';
 import { EnumContext, PlayerContext } from '../contexts';
+import { EditScenarioForm, EnlistCharacterForm } from '../components/scenario';
 
 const SingleScenarioPage = () => {
     const { id } = useParams();
 
-    const { scenarioOutcomes, loadingEnums } = useContext(EnumContext);
-    const { activePlayerCharacters } = useContext(PlayerContext);
+    const { loadingEnums } = useContext(EnumContext);
+    const { activeCharacters, players } = useContext(PlayerContext);
 
     const { getScenarioById, updateScenario } = useScenariosApi();
     const [loading, setLoading] = useState(true);
     const [scenario, setScenario] = useState(null);
+    const [enlistedCharacters, setEnlistedCharacters] = useState([]);
 
     useEffect(() => {
         getScenarioById((error, data) => {
@@ -29,90 +32,56 @@ const SingleScenarioPage = () => {
         }, id);
     }, [id]);
 
-    const onChangeOutcome = (e) => {
-        e.preventDefault();
-        const newLevel = e.target[0]?.value;
-        const newOutcome = e.target[1]?.value;
-
-        if (newOutcome) {
-            updateScenario((error, data) => {
-                if (error) {
-                    globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, variant: 'error' });
-                }
-                else {
-                    setScenario(prev => {
-                        return { ...prev, outcome: newOutcome, scenarioLevel: newLevel }
-                    });
-                }
-            }, {
-                id: scenario?.id,
-                scenario_level: newLevel,
-                outcome: newOutcome
-            });
-        }
+    const onUpdateScenario = (data) => {
+        updateScenario((error, data) => {
+            if (error) {
+                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, variant: 'error' });
+            }
+            else {
+                setScenario(prev => {
+                    return { ...prev, outcome: newOutcome, scenarioLevel: newLevel }
+                });
+            }
+        }, data);
     }
 
-    const outcome = useMemo(() => {
-        if (!scenario || scenarioOutcomes.length < 1 || !scenario?.outcome) {
-            return '';
+    const handleEnlistCharacter = (character) => {
+        if (enlistedCharacters.some(ec => ec.playerId == character?.playerId)) {
+            globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE,
+                {
+                    message: 'That characters player already has a character enrolled in this scenario',
+                    variant: 'error'
+                });
         }
-
-        return scenarioOutcomes.find(e => e.id == scenario.outcome)?.name ?? 'unknown';
-    }, [scenario, scenarioOutcomes]);
+        setEnlistedCharacters(prev => [...prev, character]);
+    }
 
     return (
         <LoadingWrapper loading={loading}>
             <Container style={{ marginTop: 10 }}>
-                <Row className='light-border'>
-                    <h3 className='header-text'>
-                        {`Scenario: ${scenario?.name} (${scenario?.scenarioNumber})`}
-                    </h3>
+                <EditScenarioForm
+                    scenario={scenario}
+                    onSaveChanges={onUpdateScenario} />
 
-                    <Col style={{ color: 'lightgrey' }}>
-                        <Col>{`Outcome: ${outcome}`}</Col>
-                        <Col>{`Level: ${scenario?.scenarioLevel}`}</Col>
-                    </Col>
+                <EnlistCharacterForm
+                    characters={activeCharacters}
+                    enlistedCharacters={enlistedCharacters}
+                    onEnlist={handleEnlistCharacter}
+                />
 
-                    <Col>
-                        <form onSubmit={onChangeOutcome}>
-                            <Col>
-                                <div className='form-label'>
-                                    New Level:
-                                    <input
-                                        style={{ marginLeft: 10 }}
-                                        autoComplete='none'
-                                        className='form-text'
-                                        type='text'
-                                        defaultValue={scenario?.scenarioLevel}
-                                        placeholder='Scenario Level'
-                                    />
+                <div className='header-text'>
+                    Enlisted Characters
+                    {
+                        enlistedCharacters.map((ec, idx) => {
+                            const { name, playerId } = ec;
+                            return (
+                                <div className='form-label' key={name + idx}>
+                                    {name}
                                 </div>
-
-                            </Col>
-                            <Col >
-                                <div className='form-label'>
-                                    New Outcome:
-                                    <select
-                                        name='outcomes'
-                                        style={{ marginLeft: 10 }}>
-                                        {
-                                            scenarioOutcomes.map(c => {
-                                                const { id, name } = c;
-                                                return <option key={id} value={id}>{name}</option>
-                                            })
-                                        }
-                                    </select>
-
-                                </div>
-                            </Col>
-                        </form>
-                    </Col>
-                    <Col>
-                        <Button style={{ width: 150 }} type='submit'>
-                            Save Changes
-                        </Button>
-                    </Col>
-                </Row>
+                            );
+                        })
+                    }
+                </div>
             </Container>
         </LoadingWrapper >
     );

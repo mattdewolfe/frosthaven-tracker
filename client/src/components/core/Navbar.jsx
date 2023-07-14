@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { RouteMap } from '../routes';
+import { RouteMap } from '../../routes';
 
-export default function Navbar() {
+const Navbar = () => {
 
     const location = useLocation();
 
@@ -18,12 +18,6 @@ export default function Navbar() {
 
             <ul>
                 <li>
-                    <Link to={RouteMap.HOME}>
-                        Home
-                    </Link>
-                </li>
-
-                <li>
                     <Link to={RouteMap.PLAYERS}>
                         Players
                     </Link>
@@ -38,3 +32,5 @@ export default function Navbar() {
         </nav>
     );
 }
+
+export default Navbar;

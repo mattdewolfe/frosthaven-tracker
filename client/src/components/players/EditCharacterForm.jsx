@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { Col, Button, ToggleButton } from 'react-bootstrap';
-import HostedImage from '../HostedImage';
+import { Col, Button } from 'react-bootstrap';
+import HostedImage from '../core/HostedImage';
 
 const EditCharacterForm = ({ style, onSave, character = {}, classes = [] }) => {
 
