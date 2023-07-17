@@ -197,6 +197,7 @@ CREATE TABLE tracker.character_event (
        CACHE 1
     ) NOT NULL,
     player_id INTEGER NOT NULL,
+    scenario_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
     healing_applied INTEGER,
     healing_received INTEGER,
@@ -205,7 +206,8 @@ CREATE TABLE tracker.character_event (
     tokens_looted INTEGER DEFAULT 0,
     PRIMARY KEY (id),
     CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --
@@ -220,14 +222,18 @@ CREATE TABLE tracker.creature_killed (
        NO MAXVALUE
        CACHE 1
     ) NOT NULL,
+    player_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
     creature_id INTEGER NOT NULL,
+    scenario_id INTEGER NOT NULL,
     creature_level INTEGER DEFAULT 1,
     scenario_level INTEGER DEFAULT 1,
     overkill INTEGER DEFAULT 0,
+    CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT creature_id_fkey FOREIGN KEY ("creature_id") REFERENCES tracker.creature_class(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT character_level_fkey FOREIGN KEY ("creature_level") REFERENCES tracker.creature_level(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_level_fkey FOREIGN KEY ("creature_level") REFERENCES tracker.creature_level(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --

@@ -1,17 +1,38 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useScenariosApi } from '../api';
 import { Subs, globalObserver } from '../utils/Observers';
-import { Container } from '../components';
 import { LoadingWrapper } from '../components/core';
-import { EnumContext, PlayerContext } from '../contexts';
+import { PlayerContext } from '../contexts';
 import { EditScenarioForm, EnlistCharacterForm } from '../components/scenario';
+import { CharacterEventForm, CreatureKilledForm, DamageDealtForm, DamageTakenForm } from '../components/events';
 
 const SingleScenarioPage = () => {
+
+    const styles = Object.freeze({
+        characterForms: {
+            display: 'grid',
+            gridTemplateColumns: '80px 1fr 1fr 1fr 1fr 1fr',
+            gap: 2
+        },
+        formColumn: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: '100%'
+        },
+        playerDetails: {
+            display: 'flex',
+            flexDirection: 'column',
+            fontWeight: 'bold',
+            marginLeft: 2,
+            marginTop: 6
+        }
+    });
+
     const { id } = useParams();
 
-    const { loadingEnums } = useContext(EnumContext);
-    const { activeCharacters, players } = useContext(PlayerContext);
+    const { activeCharacters } = useContext(PlayerContext);
 
     const { getScenarioById, updateScenario } = useScenariosApi();
     const [loading, setLoading] = useState(true);
@@ -58,7 +79,7 @@ const SingleScenarioPage = () => {
 
     return (
         <LoadingWrapper loading={loading}>
-            <Container style={{ marginTop: 10 }}>
+            <div style={{ marginTop: 10, marginLeft: 10, overflow: 'auto' }}>
                 <EditScenarioForm
                     scenario={scenario}
                     onSaveChanges={onUpdateScenario} />
@@ -75,14 +96,52 @@ const SingleScenarioPage = () => {
                         enlistedCharacters.map((ec, idx) => {
                             const { name, playerId } = ec;
                             return (
-                                <div className='form-label' key={name + idx}>
-                                    {name}
+                                <div
+                                    className='light-border'
+                                    style={styles.characterForms}
+                                    key={`${ec?.name ?? 'player_'}_${idx}`}
+                                >
+                                    <div
+                                        style={styles.playerDetails}
+                                        className='form-label'
+                                        key={name + idx}>
+                                        <div>{name}</div>
+                                    </div>
+
+                                    <div style={styles.formColumn}>
+                                        <CharacterEventForm
+                                            character={ec}
+                                            scenarioId={scenario?.id}
+                                        />
+                                    </div>
+
+                                    <div style={styles.formColumn}>
+                                        <DamageTakenForm
+                                            character={ec}
+                                            scenarioId={scenario?.id}
+                                        />
+                                    </div>
+
+                                    <div style={styles.formColumn}>
+                                        <DamageDealtForm
+                                            character={ec}
+                                            scenarioId={scenario?.id}
+                                        />
+                                    </div>
+
+                                    <div style={styles.formColumn}>
+                                        <CreatureKilledForm
+                                            character={ec}
+                                            scenarioId={scenario?.id}
+                                            scenarioLevel={scenario?.level}
+                                        />
+                                    </div>
                                 </div>
                             );
                         })
                     }
                 </div>
-            </Container>
+            </div>
         </LoadingWrapper >
     );
 };

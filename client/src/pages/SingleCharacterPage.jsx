@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCharactersApi } from '../api';
 import { Subs, globalObserver } from '../utils/Observers';
-import { LoadingWrapper, Container, Row } from '../components';
+import { Container, Row } from '../components';
+import { LoadingWrapper } from '../components/core';
 import { EnumContext, PlayerContext } from '../contexts';
 import { EditCharacterForm } from '../components/players';
 
@@ -39,10 +40,16 @@ const SingleCharacterPage = () => {
         <LoadingWrapper loading={loading}>
             <Container>
                 <Row style={{ color: 'lightgrey' }}>
-                    <EditCharacterForm
-                        onSave={handleSaveChanges}
-                        character={character}
-                        classes={characterClasses} />
+                    {
+                        character !== null ?
+
+                            <EditCharacterForm
+                                onSave={handleSaveChanges}
+                                character={character}
+                                classes={characterClasses} />
+                            :
+                            "Character data found"
+                    }
                 </Row>
             </Container>
         </LoadingWrapper >
