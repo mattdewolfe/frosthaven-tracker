@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
 
-const CreateScenarioForm = ({ style, onSubmit }) => {
+const CreateScenarioForm = ({ style, onSubmit, ongoingOutcomeId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();

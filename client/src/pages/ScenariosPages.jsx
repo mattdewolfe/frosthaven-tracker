@@ -84,20 +84,7 @@ const ScenariosPage = () => {
     }
 
     const handleSubmitScenario = (data) => {
-        e.preventDefault();
-        if (e.target) {
-            const scenarioNum = e.target[0]?.value;
-            const scenarioLevel = e.target[1]?.value;
-            const scenarioName = e.target[2]?.value;
-            const scenarioOutcome = ongoingOutcomeId || 1;
-
-            postNewScenario(handleScenarioCreation, {
-                scenario_number: scenarioNum,
-                scenario_level: scenarioLevel,
-                outcome: scenarioOutcome,
-                name: scenarioName
-            });
-        }
+        postNewScenario(handleScenarioCreation, data);
     }
 
     return (
@@ -115,7 +102,9 @@ const ScenariosPage = () => {
                         title='Active Scenarios'
                         onScenarioClicked={handleScenarioClicked} />
 
-                    <CreateScenarioForm onSubmit={handleSubmitScenario} />
+                    <CreateScenarioForm
+                        ongoingOutcomeId={ongoingOutcomeId}
+                        onSubmit={handleSubmitScenario} />
                 </Row >
             </Container >
         </LoadingWrapper>

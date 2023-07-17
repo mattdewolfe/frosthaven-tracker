@@ -36,13 +36,13 @@ const EventForm = ({
 
         for (let i = 0; i < keys.length; i++) {
             if (model[keys[i]] === 'boolean') {
-                result[keys[i]] = e.target[i].checked;
+                result[keys[i]] = e.target[i].checked == true;
             }
-            else if (model[keys[i]] === 'string') {
+            else if (model[keys[i]] === 'string' && e.target[i].value !== '') {
                 result[keys[i]] = e.target[i].value;
             }
             // If this is neither string nor boolean value, we will cast it to a number.
-            else {
+            else if (e.target[i].value !== '') {
                 try {
                     result[keys[i]] = parseInt(e.target[i].value);
                 }
@@ -99,7 +99,6 @@ const EventForm = ({
                                         autoComplete='none'
                                         className='form-text'
                                         type='number'
-                                        defaultValue={0}
                                     />
                                 </div>
                             </Col>
@@ -117,7 +116,6 @@ const EventForm = ({
                                         autoComplete='none'
                                         className='form-text'
                                         type='text'
-                                        defaultValue=''
                                     />
                                 </div>
                             </Col>

@@ -10,7 +10,6 @@ export default async ({ limit, page, id, basic } = {}, client) => {
             page: page || DEFAULT_PAGE,
         })
             .then((records) => {
-                console.log(records);
                 /* eslint-disable-next-line no-param-reassign */
                 if (records.items) {
                     return Array.from(records.items)
@@ -83,7 +82,6 @@ export default async ({ limit, page, id, basic } = {}, client) => {
             page: page || DEFAULT_PAGE,
         })
             .then((records) => {
-                console.log(records);
                 /* eslint-disable-next-line no-param-reassign */
                 if (records.items) {
                     return Array.from(records.items)
