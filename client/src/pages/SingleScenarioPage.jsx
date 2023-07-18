@@ -2,9 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useScenariosApi } from '../api';
 import { Subs, globalObserver } from '../utils/Observers';
-import { LoadingWrapper } from '../components/core';
+import { DropdownPicker, LoadingWrapper } from '../components/core';
 import { PlayerContext } from '../contexts';
-import { EditScenarioForm, EnlistCharacterForm } from '../components/scenario';
+import { EditScenarioForm } from '../components/scenario';
 import { CharacterEventForm, CreatureKilledForm, DamageDealtForm, DamageTakenForm } from '../components/events';
 
 const SingleScenarioPage = () => {
@@ -12,7 +12,7 @@ const SingleScenarioPage = () => {
     const styles = Object.freeze({
         characterForms: {
             display: 'grid',
-            gridTemplateColumns: '80px 1fr 1fr 1fr 1fr 1fr',
+            gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
             gap: 2
         },
         formColumn: {
@@ -23,10 +23,14 @@ const SingleScenarioPage = () => {
         },
         playerDetails: {
             display: 'flex',
-            flexDirection: 'column',
+            width: '100%',
+            justifyContent: 'center',
+            fontSize: 30,
+            flexDirection: 'row',
             fontWeight: 'bold',
-            marginLeft: 2,
-            marginTop: 6
+            marginTop: 6,
+            gap: 10,
+            color: 'lightblue'
         }
     });
 
@@ -37,7 +41,7 @@ const SingleScenarioPage = () => {
     const { getScenarioById, updateScenario } = useScenariosApi();
     const [loading, setLoading] = useState(true);
     const [scenario, setScenario] = useState(null);
-    const [enlistedCharacters, setEnlistedCharacters] = useState([]);
+    const [selectedCharacter, setSelectedCharacter] = useState(null);
 
     useEffect(() => {
         getScenarioById((error, data) => {
@@ -66,79 +70,72 @@ const SingleScenarioPage = () => {
         }, data);
     }
 
-    const handleEnlistCharacter = (character) => {
-        if (enlistedCharacters.some(ec => ec.playerId == character?.playerId)) {
-            globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE,
-                {
-                    message: 'That characters player already has a character enrolled in this scenario',
-                    variant: 'error'
-                });
+    useEffect(() => {
+        if (activeCharacters.length > 0) {
+            setSelectedCharacter(activeCharacters[0]);
         }
-        setEnlistedCharacters(prev => [...prev, character]);
+    }, [activeCharacters]);
+
+    const handleSelectedCharacter = (id) => {
+        setSelectedCharacter(activeCharacters.find(character => character?.id == id));
     }
 
     return (
         <LoadingWrapper loading={loading}>
-            <div style={{ marginTop: 10, marginLeft: 10, overflow: 'auto' }}>
+            <div style={{ padding: 10, width: '100%', overflow: 'none' }}>
                 <EditScenarioForm
                     scenario={scenario}
                     onSaveChanges={onUpdateScenario} />
 
-                <EnlistCharacterForm
-                    characters={activeCharacters}
-                    enlistedCharacters={enlistedCharacters}
-                    onEnlist={handleEnlistCharacter}
-                />
-
-                <div className='header-text'>
-                    Enlisted Characters
+                <div
+                    style={{ marginTop: 10, padding: 10 }}
+                    className='header-text light-border'>
+                    <DropdownPicker
+                        label='Characters'
+                        onChange={handleSelectedCharacter}
+                        options={activeCharacters} />
                     {
-                        enlistedCharacters.map((ec, idx) => {
-                            const { name, playerId } = ec;
-                            return (
-                                <div
-                                    className='light-border'
-                                    style={styles.characterForms}
-                                    key={`${ec?.name ?? 'player_'}_${idx}`}
-                                >
-                                    <div
-                                        style={styles.playerDetails}
-                                        className='form-label'
-                                        key={name + idx}>
-                                        <div>{name}</div>
-                                    </div>
-
-                                    <div style={styles.formColumn}>
-                                        <CharacterEventForm
-                                            character={ec}
-                                            scenarioId={scenario?.id}
-                                        />
-                                    </div>
-
-                                    <div style={styles.formColumn}>
-                                        <DamageTakenForm
-                                            character={ec}
-                                            scenarioId={scenario?.id}
-                                        />
-                                    </div>
-
-                                    <div style={styles.formColumn}>
-                                        <DamageDealtForm
-                                            character={ec}
-                                            scenarioId={scenario?.id}
-                                        />
-                                    </div>
-
-                                    <div style={styles.formColumn}>
-                                        <CreatureKilledForm
-                                            character={ec}
-                                            scenarioId={scenario?.id}
-                                            scenarioLevel={scenario?.level}
-                                        />
-                                    </div>
+                        selectedCharacter !== null &&
+                        <div
+                            style={{ display: 'flex', flexDirection: 'column' }}
+                            className='form-label'>
+                            <div style={styles.playerDetails}>
+                                {selectedCharacter?.name}
+                            </div>
+                            <div
+                                style={styles.characterForms}
+                                key={`${selectedCharacter?.name}`}
+                            >
+                                <div style={styles.formColumn}>
+                                    <CharacterEventForm
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
                                 </div>
-                            );
-                        })
+
+                                <div style={styles.formColumn}>
+                                    <DamageTakenForm
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <DamageDealtForm
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <CreatureKilledForm
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                        scenarioLevel={scenario?.level}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>

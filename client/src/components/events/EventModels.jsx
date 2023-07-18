@@ -23,8 +23,7 @@ const DamageDealt = Object.freeze({
 
 const CreatureKilled = Object.freeze({
     creature_id: 'creatureClasses',
-    creature_level: 'number',
-    scenario_level: 'creatureLevels',
+    creature_level: 'creatureLevels',
     overkill: 'number'
 });
 

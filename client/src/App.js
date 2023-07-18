@@ -20,7 +20,7 @@ export function App() {
 
     const handleToast = (payload) => {
         const { message } = payload;
-        toast(message, payload);
+        toast(message, { autoClose: 1250, ...payload });
     }
 
     useEffect(() => {

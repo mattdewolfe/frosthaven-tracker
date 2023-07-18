@@ -30,19 +30,21 @@ const EditScenarioForm = ({ scenario, onSaveChanges }) => {
     }, [scenario, scenarioOutcomes]);
 
     return (
-        <Row className='light-border'>
-            <h3 className='header-text'>
-                {`Scenario: ${scenario?.name} (${scenario?.scenarioNumber})`}
-            </h3>
-
-            <Col style={{ color: 'lightgrey' }}>
-                <Col>{`Outcome: ${outcome}`}</Col>
-                <Col>{`Level: ${scenario?.scenarioLevel}`}</Col>
-            </Col>
+        <div
+            style={{ display: 'flex', flexDirection: 'row', gap: 10, padding: 10 }}
+            className='light-border'>
+            <div className='header-text'>
+                <h3>
+                    {`Scenario: ${scenario?.name} (${scenario?.scenarioNumber})`}
+                </h3>
+                <div style={{ color: 'lightgrey' }}>
+                    <div>{`Outcome: ${outcome}`}</div>
+                    <div>{`Level: ${scenario?.scenarioLevel}`}</div>
+                </div>
+            </div>
 
             <Col>
                 <form onSubmit={handleSubmit}>
-
                     <div className='form-label'>
                         New Level:
                         <input
@@ -75,7 +77,7 @@ const EditScenarioForm = ({ scenario, onSaveChanges }) => {
                     </div>
                 </form>
             </Col>
-        </Row>
+        </div>
     );
 }
 
