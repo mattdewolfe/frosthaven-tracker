@@ -5,7 +5,7 @@ import { Subs, globalObserver } from '../utils/Observers';
 import { DropdownPicker, LoadingWrapper } from '../components/core';
 import { PlayerContext } from '../contexts';
 import { EditScenarioForm } from '../components/scenario';
-import { CharacterEventForm, CreatureKilledForm, DamageDealtForm, DamageTakenForm } from '../components/events';
+import { CharacterEventForm, CreatureKilledForm, DamageDealtForm, DamageTakenForm, ElementGenerationForm } from '../components/events';
 
 const SingleScenarioPage = () => {
 
@@ -31,6 +31,10 @@ const SingleScenarioPage = () => {
             marginTop: 6,
             gap: 10,
             color: 'lightblue'
+        },
+        eventForm: {
+            borderRadius: 6,
+            padding: 6
         }
     });
 
@@ -102,12 +106,14 @@ const SingleScenarioPage = () => {
                             <div style={styles.playerDetails}>
                                 {selectedCharacter?.name}
                             </div>
+
                             <div
                                 style={styles.characterForms}
                                 key={`${selectedCharacter?.name}`}
                             >
                                 <div style={styles.formColumn}>
                                     <CharacterEventForm
+                                        style={styles.eventForm}
                                         character={selectedCharacter}
                                         scenarioId={scenario?.id}
                                     />
@@ -115,6 +121,7 @@ const SingleScenarioPage = () => {
 
                                 <div style={styles.formColumn}>
                                     <DamageTakenForm
+                                        style={styles.eventForm}
                                         character={selectedCharacter}
                                         scenarioId={scenario?.id}
                                     />
@@ -122,6 +129,7 @@ const SingleScenarioPage = () => {
 
                                 <div style={styles.formColumn}>
                                     <DamageDealtForm
+                                        style={styles.eventForm}
                                         character={selectedCharacter}
                                         scenarioId={scenario?.id}
                                     />
@@ -129,9 +137,20 @@ const SingleScenarioPage = () => {
 
                                 <div style={styles.formColumn}>
                                     <CreatureKilledForm
+                                        style={styles.eventForm}
                                         character={selectedCharacter}
                                         scenarioId={scenario?.id}
                                         scenarioLevel={scenario?.level}
+                                    />
+                                </div>
+                            </div>
+
+                            <div style={styles.characterForms}>
+                                <div style={styles.formColumn}>
+                                    <ElementGenerationForm
+                                        style={styles.eventForm}
+                                        scenarioId={scenario?.id}
+                                        character={selectedCharacter}
                                     />
                                 </div>
                             </div>
