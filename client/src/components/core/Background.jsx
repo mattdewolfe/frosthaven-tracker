@@ -1,4 +1,4 @@
-import bonfire3 from '../assets/bonfire3.gif';
+import bonfire3 from '../../assets/bonfire3.gif';
 
 export default function Background() {
     return (

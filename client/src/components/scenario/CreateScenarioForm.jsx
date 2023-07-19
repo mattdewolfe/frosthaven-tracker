@@ -1,7 +1,11 @@
 import React from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
 
-const CreateScenarioForm = ({ style, onSubmit }) => {
+const CreateScenarioForm = ({ style, onSubmit, ongoingOutcomeId }) => {
+
+    const labelStyle = {
+        height: 10, marginTop: 8
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,7 +30,9 @@ const CreateScenarioForm = ({ style, onSubmit }) => {
             <form onSubmit={handleSubmit}>
                 <Row style={{ color: 'orange' }}>Add Scenario</Row>
                 <Col >
-                    <div className='form-label'>
+                    <div
+                        style={labelStyle}
+                        className='form-label'>
                         Number
                     </div>
                     <input
@@ -37,7 +43,9 @@ const CreateScenarioForm = ({ style, onSubmit }) => {
                     />
                 </Col>
                 <Col>
-                    <div className='form-label'>
+                    <div
+                        style={labelStyle}
+                        className='form-label'>
                         Level
                     </div>
                     <input
@@ -48,7 +56,9 @@ const CreateScenarioForm = ({ style, onSubmit }) => {
                     />
                 </Col>
                 <Col>
-                    <div className='form-label'>
+                    <div
+                        style={labelStyle}
+                        className='form-label'>
                         Name
                     </div>
                     <input

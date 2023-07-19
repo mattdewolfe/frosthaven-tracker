@@ -24,7 +24,7 @@ const CreateCharacterForm = ({ style, onSubmit, players = [], classes = [] }) =>
     return (
         <Col style={style}>
             <form onSubmit={handleSubmit}>
-                <h3 style={{ color: 'orange' }}>Create Character</h3>
+                <h3 className='header-text'>Create Character</h3>
 
                 <Col>
                     <select
@@ -83,8 +83,8 @@ const CreateCharacterForm = ({ style, onSubmit, players = [], classes = [] }) =>
                         </Button>
                     </div>
                 </Col>
-            </form>
-        </Col>
+            </form >
+        </Col >
     );
 }
 

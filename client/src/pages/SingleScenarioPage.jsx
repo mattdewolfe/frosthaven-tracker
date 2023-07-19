@@ -1,19 +1,47 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useScenariosApi } from '../api';
 import { Subs, globalObserver } from '../utils/Observers';
-import { LoadingWrapper, Container, Row, Col, Button } from '../components';
-import { EnumContext, PlayerContext } from '../contexts';
+import { DropdownPicker, LoadingWrapper } from '../components/core';
+import { PlayerContext } from '../contexts';
+import { EditScenarioForm } from '../components/scenario';
+import { CharacterEventForm, CreatureKilledForm, DamageDealtForm, DamageTakenForm } from '../components/events';
 
 const SingleScenarioPage = () => {
+
+    const styles = Object.freeze({
+        characterForms: {
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
+            gap: 2
+        },
+        formColumn: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: '100%'
+        },
+        playerDetails: {
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'center',
+            fontSize: 30,
+            flexDirection: 'row',
+            fontWeight: 'bold',
+            marginTop: 6,
+            gap: 10,
+            color: 'lightblue'
+        }
+    });
+
     const { id } = useParams();
 
-    const { scenarioOutcomes, loadingEnums } = useContext(EnumContext);
-    const { activePlayerCharacters } = useContext(PlayerContext);
+    const { activeCharacters } = useContext(PlayerContext);
 
     const { getScenarioById, updateScenario } = useScenariosApi();
     const [loading, setLoading] = useState(true);
     const [scenario, setScenario] = useState(null);
+    const [selectedCharacter, setSelectedCharacter] = useState(null);
 
     useEffect(() => {
         getScenarioById((error, data) => {
@@ -29,61 +57,88 @@ const SingleScenarioPage = () => {
         }, id);
     }, [id]);
 
-    const onChangeOutcome = (e) => {
-        e.preventDefault();
-        const newOutcome = e.target[0]?.value;
-
-        if (newOutcome) {
-            updateScenario((error, data) => {
-                if (error) {
-                    globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, variant: 'error' });
-                }
-                else {
-                    setScenario(prev => {
-                        return { ...prev, outcome: newOutcome }
-                    });
-                }
-            }, {
-                id: scenario?.id,
-                outcome: newOutcome
-            });
-        }
+    const onUpdateScenario = (data) => {
+        updateScenario((error, data) => {
+            if (error) {
+                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, variant: 'error' });
+            }
+            else {
+                setScenario(prev => {
+                    return { ...prev, outcome: newOutcome, scenarioLevel: newLevel }
+                });
+            }
+        }, data);
     }
 
-    const outcome = useMemo(() => {
-        if (!scenario || scenarioOutcomes.length < 1 || !scenario?.outcome) {
-            return '';
+    useEffect(() => {
+        if (activeCharacters.length > 0) {
+            setSelectedCharacter(activeCharacters[0]);
         }
+    }, [activeCharacters]);
 
-        return scenarioOutcomes.find(e => e.id == scenario.outcome)?.name ?? 'unknown';
-    }, [scenario, scenarioOutcomes]);
+    const handleSelectedCharacter = (id) => {
+        setSelectedCharacter(activeCharacters.find(character => character?.id == id));
+    }
 
     return (
         <LoadingWrapper loading={loading}>
-            <Container>
-                <Row style={{ color: 'lightgrey' }}>
-                    <h3 >{`Scenario: ${scenario?.name} (${scenario?.scenarioNumber})`}</h3>
-                    <Col>{`Outcome: ${outcome}`}</Col>
-                    <Col>{`Level: ${scenario?.scenarioLevel}`}</Col>
-                    <Col>
-                        <form onSubmit={onChangeOutcome}>
-                            <Col >
-                                <select name='outcomes'>
-                                    {
-                                        scenarioOutcomes.map(c => {
-                                            const { id, name } = c;
-                                            return <option key={id} value={id}>{name}</option>
-                                        })
-                                    }
-                                </select>
-                                <Button style={{ width: 100, marginLeft: 10 }} type='submit'>
-                                    Save
-                                </Button>
-                            </Col>
-                        </form>
-                    </Col>
-                </Row>
-            </Container>
+            <div style={{ padding: 10, width: '100%', overflow: 'none' }}>
+                <EditScenarioForm
+                    scenario={scenario}
+                    onSaveChanges={onUpdateScenario} />
+
+                <div
+                    style={{ marginTop: 10, padding: 10 }}
+                    className='header-text light-border'>
+                    <DropdownPicker
+                        label='Characters'
+                        onChange={handleSelectedCharacter}
+                        options={activeCharacters} />
+                    {
+                        selectedCharacter !== null &&
+                        <div
+                            style={{ display: 'flex', flexDirection: 'column' }}
+                            className='form-label'>
+                            <div style={styles.playerDetails}>
+                                {selectedCharacter?.name}
+                            </div>
+                            <div
+                                style={styles.characterForms}
+                                key={`${selectedCharacter?.name}`}
+                            >
+                                <div style={styles.formColumn}>
+                                    <CharacterEventForm
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <DamageTakenForm
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <DamageDealtForm
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <CreatureKilledForm
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                        scenarioLevel={scenario?.level}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </LoadingWrapper >
     );
 };

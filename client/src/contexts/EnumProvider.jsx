@@ -1,8 +1,7 @@
-import React, { useState, useEffect, createContext } from "react";
-import { useEnumsApi } from "../api";
-import { useIsMounted } from "../hooks";
-import LoadingWrapper from "../components/LoadingWrapper";
-import { convertArrayToObject } from "../utils/Conversion";
+import React, { useState, useEffect, createContext } from 'react';
+import { useEnumsApi } from '../api';
+import { useIsMounted } from '../hooks';
+import { LoadingWrapper } from '../components/core';
 
 const EnumContext = createContext({
     statusEffects: [],

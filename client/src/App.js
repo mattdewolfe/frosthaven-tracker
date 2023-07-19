@@ -4,11 +4,11 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.css';
-import './styles/global.css';
+import './styles';
 
 import Pages from './pages';
 import { RouteMap, DynamicRoutes } from './routes';
-import { Background, Navbar } from './components';
+import { Background, Navbar } from './components/core';
 import EnumProvider from './contexts/EnumProvider';
 import PlayerProvider from './contexts/PlayerProvider';
 import { Subs, globalObserver } from './utils/Observers';
@@ -20,7 +20,7 @@ export function App() {
 
     const handleToast = (payload) => {
         const { message } = payload;
-        toast(message, payload);
+        toast(message, { autoClose: 1250, ...payload });
     }
 
     useEffect(() => {

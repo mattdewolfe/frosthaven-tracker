@@ -197,15 +197,17 @@ CREATE TABLE tracker.character_event (
        CACHE 1
     ) NOT NULL,
     player_id INTEGER NOT NULL,
+    scenario_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
-    healing_applied INTEGER,
-    healing_received INTEGER,
+    healing_applied INTEGER DEFAULT NULL,
+    healing_received INTEGER DEFAULT NULL,
     hexes_moved INTEGER DEFAULT NULL,
-    cards_burned INTEGER DEFAULT 0,
-    tokens_looted INTEGER DEFAULT 0,
+    cards_burned INTEGER DEFAULT NULL,
+    tokens_looted INTEGER DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --
@@ -220,14 +222,18 @@ CREATE TABLE tracker.creature_killed (
        NO MAXVALUE
        CACHE 1
     ) NOT NULL,
+    player_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
     creature_id INTEGER NOT NULL,
+    scenario_id INTEGER NOT NULL,
     creature_level INTEGER DEFAULT 1,
     scenario_level INTEGER DEFAULT 1,
     overkill INTEGER DEFAULT 0,
+    CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT creature_id_fkey FOREIGN KEY ("creature_id") REFERENCES tracker.creature_class(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT character_level_fkey FOREIGN KEY ("creature_level") REFERENCES tracker.creature_level(id) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT character_level_fkey FOREIGN KEY ("creature_level") REFERENCES tracker.creature_level(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 --
@@ -259,10 +265,11 @@ CREATE TABLE tracker.damage_dealt (
        CACHE 1
     ) NOT NULL,
     source_id INTEGER NOT NULL,
+    player_id INTEGER NOT NULL,
     scenario_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
     attack_value INTEGER DEFAULT NULL,
-    modifier_card VARCHAR DEFAULT "0",
+    modifier_card VARCHAR DEFAULT NULL,
     target_poisoned BOOLEAN DEFAULT FALSE,
     target_brittle BOOLEAN DEFAULT FALSE,
     target_warded BOOLEAN DEFAULT FALSE,
@@ -270,6 +277,7 @@ CREATE TABLE tracker.damage_dealt (
     burned_card BOOLEAN DEFAULT FALSE,
     damage INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
+    CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT damage_source_fkey FOREIGN KEY ("source_id") REFERENCES tracker.damage_source(id) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -288,9 +296,10 @@ CREATE TABLE tracker.damage_taken (
        CACHE 1
     ) NOT NULL,
     source_id INTEGER NOT NULL,
+    player_id INTEGER NOT NULL,
     scenario_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
-    modifier_card VARCHAR DEFAULT "",
+    modifier_card VARCHAR DEFAULT NULL,
     is_poisoned BOOLEAN DEFAULT FALSE,
     is_brittle BOOLEAN DEFAULT FALSE,
     is_warded BOOLEAN DEFAULT FALSE,
@@ -298,6 +307,7 @@ CREATE TABLE tracker.damage_taken (
     burned_card BOOLEAN DEFAULT FALSE,
     damage INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
+    CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT damage_source_fkey FOREIGN KEY ("source_id") REFERENCES tracker.damage_source(id) ON UPDATE CASCADE ON DELETE RESTRICT
