@@ -1,14 +1,14 @@
 import { oneOrNoneQuery } from '../helpers';
-import Event from './Event';
+import Healing from './Healing';
 
 export default async ({ id } = {}, client) => {
 
-    const query = `SELECT * FROM tracker.event WHERE id = ${id};`;
+    const query = `SELECT * FROM tracker.healing WHERE id = ${id};`;
 
     return oneOrNoneQuery(client, singleQuery)
         .then((record) => {
             if (record) {
-                return Event.constructFromObject(record);
+                return Healing.constructFromObject(record);
             }
 
             return null;

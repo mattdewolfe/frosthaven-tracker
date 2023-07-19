@@ -27,25 +27,35 @@ const CreatureKilled = Object.freeze({
     overkill: 'number'
 });
 
-const CharacterEvent = Object.freeze({
-    healing_applied: 'number',
-    healing_received: 'number',
+const CharacterTurn = Object.freeze({
+    initiative: 'number',
     hexes_moved: 'number',
-    cards_burned: 'number',
-    tokens_looted: 'number'
+    long_rest: 'boolean',
+    short_rest: 'boolean'
+});
+
+const Healing = Object.freeze({
+    healing: 'number',
+    cured_poison: 'boolean',
+    cured_wound: 'boolean',
+    cured_bain: 'boolean',
+    cured_brittle: 'boolean'
 });
 
 const EventColors = Object.freeze({
     DamageTaken: '#ff9999',
     DamageDealt: '#ccffff',
     CreatureKilled: '#ffff00',
-    CharacterEvent: '#ffff99'
+    CharacterEvent: '#ffff99',
+    Healing: '#99ff99',
+    CharacterTurn: '#a6a6a6'
 });
 
 export {
     DamageTaken,
     DamageDealt,
     CreatureKilled,
-    CharacterEvent,
+    CharacterTurn,
+    Healing,
     EventColors
 };

@@ -1,13 +1,21 @@
-import DamageTakenForm from './DamageTakenForm';
-import DamageDealtForm from './DamageDealtForm';
-import CreatureKilledForm from './CreatureKilledForm';
-import CharacterEventForm from './CharacterEventForm';
-import ElementGenerationForm from './ElementGenerationForm';
+import DamageTaken from './DamageTakenForm';
+import DamageDealt from './DamageDealtForm';
+import CreatureKilled from './CreatureKilledForm';
+import CharacterTurn from './CharacterTurnForm';
+import ElementGeneration from './ElementGenerationForm';
+import Healing from './HealingForm';
+import ElementConsumption from './ElementConsumptionForm';
+import StatusApplied from './StatusAppliedForm';
+import StatusReceived from './StatusReceivedForm';
 
-export {
-    DamageTakenForm,
-    DamageDealtForm,
-    CreatureKilledForm,
-    CharacterEventForm,
-    ElementGenerationForm
-}
+export default {
+    DamageTaken,
+    DamageDealt,
+    CreatureKilled,
+    CharacterTurn,
+    ElementGeneration,
+    Healing,
+    ElementConsumption,
+    StatusApplied,
+    StatusReceived
+};

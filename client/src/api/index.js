@@ -1,19 +1,23 @@
 import usePlayersApi from './usePlayersApi';
 import useEnumsApi from './useEnumsApi';
 import useCharactersApi from './useCharactersApi';
-import useEventsApi from './useEventsApi';
+import useTurnApi from './useTurnApi';
 import useScenariosApi from './useScenariosApi';
 import useKillsApi from './useKillsApi';
 import useElementsApi from './useElementsApi';
 import useDamageApi from './useDamageApi';
+import useHealingApi from './useHealingApi';
+import useStatusApi from './useStatusApi';
 
 export {
     usePlayersApi,
     useEnumsApi,
     useCharactersApi,
-    useEventsApi,
+    useTurnApi,
     useScenariosApi,
     useKillsApi,
     useElementsApi,
-    useDamageApi
+    useDamageApi,
+    useHealingApi,
+    useStatusApi
 };

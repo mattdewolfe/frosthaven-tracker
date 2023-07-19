@@ -6,10 +6,10 @@ import { HostedImage } from '../core';
 import { useElementsApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
-const ElementGenerationForm = ({ style, character, scenarioId }) => {
+const ElementConsumptionForm = ({ style, character, scenarioId }) => {
 
     const { elements } = useContext(EnumContext);
-    const { postGeneratedBatch } = useElementsApi();
+    const { postConsumedBatch } = useElementsApi();
 
     const [selectedElements, setSelectedElements] = useState([]);
 
@@ -26,12 +26,12 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
     }
 
     const handleSaveData = useCallback(() => {
-        postGeneratedBatch((error, data) => {
+        postConsumedBatch((error, data) => {
             if (error) {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, type: 'error' });
             }
             else {
-                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Element Generation Submitted', type: 'success' });
+                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Element Consumption Submitted', type: 'success' });
                 setSelectedElements([]);
             }
         }, {
@@ -61,14 +61,14 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
 
     return (
         <div style={{
-            border: `1px solid white`,
+            border: `1px dashed white`,
             ...style
         }}>
             <div
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Element Generation
+                Element Consumption
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 {
@@ -105,4 +105,4 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
     );
 }
 
-export default ElementGenerationForm;
+export default ElementConsumptionForm;

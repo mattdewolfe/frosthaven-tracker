@@ -8,11 +8,12 @@ import ScenarioController from './ScenarioController';
 import StatusEffectController from './StatusEffectController';
 import PlayerController from './PlayerController';
 import PlayerCharacterController from './PlayerCharacterController';
-import EventController from './EventController';
+import CharacterTurnController from './CharacterTurnController';
 import ElementController from './ElementController';
 import CreatureKillController from './CreatureKillController';
 import DamageSourceController from './DamageSourceController';
 import DamageRecordsController from './DamageRecordsController';
+import HealingController from './HealingController';
 
 export {
     BaseController,
@@ -25,9 +26,10 @@ export {
     StatusEffectController,
     PlayerController,
     PlayerCharacterController,
-    EventController,
+    CharacterTurnController,
     ElementController,
     CreatureKillController,
     DamageSourceController,
-    DamageRecordsController
+    DamageRecordsController,
+    HealingController
 }

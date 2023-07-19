@@ -1,46 +1,45 @@
 import React, { useContext, useCallback } from 'react';
-import { EventColors, CreatureKilled } from './EventModels';
+import { EventColors, CharacterTurn } from './EventModels';
 import EventForm from './EventForm';
 import { EnumContext } from '../../contexts';
-import { useKillsApi } from '../../api';
+import { useTurnApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
-const CreatureKilledForm = ({ character, scenarioId, scenarioLevel, style }) => {
+const CharacterEventForm = ({ character, scenarioId, style }) => {
 
     const { creatureClasses, creatureLevels } = useContext(EnumContext);
-    const { postNewKill } = useKillsApi();
+    const { postNewTurn } = useTurnApi();
 
     const handleFormSubmission = useCallback((data) => {
-        postNewKill((error, data) => {
+        postNewTurn((error, data) => {
             if (error) {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, type: 'error' });
             }
             else {
-                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Creature Kill Submitted', type: 'success' });
+                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Character Turn Submitted', type: 'success' });
             }
         }, {
-            scenario_level: scenarioLevel,
             character_id: character?.id,
             player_id: character?.id,
             scenario_id: scenarioId,
             ...data
         });
-    }, [character, scenarioId, scenarioLevel]);
+    }, [character, scenarioId]);
 
     return (
         <EventForm
-            title="Creature Killed"
+            title="Character Turn"
             style={{
-                border: `1px solid ${EventColors.CreatureKilled}`,
+                border: `1px solid ${EventColors.CharacterTurn}`,
                 ...style
             }}
-            model={CreatureKilled}
+            model={CharacterTurn}
             character={character}
-            enumData={{ creatureClasses, creatureLevels }}
+            enuenumData={{ creatureClasses, creatureLevels }}
             scenarioId={scenarioId}
             onSubmit={handleFormSubmission}
         />
     );
 }
 
-export default CreatureKilledForm;
+export default CharacterEventForm;

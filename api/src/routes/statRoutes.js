@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import {
     CreatureKillController,
-    EventController,
+    CharacterTurnController,
+    HealingController
 } from '../controllers';
 
 // Will also handle damage dealt and damage taken routes
@@ -11,10 +12,17 @@ statRoutes.get('/kill', CreatureKillController.getAll);
 statRoutes.post('/kill', CreatureKillController.post);
 statRoutes.put('/kill', CreatureKillController.put);
 
-statRoutes.get('/events', EventController.getAll);
+statRoutes.get('/turns', CharacterTurnController.getAll);
 
-statRoutes.get('/event', EventController.getById);
-statRoutes.post('/event', EventController.post);
-statRoutes.put('/event', EventController.put);
+statRoutes.get('/turn', CharacterTurnController.getById);
+statRoutes.post('/turn', CharacterTurnController.post);
+statRoutes.put('/turn', CharacterTurnController.put);
+
+statRoutes.get('/heals', HealingController.getAll);
+
+statRoutes.get('/healing', HealingController.getById);
+statRoutes.post('/healing', HealingController.post);
+statRoutes.put('/healing', HealingController.put);
+
 
 export default statRoutes;
