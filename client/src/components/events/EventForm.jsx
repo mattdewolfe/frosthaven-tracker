@@ -59,7 +59,7 @@ const EventForm = ({
 
     return (
         <form
-            style={{ borderRadius: 6, padding: 6, ...style }}
+            style={style}
             onSubmit={handleSubmit}
         >
             <div
