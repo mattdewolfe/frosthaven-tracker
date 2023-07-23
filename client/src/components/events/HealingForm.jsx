@@ -1,22 +1,22 @@
 import React, { useContext, useCallback } from 'react';
-import { EventColors, CharacterEvent } from './EventModels';
+import { EventColors, Healing } from './EventModels';
 import EventForm from './EventForm';
 import { EnumContext } from '../../contexts';
-import { useEventsApi } from '../../api';
+import { useHealingApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
 const CharacterEventForm = ({ character, scenarioId, style }) => {
 
     const { creatureClasses, creatureLevels } = useContext(EnumContext);
-    const { postNewEvent } = useEventsApi();
+    const { postNewHeal } = useHealingApi();
 
-    const handleDamageTakenSubmission = useCallback((data) => {
-        postNewEvent((error, data) => {
+    const handleFormSubmission = useCallback((data) => {
+        postNewHeal((error, data) => {
             if (error) {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, type: 'error' });
             }
             else {
-                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Creature Kill Submitted', type: 'success' });
+                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Healing Submitted', type: 'success' });
             }
         }, {
             character_id: character?.id,
@@ -28,16 +28,16 @@ const CharacterEventForm = ({ character, scenarioId, style }) => {
 
     return (
         <EventForm
-            title="Character Event"
+            title="Healing"
             style={{
-                border: `1px solid ${EventColors.CharacterEvent}`,
+                border: `1px solid ${EventColors.Healing}`,
                 ...style
             }}
-            model={CharacterEvent}
+            model={Healing}
             character={character}
             enuenumData={{ creatureClasses, creatureLevels }}
             scenarioId={scenarioId}
-            onSubmit={handleDamageTakenSubmission}
+            onSubmit={handleFormSubmission}
         />
     );
 }

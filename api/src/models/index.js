@@ -6,7 +6,7 @@ import StatusEffect from './statusEffect';
 import Scenario from './scenario';
 import Player from './player';
 import PlayerCharacter from './playerCharacter';
-import Event from './event';
+import CharacterTurn from './characterTurn';
 import Element from './element';
 import CreatureKilled from './creatureKilled';
 import DamageSource from './damageSource';
@@ -16,6 +16,7 @@ import StatusApplied from './statusApplied';
 import StatusReceived from './statusReceived';
 import DamageDealt from './damageDealt';
 import DamageTaken from './damageTaken';
+import Healing from './healing';
 
 export {
     CreatureClass,
@@ -25,7 +26,7 @@ export {
     ScenarioOutcome,
     Player,
     PlayerCharacter,
-    Event,
+    CharacterTurn,
     Scenario,
     Element,
     CreatureKilled,
@@ -35,5 +36,6 @@ export {
     StatusApplied,
     StatusReceived,
     DamageDealt,
-    DamageTaken
+    DamageTaken,
+    Healing
 };

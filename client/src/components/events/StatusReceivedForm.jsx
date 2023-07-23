@@ -3,22 +3,22 @@ import { Button } from 'react-bootstrap';
 import { EnumContext } from '../../contexts';
 import SelectableEnumEntry from './SelectableEnumEntry';
 import { HostedImage } from '../core';
-import { useElementsApi } from '../../api';
+import { useStatusApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
-const ElementGenerationForm = ({ style, character, scenarioId }) => {
+const StatusReceivedForm = ({ style, character, scenarioId }) => {
 
-    const { elements } = useContext(EnumContext);
-    const { postGeneratedBatch } = useElementsApi();
+    const { statusEffects } = useContext(EnumContext);
+    const { postReceivedBatch } = useStatusApi();
 
-    const [selectedElements, setSelectedElements] = useState([]);
+    const [selected, setSelected] = useState([]);
 
-    const handleElementAdded = (id) => {
-        setSelectedElements(prev => [...prev, id]);
+    const handleAdded = (id) => {
+        setSelected(prev => [...prev, id]);
     }
 
     const handleEntryRemoved = (index) => {
-        setSelectedElements(prev => {
+        setSelected(prev => {
             const next = [...prev];
             next.splice(index, 1);
             return next;
@@ -26,24 +26,24 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
     }
 
     const handleSaveData = useCallback(() => {
-        postGeneratedBatch((error, data) => {
+        postReceivedBatch((error, data) => {
             if (error) {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, type: 'error' });
             }
             else {
-                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Element Generation Submitted', type: 'success' });
-                setSelectedElements([]);
+                globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Status Received Batch Submitted', type: 'success' });
+                setSelected([]);
             }
         }, {
             scenario_id: scenarioId,
             player_id: character?.playerId,
             character_id: character?.id,
-            element_ids: selectedElements
+            status_ids: selected
         })
-    }, [character, scenarioId, selectedElements]);
+    }, [character, scenarioId, selected]);
 
     const renderEntry = useCallback((id, idx) => {
-        const element = elements.find(el => el?.id == id);
+        const element = statusEffects.find(el => el?.id == id);
         return (
             <div
                 key={id + idx + element?.name}
@@ -57,25 +57,25 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
                 />
             </div>
         )
-    }, [elements]);
+    }, [statusEffects]);
 
     return (
         <div style={{
-            border: `1px solid white`,
+            border: `1px dashed white`,
             ...style
         }}>
             <div
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Element Generation
+                Status Effect Received
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 2 }}>
                 {
-                    elements.map(e => {
+                    statusEffects.map(e => {
                         return <SelectableEnumEntry
                             key={e?.id + e?.name}
-                            onClick={handleElementAdded}
+                            onClick={handleAdded}
                             data={e}
                         />
                     })
@@ -86,11 +86,11 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Selected Elements
+                Selected
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 2 }}>
                 {
-                    selectedElements.map((id, idx) => {
+                    selected.map((id, idx) => {
                         return renderEntry(id, idx);
                     })
                 }
@@ -105,4 +105,4 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
     );
 }
 
-export default ElementGenerationForm;
+export default StatusReceivedForm;

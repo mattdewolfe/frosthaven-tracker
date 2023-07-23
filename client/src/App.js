@@ -38,7 +38,7 @@ export function App() {
                     <Navbar />
                     <Background />
 
-                    <div style={{ width: '100%', height: '100%' }}>
+                    <div style={{ width: '100%', height: '100%', overflow: 'auto' }}>
                         {
                             loading === true &&
                             <div>Loading...</div>

@@ -1,9 +1,9 @@
 import { paginateResults, DEFAULT_PAGE, DEFAULT_LIMIT } from '../helpers';
-import Event from './Event';
+import CharacterTurn from './CharacterTurn';
 
 export default async ({ limit, page, playerId, characterId } = {}, client) => {
 
-    let query = `SELECT * FROM tracker.event`;
+    let query = `SELECT * FROM tracker.character_turn`;
 
     if (playerId && characterId) {
         query = `${query} WHERE player_id = ${playerId} AND character_id = ${characterId};`;
@@ -24,6 +24,6 @@ export default async ({ limit, page, playerId, characterId } = {}, client) => {
         .then((records) => {
             /* eslint-disable-next-line no-param-reassign */
             return Array.from(records.items)
-                .map((item) => Event.constructFromObject(item));
+                .map((item) => CharacterTurn.constructFromObject(item));
         });
 };

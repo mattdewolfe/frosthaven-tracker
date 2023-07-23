@@ -184,12 +184,13 @@ CREATE TABLE tracker.player_character (
     CONSTRAINT class_id_fkey FOREIGN KEY ("class_id") REFERENCES tracker.character_class(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
+
 --
--- Create Events, used to track general overall stats (most likely on a per round basis)
+-- Create Healing, used to tracked healing events
 --
-CREATE TABLE tracker.character_event (
+CREATE TABLE tracker.healing (
     id INTEGER GENERATED ALWAYS AS IDENTITY (
-       SEQUENCE NAME tracker.character_event_id_seq
+       SEQUENCE NAME tracker.healing_id_seq
        START WITH 1
        INCREMENT BY 1
        NO MINVALUE
@@ -199,11 +200,36 @@ CREATE TABLE tracker.character_event (
     player_id INTEGER NOT NULL,
     scenario_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
-    healing_applied INTEGER DEFAULT NULL,
-    healing_received INTEGER DEFAULT NULL,
+    healing INTEGER DEFAULT NULL,
+    cured_poison BOOLEAN DEFAULT FALSE,
+    cured_wound BOOLEAN DEFAULT FALSE,
+    cured_bain BOOLEAN DEFAULT FALSE,
+    cured_brittle BOOLEAN DEFAULT FALSE,
+    PRIMARY KEY (id),
+    CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+--
+-- Create Character Turn, used for generic player turn stats
+--
+CREATE TABLE tracker.character_turn (
+    id INTEGER GENERATED ALWAYS AS IDENTITY (
+       SEQUENCE NAME tracker.character_turn_id_seq
+       START WITH 1
+       INCREMENT BY 1
+       NO MINVALUE
+       NO MAXVALUE
+       CACHE 1
+    ) NOT NULL,
+    player_id INTEGER NOT NULL,
+    scenario_id INTEGER NOT NULL,
+    character_id INTEGER NOT NULL,
+    initiative INTEGER DEFAULT NULL, 
     hexes_moved INTEGER DEFAULT NULL,
-    cards_burned INTEGER DEFAULT NULL,
-    tokens_looted INTEGER DEFAULT NULL,
+    long_rest BOOLEAN DEFAULT FALSE,
+    short_rest BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (id),
     CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,

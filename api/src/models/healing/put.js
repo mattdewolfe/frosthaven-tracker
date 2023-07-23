@@ -1,5 +1,5 @@
+import Healing from './Healing';
 import { getUpdateStatementKeys, noneQuery } from '../helpers';
-import Event from './Event';
 
 export default async (params = {}, client) => {
 
@@ -11,9 +11,9 @@ export default async (params = {}, client) => {
     const id = params.id;
     delete params.id;
 
-    let data = getUpdateStatementKeys(params, Event.checkQueryVariableType);
+    let data = getUpdateStatementKeys(params, Healing.checkQueryVariableType);
 
-    const query = `UPDATE tracker.event SET ${data.keyValuePairs} WHERE id=${id};`;
+    const query = `UPDATE tracker.healing SET ${data.keyValuePairs} WHERE id=${id};`;
 
     return noneQuery(client, query)
         .then((result) => {

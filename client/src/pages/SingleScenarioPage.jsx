@@ -5,7 +5,7 @@ import { Subs, globalObserver } from '../utils/Observers';
 import { DropdownPicker, LoadingWrapper } from '../components/core';
 import { PlayerContext } from '../contexts';
 import { EditScenarioForm } from '../components/scenario';
-import { CharacterEventForm, CreatureKilledForm, DamageDealtForm, DamageTakenForm, ElementGenerationForm } from '../components/events';
+import EventForms from '../components/events';
 
 const SingleScenarioPage = () => {
 
@@ -86,7 +86,7 @@ const SingleScenarioPage = () => {
 
     return (
         <LoadingWrapper loading={loading}>
-            <div style={{ padding: 10, width: '100%', overflow: 'none' }}>
+            <div style={{ padding: 10 }}>
                 <EditScenarioForm
                     scenario={scenario}
                     onSaveChanges={onUpdateScenario} />
@@ -112,42 +112,73 @@ const SingleScenarioPage = () => {
                                 key={`${selectedCharacter?.name}`}
                             >
                                 <div style={styles.formColumn}>
-                                    <CharacterEventForm
+                                    <EventForms.CharacterTurn
                                         style={styles.eventForm}
                                         character={selectedCharacter}
                                         scenarioId={scenario?.id}
                                     />
-                                </div>
-
-                                <div style={styles.formColumn}>
-                                    <DamageTakenForm
-                                        style={styles.eventForm}
-                                        character={selectedCharacter}
-                                        scenarioId={scenario?.id}
-                                    />
-                                </div>
-
-                                <div style={styles.formColumn}>
-                                    <DamageDealtForm
-                                        style={styles.eventForm}
-                                        character={selectedCharacter}
-                                        scenarioId={scenario?.id}
-                                    />
-                                </div>
-
-                                <div style={styles.formColumn}>
-                                    <CreatureKilledForm
+                                    <EventForms.CreatureKilled
                                         style={styles.eventForm}
                                         character={selectedCharacter}
                                         scenarioId={scenario?.id}
                                         scenarioLevel={scenario?.level}
                                     />
                                 </div>
+
+                                <div style={styles.formColumn}>
+                                    <EventForms.DamageTaken
+                                        style={styles.eventForm}
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <EventForms.DamageDealt
+                                        style={styles.eventForm}
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <EventForms.Healing
+                                        style={styles.eventForm}
+                                        character={selectedCharacter}
+                                        scenarioId={scenario?.id}
+                                    />
+                                </div>
                             </div>
 
                             <div style={styles.characterForms}>
+
+
                                 <div style={styles.formColumn}>
-                                    <ElementGenerationForm
+                                    <EventForms.ElementGeneration
+                                        style={styles.eventForm}
+                                        scenarioId={scenario?.id}
+                                        character={selectedCharacter}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <EventForms.ElementConsumption
+                                        style={styles.eventForm}
+                                        scenarioId={scenario?.id}
+                                        character={selectedCharacter}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <EventForms.StatusApplied
+                                        style={styles.eventForm}
+                                        scenarioId={scenario?.id}
+                                        character={selectedCharacter}
+                                    />
+                                </div>
+
+                                <div style={styles.formColumn}>
+                                    <EventForms.StatusReceived
                                         style={styles.eventForm}
                                         scenarioId={scenario?.id}
                                         character={selectedCharacter}

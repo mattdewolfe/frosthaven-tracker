@@ -10,7 +10,7 @@ const DamageDealtForm = ({ character, scenarioId, style }) => {
     const { damageSources } = useContext(EnumContext);
     const { postDamageDealt } = useDamageApi();
 
-    const handleDamageTakenSubmission = useCallback((data) => {
+    const handleFormSubmission = useCallback((data) => {
         postDamageDealt((error, result) => {
             if (error) {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, type: 'error' });
@@ -35,7 +35,7 @@ const DamageDealtForm = ({ character, scenarioId, style }) => {
             }}
             model={DamageDealt}
             enumData={{ damageSources }}
-            onSubmit={handleDamageTakenSubmission}
+            onSubmit={handleFormSubmission}
         />
     );
 }
