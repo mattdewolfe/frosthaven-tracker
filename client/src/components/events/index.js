@@ -3,8 +3,8 @@ import DamageDealt from './DamageDealtForm';
 import CreatureKilled from './CreatureKilledForm';
 import CharacterTurn from './CharacterTurnForm';
 import Healing from './HealingForm';
-import DualElementForm from './DualElementForm';
-import DualStatusForm from './DualStatusForm';
+import DualElement from './DualElementForm';
+import DualStatus from './DualStatusForm';
 
 export default {
     DamageTaken,
@@ -12,6 +12,6 @@ export default {
     CreatureKilled,
     CharacterTurn,
     Healing,
-    DualElementForm,
-    DualStatusForm
+    DualElement,
+    DualStatus
 };

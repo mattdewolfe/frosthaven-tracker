@@ -73,7 +73,7 @@ const StatusAppliedForm = ({
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Status Effect Applied
+                Status APPLIED
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 2 }}>
                 {

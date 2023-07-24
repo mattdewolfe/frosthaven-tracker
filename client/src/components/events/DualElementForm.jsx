@@ -41,7 +41,7 @@ const DualElementForm = ({ scenarioId, style }) => {
                     type='radio'
                     id={FormKeys.Generated}
                 />
-                <label for={FormKeys.Generated}>Created</label>
+                <label htmlFor={FormKeys.Generated}>CREATED</label>
 
                 <input
                     checked={visibleForm == FormKeys.Consumed}
@@ -52,7 +52,7 @@ const DualElementForm = ({ scenarioId, style }) => {
                     type='radio'
                     id={FormKeys.Consumed}
                 />
-                <label for={FormKeys.Consumed}>Consumption</label>
+                <label htmlFor={FormKeys.Consumed}>CONSUMED</label>
             </div>
 
             <div className='divider' />

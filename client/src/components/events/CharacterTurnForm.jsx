@@ -18,7 +18,13 @@ const CharacterEventForm = ({ scenarioId, style }) => {
     }
 
     const handleFormSubmission = useCallback((data) => {
-        console.log(activeCharacter);
+
+        let validated = { ...data };
+        if (validated.long_rest) {
+            validated.initiative = 99;
+            validated.short_rest = false;
+        }
+
         postNewTurn((error, resData) => {
             if (error) {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, type: 'error' });
@@ -27,7 +33,7 @@ const CharacterEventForm = ({ scenarioId, style }) => {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Character Turn Submitted', type: 'success' });
             }
         }, {
-            ...data,
+            ...validated,
             character_id: activeCharacter?.id,
             player_id: activeCharacter?.playerId,
             scenario_id: scenarioId

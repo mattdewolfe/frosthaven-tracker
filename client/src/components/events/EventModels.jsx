@@ -27,7 +27,8 @@ const DamageDealt = Object.freeze({
         damage: 'number'
     },
     defaults: {
-        target_shield: 0
+        target_shield: 0,
+        source_id: 2
     }
 });
 
@@ -46,8 +47,8 @@ const CharacterTurn = Object.freeze({
     fields: {
         initiative: 'number',
         hexes_moved: 'number',
-        long_rest: 'boolean',
         short_rest: 'boolean',
+        long_rest: 'boolean'
     },
     defaults: {
         hexes_moved: 0

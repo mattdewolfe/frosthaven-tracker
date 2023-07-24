@@ -18,8 +18,6 @@ const CharacterEventForm = ({ scenarioId, style }) => {
     }
 
     const handleFormSubmission = useCallback((data) => {
-        console.log(activeCharacter);
-
         postNewHeal((error, data) => {
             if (error) {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: error, type: 'error' });

@@ -8,7 +8,8 @@ const EventForm = ({
     onSubmit,
     title = 'Form',
     style = {},
-    saveLabel = 'Save'
+    saveLabel = 'Save',
+    resetOnSubmit = true
 }) => {
     const rowStyle = {
         display: 'flex',
@@ -16,7 +17,7 @@ const EventForm = ({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 2,
-        gap: 6,
+        gap: 6
     }
 
     const { fields, defaults = {} } = model;
@@ -65,9 +66,11 @@ const EventForm = ({
             }
         }
 
-        e.target.reset();
+        if (resetOnSubmit) {
+            e.target.reset();
+        }
         onSubmit?.(result);
-    }, [keys, fields]);
+    }, [keys, fields, onSubmit, resetOnSubmit]);
 
     return (
         <form
@@ -147,6 +150,7 @@ const EventForm = ({
                                 >
                                     {k}
                                     <select
+                                        defaultValue={getDefault(k)}
                                         autoComplete='none'
                                         className='form-text'
                                         type='text'

@@ -73,7 +73,7 @@ const ElementGenerationForm = ({
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Element Creation
+                Element CREATION
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 {
@@ -91,7 +91,7 @@ const ElementGenerationForm = ({
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Selected Elements
+                Selected
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 2 }}>
                 {

@@ -46,6 +46,7 @@ const CreatureKilledForm = ({ scenarioId, scenarioLevel, style }) => {
             <div className='divider' />
 
             <EventForm
+                resetOnSubmit={false}
                 title='Creature Killed'
                 saveLabel='Save Kill'
                 model={CreatureKilled}
@@ -53,8 +54,8 @@ const CreatureKilledForm = ({ scenarioId, scenarioLevel, style }) => {
                 enumData={{ creatureClasses, creatureLevels }}
                 scenarioId={scenarioId}
                 onSubmit={handleFormSubmission}
-            /></div>
-
+            />
+        </div>
     );
 }
 

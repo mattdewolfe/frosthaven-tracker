@@ -41,7 +41,7 @@ const DualStatusForm = ({ scenarioId, style }) => {
                     type='radio'
                     id={FormKeys.Applied}
                 />
-                <label for={FormKeys.Applied}>Generation</label>
+                <label htmlFor={FormKeys.Applied}>APPLIED</label>
 
                 <input
                     checked={visibleForm === FormKeys.Received}
@@ -52,7 +52,7 @@ const DualStatusForm = ({ scenarioId, style }) => {
                     type='radio'
                     id={FormKeys.Received}
                 />
-                <label for={FormKeys.Received}>Consumption</label>
+                <label htmlFor={FormKeys.Received}>RECEIVED</label>
             </div>
 
             <div className='divider' />

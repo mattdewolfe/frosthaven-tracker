@@ -98,12 +98,12 @@ const SingleScenarioPage = () => {
                             style={styles.eventForm}
                             scenarioId={scenario?.id} />
 
-                        <EventForms.DualElementForm
+                        <EventForms.DualElement
                             style={styles.eventForm}
                             scenarioId={scenario?.id}
                         />
 
-                        <EventForms.DualStatusForm
+                        <EventForms.DualStatus
                             style={styles.eventForm}
                             scenarioId={scenario?.id}
                         />

@@ -73,7 +73,7 @@ const ElementConsumptionForm = ({
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Element Consumption
+                Element CONSUMPTION
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 {
@@ -91,7 +91,7 @@ const ElementConsumptionForm = ({
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Selected Elements
+                Selected
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 2 }}>
                 {
