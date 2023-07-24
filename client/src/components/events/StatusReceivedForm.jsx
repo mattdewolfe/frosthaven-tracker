@@ -6,7 +6,12 @@ import { HostedImage } from '../core';
 import { useStatusApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
-const StatusReceivedForm = ({ style, character, scenarioId }) => {
+const StatusReceivedForm = ({
+    style,
+    character,
+    scenarioId,
+    saveLabel = 'Save Received'
+}) => {
 
     const { statusEffects } = useContext(EnumContext);
     const { postReceivedBatch } = useStatusApi();
@@ -98,7 +103,7 @@ const StatusReceivedForm = ({ style, character, scenarioId }) => {
 
             <div style={{ marginTop: 10 }}>
                 <Button onClick={handleSaveData}>
-                    Save
+                    {saveLabel}
                 </Button>
             </div>
         </div>

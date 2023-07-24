@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useScenariosApi } from '../api';
 import { Subs, globalObserver } from '../utils/Observers';
-import { DropdownPicker, LoadingWrapper } from '../components/core';
-import { PlayerContext } from '../contexts';
+import { LoadingWrapper } from '../components/core';
 import { EditScenarioForm } from '../components/scenario';
 import EventForms from '../components/events';
 
@@ -12,14 +11,8 @@ const SingleScenarioPage = () => {
     const styles = Object.freeze({
         characterForms: {
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
-            gap: 2
-        },
-        formColumn: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            height: '100%'
+            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+            gap: 4
         },
         playerDetails: {
             display: 'flex',
@@ -34,18 +27,17 @@ const SingleScenarioPage = () => {
         },
         eventForm: {
             borderRadius: 6,
-            padding: 6
+            padding: 6,
+            display: 'flex',
+            flexDirection: 'column'
         }
     });
 
     const { id } = useParams();
 
-    const { activeCharacters } = useContext(PlayerContext);
-
     const { getScenarioById, updateScenario } = useScenariosApi();
     const [loading, setLoading] = useState(true);
     const [scenario, setScenario] = useState(null);
-    const [selectedCharacter, setSelectedCharacter] = useState(null);
 
     useEffect(() => {
         getScenarioById((error, data) => {
@@ -68,20 +60,10 @@ const SingleScenarioPage = () => {
             }
             else {
                 setScenario(prev => {
-                    return { ...prev, outcome: newOutcome, scenarioLevel: newLevel }
+                    return { ...prev, ...data }
                 });
             }
         }, data);
-    }
-
-    useEffect(() => {
-        if (activeCharacters.length > 0) {
-            setSelectedCharacter(activeCharacters[0]);
-        }
-    }, [activeCharacters]);
-
-    const handleSelectedCharacter = (id) => {
-        setSelectedCharacter(activeCharacters.find(character => character?.id == id));
     }
 
     return (
@@ -94,99 +76,44 @@ const SingleScenarioPage = () => {
                 <div
                     style={{ marginTop: 10, padding: 10 }}
                     className='header-text light-border'>
-                    <DropdownPicker
-                        label='Characters'
-                        onChange={handleSelectedCharacter}
-                        options={activeCharacters} />
-                    {
-                        selectedCharacter !== null &&
-                        <div
-                            style={{ display: 'flex', flexDirection: 'column' }}
-                            className='form-label'>
-                            <div style={styles.playerDetails}>
-                                {selectedCharacter?.name}
-                            </div>
 
-                            <div
-                                style={styles.characterForms}
-                                key={`${selectedCharacter?.name}`}
-                            >
-                                <div style={styles.formColumn}>
-                                    <EventForms.CharacterTurn
-                                        style={styles.eventForm}
-                                        character={selectedCharacter}
-                                        scenarioId={scenario?.id}
-                                    />
-                                    <EventForms.CreatureKilled
-                                        style={styles.eventForm}
-                                        character={selectedCharacter}
-                                        scenarioId={scenario?.id}
-                                        scenarioLevel={scenario?.level}
-                                    />
-                                </div>
+                    <div
+                        style={styles.characterForms}
+                        className='form-label'>
+                        <EventForms.CharacterTurn
+                            style={styles.eventForm}
+                            scenarioId={scenario?.id}
+                        />
 
-                                <div style={styles.formColumn}>
-                                    <EventForms.DamageTaken
-                                        style={styles.eventForm}
-                                        character={selectedCharacter}
-                                        scenarioId={scenario?.id}
-                                    />
-                                </div>
+                        <EventForms.Healing
+                            style={styles.eventForm}
+                            scenarioId={scenario?.id}
+                        />
 
-                                <div style={styles.formColumn}>
-                                    <EventForms.DamageDealt
-                                        style={styles.eventForm}
-                                        character={selectedCharacter}
-                                        scenarioId={scenario?.id}
-                                    />
-                                </div>
+                        <EventForms.DamageDealt
+                            style={styles.eventForm}
+                            scenarioId={scenario?.id} />
 
-                                <div style={styles.formColumn}>
-                                    <EventForms.Healing
-                                        style={styles.eventForm}
-                                        character={selectedCharacter}
-                                        scenarioId={scenario?.id}
-                                    />
-                                </div>
-                            </div>
+                        <EventForms.DamageTaken
+                            style={styles.eventForm}
+                            scenarioId={scenario?.id} />
 
-                            <div style={styles.characterForms}>
+                        <EventForms.DualElementForm
+                            style={styles.eventForm}
+                            scenarioId={scenario?.id}
+                        />
 
+                        <EventForms.DualStatusForm
+                            style={styles.eventForm}
+                            scenarioId={scenario?.id}
+                        />
 
-                                <div style={styles.formColumn}>
-                                    <EventForms.ElementGeneration
-                                        style={styles.eventForm}
-                                        scenarioId={scenario?.id}
-                                        character={selectedCharacter}
-                                    />
-                                </div>
-
-                                <div style={styles.formColumn}>
-                                    <EventForms.ElementConsumption
-                                        style={styles.eventForm}
-                                        scenarioId={scenario?.id}
-                                        character={selectedCharacter}
-                                    />
-                                </div>
-
-                                <div style={styles.formColumn}>
-                                    <EventForms.StatusApplied
-                                        style={styles.eventForm}
-                                        scenarioId={scenario?.id}
-                                        character={selectedCharacter}
-                                    />
-                                </div>
-
-                                <div style={styles.formColumn}>
-                                    <EventForms.StatusReceived
-                                        style={styles.eventForm}
-                                        scenarioId={scenario?.id}
-                                        character={selectedCharacter}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    }
+                        <EventForms.CreatureKilled
+                            style={styles.eventForm}
+                            scenarioId={scenario?.id}
+                            scenarioLevel={scenario?.level}
+                        />
+                    </div>
                 </div>
             </div>
         </LoadingWrapper >

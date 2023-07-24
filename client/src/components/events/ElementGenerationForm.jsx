@@ -6,7 +6,12 @@ import { HostedImage } from '../core';
 import { useElementsApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
-const ElementGenerationForm = ({ style, character, scenarioId }) => {
+const ElementGenerationForm = ({
+    style,
+    character = {},
+    scenarioId,
+    saveLabel = 'Save Created'
+}) => {
 
     const { elements } = useContext(EnumContext);
     const { postGeneratedBatch } = useElementsApi();
@@ -68,7 +73,7 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Element Generation
+                Element Creation
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 {
@@ -98,7 +103,7 @@ const ElementGenerationForm = ({ style, character, scenarioId }) => {
 
             <div style={{ marginTop: 10 }}>
                 <Button onClick={handleSaveData}>
-                    Save
+                    {saveLabel}
                 </Button>
             </div>
         </div>

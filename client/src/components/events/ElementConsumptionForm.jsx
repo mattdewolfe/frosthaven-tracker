@@ -6,7 +6,12 @@ import { HostedImage } from '../core';
 import { useElementsApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
-const ElementConsumptionForm = ({ style, character, scenarioId }) => {
+const ElementConsumptionForm = ({
+    style,
+    character = {},
+    scenarioId,
+    saveLabel = 'Save Consumed'
+}) => {
 
     const { elements } = useContext(EnumContext);
     const { postConsumedBatch } = useElementsApi();
@@ -98,7 +103,7 @@ const ElementConsumptionForm = ({ style, character, scenarioId }) => {
 
             <div style={{ marginTop: 10 }}>
                 <Button onClick={handleSaveData}>
-                    Save
+                    {saveLabel}
                 </Button>
             </div>
         </div>

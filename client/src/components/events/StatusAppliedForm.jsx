@@ -6,7 +6,12 @@ import { HostedImage } from '../core';
 import { useStatusApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
-const StatusAppliedForm = ({ style, character, scenarioId }) => {
+const StatusAppliedForm = ({
+    style,
+    character,
+    scenarioId,
+    saveLabel = 'Save Applied'
+}) => {
 
     const { statusEffects } = useContext(EnumContext);
     const { postAppliedBatch } = useStatusApi();
@@ -98,7 +103,7 @@ const StatusAppliedForm = ({ style, character, scenarioId }) => {
 
             <div style={{ marginTop: 10 }}>
                 <Button onClick={handleSaveData}>
-                    Save
+                    {saveLabel}
                 </Button>
             </div>
         </div>
