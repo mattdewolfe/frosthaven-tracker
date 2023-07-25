@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles';
 
+import bonfire3 from './assets/bonfire3.gif';
+
 import Pages from './pages';
 import { RouteMap, DynamicRoutes } from './routes';
 import { Background, Navbar } from './components/core';
@@ -35,28 +37,38 @@ export function App() {
         <EnumProvider>
             <PlayerProvider>
                 <BrowserRouter>
-                    <Navbar />
-                    <Background />
+                    <div style={{
+                        width: '100vw',
+                        height: '100vh',
+                    }}>
+                        <Background />
+                        <Navbar />
 
-                    <div style={{ width: '100%', height: '100%', overflow: 'auto' }}>
-                        {
-                            loading === true &&
-                            <div>Loading...</div>
-                        }
-                        {
-                            loading === false &&
-                            <Routes >
-                                <Route path={RouteMap.HOME} element={<Pages.Home />} />
-                                <Route exact path={RouteMap.PLAYERS} element={<Pages.Players />} />
-                                <Route exact path={RouteMap.SCENARIOS} element={<Pages.Scenarios />} />
-                                <Route exact path={DynamicRoutes.SINGLE_SCENARIO} element={<Pages.SingleScenario />} />
-                                <Route exact path={DynamicRoutes.SINGLE_CHARACTER} element={<Pages.SingleCharacter />} />
+                        <div style={{
+                            width: '100%',
+                            background: 'transparent',
+                            overflow: 'hidden',
+                            marginTop: 60,
+                        }}>
+                            {
+                                loading === true &&
+                                <div>Loading...</div>
+                            }
+                            {
+                                loading === false &&
+                                <Routes >
+                                    <Route path={RouteMap.HOME} element={<Pages.Home />} />
+                                    <Route exact path={RouteMap.PLAYERS} element={<Pages.Players />} />
+                                    <Route exact path={RouteMap.SCENARIOS} element={<Pages.Scenarios />} />
+                                    <Route exact path={DynamicRoutes.SINGLE_SCENARIO} element={<Pages.SingleScenario />} />
+                                    <Route exact path={DynamicRoutes.SINGLE_CHARACTER} element={<Pages.SingleCharacter />} />
 
-                                <Route exact path={RouteMap.DEBUG} element={<Pages.Debug />} />
-                                <Route path='example' element={<Pages.Example />} />
-                                <Route path='*' element={<Pages.NotFound />} />
-                            </Routes>
-                        }
+                                    <Route exact path={RouteMap.DEBUG} element={<Pages.Debug />} />
+                                    <Route path='example' element={<Pages.Example />} />
+                                    <Route path='*' element={<Pages.NotFound />} />
+                                </Routes>
+                            }
+                        </div>
                     </div>
                     <ToastContainer />
                 </BrowserRouter>

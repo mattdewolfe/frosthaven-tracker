@@ -7,7 +7,9 @@ const EventForm = ({
     enumData,
     onSubmit,
     title = 'Form',
-    style = {}
+    style = {},
+    saveLabel = 'Save',
+    resetOnSubmit = true
 }) => {
     const rowStyle = {
         display: 'flex',
@@ -15,15 +17,26 @@ const EventForm = ({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 2,
-        gap: 6,
+        gap: 6
     }
+
+    const { fields, defaults = {} } = model;
+
     const keys = useMemo(() => {
-        if (!model) {
+        if (!fields) {
             return [];
         }
 
-        return Object.keys(model);
-    }, [model]);
+        return Object.keys(fields);
+    }, [fields]);
+
+    const getDefault = useCallback((key) => {
+        if (!defaults || !defaults.hasOwnProperty(key)) {
+            return undefined;
+        }
+
+        return defaults[key];
+    }, [defaults]);
 
     const handleSubmit = useCallback((e) => {
         if (!e.target) {
@@ -35,10 +48,10 @@ const EventForm = ({
         let result = {};
 
         for (let i = 0; i < keys.length; i++) {
-            if (model[keys[i]] === 'boolean') {
+            if (fields[keys[i]] === 'boolean') {
                 result[keys[i]] = e.target[i].checked == true;
             }
-            else if (model[keys[i]] === 'string' && e.target[i].value !== '') {
+            else if (fields[keys[i]] === 'string' && e.target[i].value !== '') {
                 result[keys[i]] = e.target[i].value;
             }
             // If this is neither string nor boolean value, we will cast it to a number.
@@ -53,9 +66,11 @@ const EventForm = ({
             }
         }
 
-        e.target.reset();
+        if (resetOnSubmit) {
+            e.target.reset();
+        }
         onSubmit?.(result);
-    }, [keys]);
+    }, [keys, fields, onSubmit, resetOnSubmit]);
 
     return (
         <form
@@ -70,7 +85,7 @@ const EventForm = ({
             </div>
             {
                 keys.map((k, idx) => {
-                    if (model[k] === 'boolean') {
+                    if (fields[k] === 'boolean') {
                         return (
                             <Col key={k + idx}>
                                 <div
@@ -82,12 +97,13 @@ const EventForm = ({
                                         autoComplete='none'
                                         className='form-text'
                                         type='checkbox'
+                                        defaultChecked={getDefault(k)}
                                     />
                                 </div>
                             </Col>
                         );
                     }
-                    else if (model[k] === 'number') {
+                    else if (fields[k] === 'number') {
                         return (
                             <Col key={k + idx}>
                                 <div
@@ -99,12 +115,13 @@ const EventForm = ({
                                         autoComplete='none'
                                         className='form-text'
                                         type='number'
+                                        defaultValue={getDefault(k)}
                                     />
                                 </div>
                             </Col>
                         );
                     }
-                    else if (model[k] === 'string') {
+                    else if (fields[k] === 'string') {
                         return (
                             <Col key={k + idx}>
                                 <div
@@ -116,13 +133,14 @@ const EventForm = ({
                                         autoComplete='none'
                                         className='form-text'
                                         type='text'
+                                        defaultValue={getDefault(k)}
                                     />
                                 </div>
                             </Col>
                         );
                     }
                     else if (enumData) {
-                        const options = enumData[model[k]] ?? [];
+                        const options = enumData[fields[k]] ?? [];
 
                         return (
                             <Col key={k + idx}>
@@ -132,6 +150,7 @@ const EventForm = ({
                                 >
                                     {k}
                                     <select
+                                        defaultValue={getDefault(k)}
                                         autoComplete='none'
                                         className='form-text'
                                         type='text'
@@ -153,7 +172,7 @@ const EventForm = ({
             <div style={{ marginTop: 10 }}>
                 <Button
                     type='submit'>
-                    Save
+                    {saveLabel}
                 </Button>
             </div>
         </form>

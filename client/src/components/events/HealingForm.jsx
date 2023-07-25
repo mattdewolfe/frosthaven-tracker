@@ -1,14 +1,21 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useState } from 'react';
 import { EventColors, Healing } from './EventModels';
 import EventForm from './EventForm';
 import { EnumContext } from '../../contexts';
 import { useHealingApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
+import { CharactersPicker } from '../players';
 
-const CharacterEventForm = ({ character, scenarioId, style }) => {
+const CharacterEventForm = ({ scenarioId, style }) => {
 
     const { creatureClasses, creatureLevels } = useContext(EnumContext);
     const { postNewHeal } = useHealingApi();
+
+    const [activeCharacter, setActiveCharacter] = useState({});
+
+    const handleActiveCharacter = (character) => {
+        setActiveCharacter(character);
+    }
 
     const handleFormSubmission = useCallback((data) => {
         postNewHeal((error, data) => {
@@ -19,26 +26,34 @@ const CharacterEventForm = ({ character, scenarioId, style }) => {
                 globalObserver.sendMsg(Subs.REQUEST_TOAST_MESSAGE, { message: 'Healing Submitted', type: 'success' });
             }
         }, {
-            character_id: character?.id,
-            player_id: character?.id,
+            character_id: activeCharacter?.id,
+            player_id: activeCharacter?.playerId,
             scenario_id: scenarioId,
             ...data
         });
-    }, [character, scenarioId]);
+    }, [activeCharacter, scenarioId]);
 
     return (
-        <EventForm
-            title="Healing"
+        <div
             style={{
                 border: `1px solid ${EventColors.Healing}`,
                 ...style
-            }}
-            model={Healing}
-            character={character}
-            enuenumData={{ creatureClasses, creatureLevels }}
-            scenarioId={scenarioId}
-            onSubmit={handleFormSubmission}
-        />
+            }}>
+
+            <CharactersPicker onCharacterSelected={handleActiveCharacter} />
+
+            <div className='divider' />
+
+            <EventForm
+                title='Healing'
+                saveLabel='Save Healing'
+                model={Healing}
+                character={activeCharacter}
+                enuenumData={{ creatureClasses, creatureLevels }}
+                scenarioId={scenarioId}
+                onSubmit={handleFormSubmission}
+            />
+        </div>
     );
 }
 

@@ -6,7 +6,12 @@ import { HostedImage } from '../core';
 import { useElementsApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 
-const ElementConsumptionForm = ({ style, character, scenarioId }) => {
+const ElementConsumptionForm = ({
+    style,
+    character = {},
+    scenarioId,
+    saveLabel = 'Save Consumed'
+}) => {
 
     const { elements } = useContext(EnumContext);
     const { postConsumedBatch } = useElementsApi();
@@ -68,7 +73,7 @@ const ElementConsumptionForm = ({ style, character, scenarioId }) => {
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Element Consumption
+                Element CONSUMPTION
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 {
@@ -86,7 +91,7 @@ const ElementConsumptionForm = ({ style, character, scenarioId }) => {
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Selected Elements
+                Selected
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 2 }}>
                 {
@@ -98,7 +103,7 @@ const ElementConsumptionForm = ({ style, character, scenarioId }) => {
 
             <div style={{ marginTop: 10 }}>
                 <Button onClick={handleSaveData}>
-                    Save
+                    {saveLabel}
                 </Button>
             </div>
         </div>

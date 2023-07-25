@@ -11,7 +11,7 @@ const Navbar = () => {
     }, [location]);
 
     return (
-        <nav className='nav'>
+        <nav className='nav' style={{ position: "fixed", top: 0, left: 0, right: 0 }}>
             <a href='/' className='site-title'>
                 Frosthaven Stat Tracker
             </a>

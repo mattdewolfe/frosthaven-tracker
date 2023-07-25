@@ -28,12 +28,12 @@ const DropdownPicker = ({ value, onChange, options, style, label = null, mapping
         <div style={{ display: 'flex', flexDirection: 'row', gap: 10, ...style }}>
             {
                 label !== null ?
-                    < div className='form-label'>
+                    <div className='form-label'>
                         {label}
                     </div>
-                    : null
+                    :
+                    null
             }
-
             {
                 useValueSetter ?
                     <select

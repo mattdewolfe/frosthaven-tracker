@@ -24,5 +24,4 @@ statRoutes.get('/healing', HealingController.getById);
 statRoutes.post('/healing', HealingController.post);
 statRoutes.put('/healing', HealingController.put);
 
-
 export default statRoutes;
