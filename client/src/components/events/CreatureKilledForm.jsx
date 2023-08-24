@@ -4,18 +4,11 @@ import EventForm from './EventForm';
 import { EnumContext } from '../../contexts';
 import { useKillsApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
-import { CharactersPicker } from '../players';
 
-const CreatureKilledForm = ({ scenarioId, scenarioLevel, style }) => {
+const CreatureKilledForm = ({ scenarioId, scenarioLevel, style, activeCharacter }) => {
 
     const { creatureClasses, creatureLevels } = useContext(EnumContext);
     const { postNewKill } = useKillsApi();
-
-    const [activeCharacter, setActiveCharacter] = useState({});
-
-    const handleActiveCharacter = (character) => {
-        setActiveCharacter(character);
-    }
 
     const handleFormSubmission = useCallback((data) => {
         postNewKill((error, data) => {
@@ -40,8 +33,6 @@ const CreatureKilledForm = ({ scenarioId, scenarioLevel, style }) => {
                 border: `1px solid ${EventColors.CreatureKilled}`,
                 ...style
             }}>
-
-            <CharactersPicker onCharacterSelected={handleActiveCharacter} />
 
             <div className='divider' />
 

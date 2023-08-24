@@ -4,18 +4,11 @@ import EventForm from './EventForm';
 import { EnumContext } from '../../contexts';
 import { useHealingApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
-import { CharactersPicker } from '../players';
 
-const CharacterEventForm = ({ scenarioId, style }) => {
+const CharacterEventForm = ({ scenarioId, style, activeCharacter }) => {
 
     const { creatureClasses, creatureLevels } = useContext(EnumContext);
     const { postNewHeal } = useHealingApi();
-
-    const [activeCharacter, setActiveCharacter] = useState({});
-
-    const handleActiveCharacter = (character) => {
-        setActiveCharacter(character);
-    }
 
     const handleFormSubmission = useCallback((data) => {
         postNewHeal((error, data) => {
@@ -39,8 +32,6 @@ const CharacterEventForm = ({ scenarioId, style }) => {
                 border: `1px solid ${EventColors.Healing}`,
                 ...style
             }}>
-
-            <CharactersPicker onCharacterSelected={handleActiveCharacter} />
 
             <div className='divider' />
 
