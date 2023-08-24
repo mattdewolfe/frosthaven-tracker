@@ -33,8 +33,6 @@ function useTurnApi() {
     }
 
     function postNewTurn(callback, data) {
-        console.log(data);
-
         callbackWrapper(postRequest('/stats/turn', data), callback);
     }
 
