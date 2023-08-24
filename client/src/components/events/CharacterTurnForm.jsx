@@ -40,8 +40,6 @@ const CharacterEventForm = ({ scenarioId, style, activeCharacter }) => {
                 ...style
             }}>
 
-            <div className='divider' />
-
             <EventForm
                 title='Character Turn'
                 saveLabel='Save Turn'

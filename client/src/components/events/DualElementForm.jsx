@@ -13,7 +13,6 @@ const DualElementForm = ({ scenarioId, style, activeCharacter }) => {
 
     const onSelectForm = (e) => {
         setVisibleForm(e.target?.id);
-        console.log(e.target.id);
     }
 
     return (

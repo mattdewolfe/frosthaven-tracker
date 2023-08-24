@@ -33,8 +33,6 @@ const DamageTakenForm = ({ scenarioId, style, activeCharacter }) => {
                 ...style
             }}>
 
-            <div className='divider' />
-
             <EventForm
                 title='Damage Taken'
                 saveLabel='Save Damage Taken'

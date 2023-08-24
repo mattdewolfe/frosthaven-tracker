@@ -69,12 +69,12 @@ const StatusReceivedForm = ({
             border: `1px dashed white`,
             ...style
         }}>
-            <div
+            <h4
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Status RECEIVED
-            </div>
+                Status Received
+            </h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 2 }}>
                 {
                     statusEffects.map(e => {

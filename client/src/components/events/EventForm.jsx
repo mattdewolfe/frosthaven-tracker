@@ -77,12 +77,12 @@ const EventForm = ({
             style={style}
             onSubmit={handleSubmit}
         >
-            <div
+            <h4
                 className='form-label'
                 style={{ color: 'orange' }}
             >
                 {title}
-            </div>
+            </h4>
             {
                 keys.map((k, idx) => {
                     if (fields[k] === 'boolean') {

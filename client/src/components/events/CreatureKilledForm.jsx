@@ -34,8 +34,6 @@ const CreatureKilledForm = ({ scenarioId, scenarioLevel, style, activeCharacter 
                 ...style
             }}>
 
-            <div className='divider' />
-
             <EventForm
                 resetOnSubmit={false}
                 title='Creature Killed'

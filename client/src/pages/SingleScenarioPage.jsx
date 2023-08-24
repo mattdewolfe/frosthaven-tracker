@@ -14,7 +14,7 @@ const SingleScenarioPage = () => {
         characterForms: {
             display: 'grid',
             gridTemplateColumns: '1fr 1fr 1fr 1fr',
-            gap: 4
+            gap: 10
         },
         playerDetails: {
             display: 'flex',
@@ -31,7 +31,8 @@ const SingleScenarioPage = () => {
             borderRadius: 6,
             padding: 6,
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            justifyContent: 'space-between'
         }
     });
 
@@ -101,20 +102,21 @@ const SingleScenarioPage = () => {
                         className='form-label'>
                         <EventForms.CharacterTurn {...{ ...commonProps }} />
 
-                        <EventForms.Healing {...commonProps} />
-
                         <EventForms.DamageDealt {...commonProps} />
+
+                        <EventForms.Healing {...commonProps} />
 
                         <EventForms.DamageTaken {...commonProps} />
 
-                        <EventForms.DualElement {...commonProps} />
+                        <EventForms.ElementConsumed {...commonProps} />
 
-                        <EventForms.DualStatus {...commonProps} />
+                        <EventForms.StatusReceived {...commonProps} />
 
-                        <EventForms.CreatureKilled
-                            scenarioLevel={scenario?.level}
-                            {...commonProps}
-                        />
+                        <EventForms.ElementCreated {...commonProps} />
+
+                        <EventForms.StatusApplied {...commonProps} />
+
+
                     </div>
                 </div>
             </div>
