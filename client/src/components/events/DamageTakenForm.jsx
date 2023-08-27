@@ -4,19 +4,11 @@ import { EnumContext } from '../../contexts';
 import { useDamageApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
 import EventForm from './EventForm';
-import { CharactersPicker } from '../players';
 
-const DamageTakenForm = ({ scenarioId, style }) => {
+const DamageTakenForm = ({ scenarioId, style, activeCharacter }) => {
 
     const { damageSources } = useContext(EnumContext);
     const { postDamageTaken } = useDamageApi();
-
-    const [activeCharacter, setActiveCharacter] = useState({});
-
-    const handleActiveCharacter = (character) => {
-        setActiveCharacter(character);
-    }
-
 
     const handleFormSubmission = useCallback((data) => {
         postDamageTaken((error, data) => {
@@ -40,10 +32,6 @@ const DamageTakenForm = ({ scenarioId, style }) => {
                 border: `1px solid ${EventColors.DamageTaken}`,
                 ...style
             }}>
-
-            <CharactersPicker onCharacterSelected={handleActiveCharacter} />
-
-            <div className='divider' />
 
             <EventForm
                 title='Damage Taken'

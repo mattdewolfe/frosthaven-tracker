@@ -1,16 +1,8 @@
 const DamageTaken = Object.freeze({
     fields: {
         source_id: 'damageSources',
-        modifier_card: 'string',
-        is_poisoned: 'boolean',
-        is_brittle: 'boolean',
-        is_warded: 'boolean',
-        shield: 'number',
         burned_card: 'boolean',
         damage: 'number'
-    },
-    defaults: {
-        shield: 0
     }
 });
 
@@ -18,16 +10,10 @@ const DamageDealt = Object.freeze({
     fields: {
         source_id: 'damageSources',
         attack_value: 'number',
-        modifier_card: 'string',
-        target_poisoned: 'boolean',
-        target_brittle: 'boolean',
-        target_warded: 'boolean',
-        target_shield: 'number',
         burned_card: 'boolean',
         damage: 'number'
     },
     defaults: {
-        target_shield: 0,
         source_id: 2
     }
 });
@@ -36,10 +22,6 @@ const CreatureKilled = Object.freeze({
     fields: {
         creature_id: 'creatureClasses',
         creature_level: 'creatureLevels',
-        overkill: 'number'
-    },
-    defaults: {
-        overkill: 0
     }
 });
 

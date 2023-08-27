@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CharactersPicker } from '../players';
 import ElementGenerationForm from './ElementGenerationForm';
 import ElementConsumptionForm from './ElementConsumptionForm';
 
@@ -8,18 +7,12 @@ const FormKeys = {
     Consumed: 'consumed'
 };
 
-const DualElementForm = ({ scenarioId, style }) => {
+const DualElementForm = ({ scenarioId, style, activeCharacter }) => {
 
     const [visibleForm, setVisibleForm] = useState(FormKeys.Generated);
-    const [activeCharacter, setActiveCharacter] = useState({});
-
-    const handleActiveCharacter = (character) => {
-        setActiveCharacter(character);
-    }
 
     const onSelectForm = (e) => {
         setVisibleForm(e.target?.id);
-        console.log(e.target.id);
     }
 
     return (
@@ -28,8 +21,6 @@ const DualElementForm = ({ scenarioId, style }) => {
                 border: `1px dashed lightgrey`,
                 ...style
             }}>
-
-            <CharactersPicker onCharacterSelected={handleActiveCharacter} />
 
             <div style={{ display: 'flex', gap: 6 }}>
                 <input

@@ -69,12 +69,12 @@ const ElementConsumptionForm = ({
             border: `1px dashed white`,
             ...style
         }}>
-            <div
+            <h4
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Element CONSUMPTION
-            </div>
+                Element Consumed
+            </h4>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 {
                     elements.map(e => {

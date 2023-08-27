@@ -4,18 +4,11 @@ import EventForm from './EventForm';
 import { EnumContext } from '../../contexts';
 import { useTurnApi } from '../../api';
 import { Subs, globalObserver } from '../../utils/Observers';
-import { CharactersPicker } from '../players';
 
-const CharacterEventForm = ({ scenarioId, style }) => {
+const CharacterEventForm = ({ scenarioId, style, activeCharacter }) => {
 
     const { postNewTurn } = useTurnApi();
     const { creatureClasses, creatureLevels } = useContext(EnumContext);
-
-    const [activeCharacter, setActiveCharacter] = useState({});
-
-    const handleActiveCharacter = (character) => {
-        setActiveCharacter(character);
-    }
 
     const handleFormSubmission = useCallback((data) => {
 
@@ -46,10 +39,6 @@ const CharacterEventForm = ({ scenarioId, style }) => {
                 border: `1px solid ${EventColors.CharacterTurn}`,
                 ...style
             }}>
-
-            <CharactersPicker onCharacterSelected={handleActiveCharacter} />
-
-            <div className='divider' />
 
             <EventForm
                 title='Character Turn'
