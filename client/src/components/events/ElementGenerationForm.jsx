@@ -69,12 +69,12 @@ const ElementGenerationForm = ({
             border: `1px solid white`,
             ...style
         }}>
-            <div
+            <h4
                 className='form-label'
                 style={{ color: 'orange' }}
             >
-                Element CREATION
-            </div>
+                Element Created
+            </h4>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 {
                     elements.map(e => {

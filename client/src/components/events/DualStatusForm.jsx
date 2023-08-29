@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CharactersPicker } from '../players';
 import StatusAppliedForm from './StatusAppliedForm';
 import StatusReceivedForm from './StatusReceivedForm';
 
@@ -8,14 +7,9 @@ const FormKeys = {
     Received: 'received'
 };
 
-const DualStatusForm = ({ scenarioId, style }) => {
+const DualStatusForm = ({ scenarioId, style, activeCharacter }) => {
 
     const [visibleForm, setVisibleForm] = useState(FormKeys.Applied);
-    const [activeCharacter, setActiveCharacter] = useState({});
-
-    const handleActiveCharacter = (character) => {
-        setActiveCharacter(character);
-    }
 
     const onSelectForm = (e) => {
         setVisibleForm(e.target?.id);
@@ -27,8 +21,6 @@ const DualStatusForm = ({ scenarioId, style }) => {
                 border: `1px dashed lightgrey`,
                 ...style
             }}>
-
-            <CharactersPicker onCharacterSelected={handleActiveCharacter} />
 
             <div style={{ display: 'flex', gap: 6 }}>
 
