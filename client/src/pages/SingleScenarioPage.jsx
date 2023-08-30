@@ -121,6 +121,7 @@ const SingleScenarioPage = () => {
 
                         <EventForms.StatusApplied {...commonProps} />
 
+                        <EventForms.CreatureKilled {...commonProps} />
 
                     </div>
                 </div>

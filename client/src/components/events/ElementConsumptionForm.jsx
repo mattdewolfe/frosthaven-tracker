@@ -102,7 +102,8 @@ const ElementConsumptionForm = ({
             </div>
 
             <div style={{ marginTop: 10 }}>
-                <Button onClick={handleSaveData}>
+                <Button variant='danger'
+                    onClick={handleSaveData}>
                     {saveLabel}
                 </Button>
             </div>

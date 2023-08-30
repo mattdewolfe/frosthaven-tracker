@@ -73,10 +73,14 @@ const EventForm = ({
     }, [keys, fields, onSubmit, resetOnSubmit]);
 
     return (
-        <form
-            style={style}
-            onSubmit={handleSubmit}
-        >
+        <form onSubmit={handleSubmit}
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+                justifyContent: 'space-between',
+                ...style
+            }}>
             <h4
                 className='form-label'
                 style={{ color: 'orange' }}
@@ -175,7 +179,7 @@ const EventForm = ({
                     {saveLabel}
                 </Button>
             </div>
-        </form>
+        </form >
     );
 }
 

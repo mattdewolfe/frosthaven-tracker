@@ -6,6 +6,7 @@ import Debug from './DebugPage';
 import Example from './ExamplePage';
 import SingleScenario from './SingleScenarioPage';
 import SingleCharacter from './SingleCharacterPage';
+import DeckBuilder from './DeckBuilderPage';
 
 const Pages = {
     Home,
@@ -15,7 +16,8 @@ const Pages = {
     NotFound,
     Example,
     SingleScenario,
-    SingleCharacter
+    SingleCharacter,
+    DeckBuilder
 };
 
 export default Pages;

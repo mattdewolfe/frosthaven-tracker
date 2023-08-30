@@ -102,7 +102,8 @@ const StatusAppliedForm = ({
             </div>
 
             <div style={{ marginTop: 10 }}>
-                <Button onClick={handleSaveData}>
+                <Button variant='success'
+                    onClick={handleSaveData}>
                     {saveLabel}
                 </Button>
             </div>

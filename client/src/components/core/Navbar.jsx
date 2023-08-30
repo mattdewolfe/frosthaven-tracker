@@ -18,6 +18,12 @@ const Navbar = () => {
 
             <ul>
                 <li>
+                    <Link to={RouteMap.DECK_BUILDER}>
+                        Deck Builder
+                    </Link>
+                </li>
+
+                <li>
                     <Link to={RouteMap.PLAYERS}>
                         Players
                     </Link>
