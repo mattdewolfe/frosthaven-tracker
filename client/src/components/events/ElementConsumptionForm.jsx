@@ -8,7 +8,7 @@ import { Subs, globalObserver } from '../../utils/Observers';
 
 const ElementConsumptionForm = ({
     style,
-    character = {},
+    activeCharacter = {},
     scenarioId,
     saveLabel = 'Save Consumed'
 }) => {
@@ -41,11 +41,11 @@ const ElementConsumptionForm = ({
             }
         }, {
             scenario_id: scenarioId,
-            player_id: character?.playerId,
-            character_id: character?.id,
+            player_id: activeCharacter?.playerId,
+            character_id: activeCharacter?.id,
             element_ids: selectedElements
         })
-    }, [character, scenarioId, selectedElements]);
+    }, [activeCharacter, scenarioId, selectedElements]);
 
     const renderEntry = useCallback((id, idx) => {
         const element = elements.find(el => el?.id == id);

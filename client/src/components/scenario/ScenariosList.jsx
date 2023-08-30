@@ -30,7 +30,7 @@ const ScenarioEntry = ({ data, style, allOutcomes, onClick }) => {
     );
 }
 
-const ScenarioList = ({ style, scenarios, title, onScenarioClicked }) => {
+const ScenarioList = ({ style, scenarios = [], title, onScenarioClicked }) => {
 
     const { scenarioOutcomes } = useContext(EnumContext);
 

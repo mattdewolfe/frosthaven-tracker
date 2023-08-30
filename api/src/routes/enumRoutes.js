@@ -6,7 +6,8 @@ import {
     CharacterClassController,
     StatusEffectController,
     ElementController,
-    DamageSourceController
+    DamageSourceController,
+    AttackModifierController
 } from '../controllers';
 
 const enumRoutes = Router();
@@ -18,5 +19,6 @@ enumRoutes.get('/character_classes', CharacterClassController.getAll);
 enumRoutes.get('/status_effects', StatusEffectController.getAll);
 enumRoutes.get('/elements', ElementController.getAll);
 enumRoutes.get('/damage_sources', DamageSourceController.getAll);
+enumRoutes.get('/attack_modifiers', AttackModifierController.getAll)
 
 export default enumRoutes;
