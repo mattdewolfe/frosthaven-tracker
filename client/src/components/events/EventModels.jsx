@@ -2,19 +2,27 @@ const DamageTaken = Object.freeze({
     fields: {
         source_id: 'damageSources',
         burned_card: 'boolean',
-        damage: 'number'
+        shield: 'number',
+        damage: 'number',
+    },
+    defaults: {
+        source_id: 1,
+        burnder_card: false,
+        shield: 0,
+        damage: 0
     }
 });
 
 const DamageDealt = Object.freeze({
     fields: {
         source_id: 'damageSources',
-        attack_value: 'number',
-        burned_card: 'boolean',
+        modifier_id: 'attackModifiers',
         damage: 'number'
     },
     defaults: {
-        source_id: 2
+        source_id: 2,
+        modifier_id: 1,
+        damage: 0
     }
 });
 

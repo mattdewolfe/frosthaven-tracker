@@ -7,9 +7,8 @@ import EventForm from './EventForm';
 
 const DamageDealtForm = ({ scenarioId, style, activeCharacter }) => {
 
-    const { damageSources } = useContext(EnumContext);
+    const { damageSources, attackModifiers } = useContext(EnumContext);
     const { postDamageDealt } = useDamageApi();
-
 
     const handleFormSubmission = useCallback((data) => {
         postDamageDealt((error, result) => {
@@ -38,7 +37,7 @@ const DamageDealtForm = ({ scenarioId, style, activeCharacter }) => {
                 title='Damage Dealt'
                 saveLabel='Save Damage Dealt'
                 model={DamageDealt}
-                enumData={{ damageSources }}
+                enumData={{ damageSources, attackModifiers }}
                 onSubmit={handleFormSubmission}
             />
         </div>

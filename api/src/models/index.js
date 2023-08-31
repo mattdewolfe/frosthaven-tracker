@@ -17,6 +17,7 @@ import StatusReceived from './statusReceived';
 import DamageDealt from './damageDealt';
 import DamageTaken from './damageTaken';
 import Healing from './healing';
+import AttackModifier from './attackModifier';
 
 export {
     CreatureClass,
@@ -37,5 +38,6 @@ export {
     StatusReceived,
     DamageDealt,
     DamageTaken,
-    Healing
+    Healing,
+    AttackModifier
 };
