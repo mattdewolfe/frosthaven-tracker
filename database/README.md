@@ -78,7 +78,7 @@ following variables and values:
 ```bash
 POSTGRES_USER=master_user
 POSTGRES_PASSWORD=<PASSWORD>
-POSTGRES_DB=parliament
+POSTGRES_DB=tracker
 ```
 
 > NOTE: For every environment that you want to apply the schema updates to, it is necessary to create a `.env.<environment>` file containing the correct values.
@@ -102,22 +102,6 @@ PROFILES_<environment>=(
 ### Updating the database
 
 The `docker-compose.yml` file in this (`database`) folder makes use of multiple environment variables that should be made available at the time of running. An easy way to set these variables is to create a `.env` file within the folder. It will be automatically picked up and used by Docker Compose.
-
-#### Environment Variables
-
-| Name | Description | Example |
-| ---- | ----------- | ------- |
-| BAKE_MODE | The direction in which the schema should be applied (can be either `up` or `down`) | BAKE_MODE=up |
-| BAKE_ENV | The environment to which the schema changes should be applied (corresponds to the `PROFILES_<environment>` entries within the `.bakerc` file) | BAKE_ENV=local |
-| BAKE_MIGRATION | The name of the schema migration file that should be run (do not include the `_<up\|down>.sql` portion of the filename) | BAKE_MIGRATION=0_initial-schema |
-
-#### Applying Schema Update
-
-Running the following command will execute the `bake.sh` script within a Docker container so you don't have to use a specific terminal or dependencies.
-
-```bash
-$ docker compose run bake
-```
 
 ## Contacts
 

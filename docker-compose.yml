@@ -29,23 +29,6 @@ services:
     depends_on:
       - fr-db
 
-  fr-frontend:
-    container_name: fr-frontend
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    environment:
-      - APP_TARGET=local
-      - NODE_ENV=development
-    ports:
-      - 3002:3002
-    volumes:
-      - ./frontend:/usr/src/app
-      - fr-frontend-nodemodules:/usr/src/app/node_modules
-    depends_on:
-      - fr-api
-
 volumes:
   fr-db-data:
   fr-api-nodemodules:
-  fr-frontend-nodemodules:

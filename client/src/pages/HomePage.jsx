@@ -1,30 +1,15 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from 'react';
 
 const HomePage = () => {
 
-    const [randomNumber, setRandomNumber] = useState(Math.random());
-
-    const newRandomNumber = () => {
-        setRandomNumber(Math.random());
-    };
-
     return (
-        <div>
-            <h3>Bonfire?</h3>
-            <br />
-            <div>
-                {`The Random Number: ${randomNumber}`}
-                <br />
-                <button onClick={newRandomNumber}>
-                    Get New Number
-                </button>
-            </div>
-            <div className="orange-div">
-                This is a classNamed div.
-            </div>
-        </div >
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 20 }}>
+            <h4 className='light-text'>
+                WELCOME!
+            </h4>
+        </div>
     );
-};
+}
 
 export default HomePage;
+

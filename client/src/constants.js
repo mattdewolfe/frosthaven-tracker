@@ -1,1 +1,8 @@
-// Define some const variables and export.
+// Values for any data written to browser storage
+const StorageKeys = Object.freeze({
+    API_KEY: "enterprise_api_key"
+});
+
+export {
+    StorageKeys
+}
