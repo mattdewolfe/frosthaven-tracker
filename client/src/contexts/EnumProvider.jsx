@@ -23,9 +23,10 @@ const EnumProvider = ({ children }) => {
         getCreatureClasses,
         getDamageSources,
         getCreatureLevels,
-        getElements } = useEnumsApi();
+        getElements,
+        getAttackModifiers } = useEnumsApi();
 
-    const [loading, setLoading] = useState(7);
+    const [loading, setLoading] = useState(8);
     const [statusEffects, setStatusEffects] = useState([]);
     const [scenarioOutcomes, setScenarioOutcomes] = useState([]);
     const [characterClasses, setCharacterClasses] = useState([]);
@@ -33,6 +34,7 @@ const EnumProvider = ({ children }) => {
     const [damageSources, setDamageSources] = useState([]);
     const [elements, setElements] = useState([]);
     const [creatureLevels, setCreatureLevels] = useState([]);
+    const [attackModifiers, setAttackModifiers] = useState([]);
 
     const handleStatusEffects = (error, data) => {
         if (error) {
@@ -111,6 +113,17 @@ const EnumProvider = ({ children }) => {
         setLoading(prev => prev - 1);
     }
 
+    const handleAttackModifiers = (error, data) => {
+        if (error) {
+            console.warn(error);
+        }
+        else if (isMounted()) {
+            setAttackModifiers([...data]);
+        }
+
+        setLoading(prev => prev - 1);
+    }
+
     useEffect(() => {
         getStatusEffects(handleStatusEffects);
         getScenarioOutcomes(handleScenarioOutcomes);
@@ -119,6 +132,7 @@ const EnumProvider = ({ children }) => {
         getDamageSources(handleDamageSources);
         getCreatureLevels(handleCreatureLevels);
         getElements(handleElements);
+        getAttackModifiers(handleAttackModifiers);
     }, []);
 
     return (
@@ -131,7 +145,8 @@ const EnumProvider = ({ children }) => {
                 creatureClasses,
                 damageSources,
                 elements,
-                creatureLevels
+                creatureLevels,
+                attackModifiers
             }}>
             <LoadingWrapper loading={loading > 0}>
                 {children}

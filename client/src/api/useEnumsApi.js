@@ -31,6 +31,10 @@ function useEnumsApi() {
         callbackWrapper(getRequest('/enums/character_classes'), callback);
     }
 
+    function getAttackModifiers(callback) {
+        callbackWrapper(getRequest('/enums/attack_modifiers'), callback);
+    }
+
     return {
         getStatusEffects,
         getElements,
@@ -38,7 +42,8 @@ function useEnumsApi() {
         getDamageSources,
         getCreatureLevels,
         getCreatureClasses,
-        getCharacterClasses
+        getCharacterClasses,
+        getAttackModifiers
     };
 }
 

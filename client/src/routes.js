@@ -4,7 +4,8 @@ const RouteMap = {
     PLAYERS: '/players',
     DEBUG: '/debug',
     EXAMPLE: '/example',
-    CHARACTERS: '/characters'
+    CHARACTERS: '/characters',
+    DECK_BUILDER: '/deckbuilder'
 };
 
 const DynamicRoutes = {

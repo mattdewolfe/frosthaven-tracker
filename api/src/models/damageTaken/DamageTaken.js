@@ -25,26 +25,6 @@ export default class DamageTaken extends Model {
         this.character_id = props.character_id;
 
         /**
-         * @type {boolean}
-         */
-        this.modifier_card = props.modifier_card;
-
-        /**
-         * @type {boolean}
-         */
-        this.is_poisoned = props.is_poisoned;
-
-        /**
-         * @type {boolean}
-         */
-        this.is_brittle = props.is_brittle;
-
-        /**
-         * @type {boolean}
-         */
-        this.is_warded = props.is_warded;
-
-        /**
          * @type {number}
          */
         this.shield = props.shield;
@@ -61,13 +41,7 @@ export default class DamageTaken extends Model {
     }
 
     static checkQueryVariableType(name) {
-        if (name === 'modifier_card') {
-            return QueryVariableType.String;
-        }
-        else if (name === 'is_poisoned'
-            || name === 'is_brittle'
-            || name === 'is_warded'
-            || name === 'burned_card') {
+        if (name === 'burned_card') {
             return QueryVariableType.Boolean;
         }
 

@@ -124,6 +124,22 @@ CREATE TABLE tracker.scenario_outcome (
 );
 
 --
+-- Attack Modifier
+--
+CREATE TABLE tracker.attack_modifier (
+    id INTEGER GENERATED ALWAYS AS IDENTITY (
+       SEQUENCE NAME tracker.attack_modifier_id_seq
+       START WITH 1
+       INCREMENT BY 1
+       NO MINVALUE
+       NO MAXVALUE
+       CACHE 1
+    ) NOT NULL,
+    name TEXT NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+--
 -- Create Scenario
 --
 CREATE TABLE tracker.scenario (
@@ -294,18 +310,13 @@ CREATE TABLE tracker.damage_dealt (
     player_id INTEGER NOT NULL,
     scenario_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
-    attack_value INTEGER DEFAULT NULL,
-    modifier_card VARCHAR DEFAULT NULL,
-    target_poisoned BOOLEAN DEFAULT FALSE,
-    target_brittle BOOLEAN DEFAULT FALSE,
-    target_warded BOOLEAN DEFAULT FALSE,
-    target_shield INTEGER DEFAULT 0,
-    burned_card BOOLEAN DEFAULT FALSE,
+    modifier_id INTEGER NOT NULL,
     damage INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     CONSTRAINT player_id_fkey FOREIGN KEY ("player_id") REFERENCES tracker.player(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT character_id_fkey FOREIGN KEY ("character_id") REFERENCES tracker.player_character(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT scenario_fkey FOREIGN KEY ("scenario_id") REFERENCES tracker.scenario(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT modifier_id_fkey FOREIGN KEY ("modifier_id") REFERENCES tracker.attack_modifier(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT damage_source_fkey FOREIGN KEY ("source_id") REFERENCES tracker.damage_source(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
@@ -325,10 +336,6 @@ CREATE TABLE tracker.damage_taken (
     player_id INTEGER NOT NULL,
     scenario_id INTEGER NOT NULL,
     character_id INTEGER NOT NULL,
-    modifier_card VARCHAR DEFAULT NULL,
-    is_poisoned BOOLEAN DEFAULT FALSE,
-    is_brittle BOOLEAN DEFAULT FALSE,
-    is_warded BOOLEAN DEFAULT FALSE,
     shield INTEGER DEFAULT 0,
     burned_card BOOLEAN DEFAULT FALSE,
     damage INTEGER NOT NULL DEFAULT 0,
@@ -422,6 +429,8 @@ CREATE TABLE tracker.element_consumed (
 INSERT INTO tracker.creature_level (name) VALUES ('Normal'), ('Elite'), ('Boss'), ('Objective'), ('Other');
 
 INSERT INTO tracker.damage_source (name) VALUES ('Creature'), ('Player'), ('Self'), ('Retaliate'), ('Wound'), ('Bane'), ('Terrain'), ('Trap'), ('Short Rest'), ('Scenario'), ('Objective'), ('Other');
+
+INSERT INTO tracker.attack_modifier (name) VALUES ('0'), ('1'), ('2'), ('-1'), ('-2'), ('Miss'), ('Crit'), ('Curse'), ('Bless'), ('3'), ('4'), ('5'), ('6');
 
 INSERT INTO tracker.character_class (name, icon_url) VALUES 
 ('Blink Blade', '/images/characters/fh-blinkblade.png'), 

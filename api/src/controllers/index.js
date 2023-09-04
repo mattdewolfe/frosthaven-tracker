@@ -14,6 +14,7 @@ import CreatureKillController from './CreatureKillController';
 import DamageSourceController from './DamageSourceController';
 import DamageRecordsController from './DamageRecordsController';
 import HealingController from './HealingController';
+import AttackModifierController from './AttackModifierController';
 
 export {
     BaseController,
@@ -31,5 +32,6 @@ export {
     CreatureKillController,
     DamageSourceController,
     DamageRecordsController,
-    HealingController
+    HealingController,
+    AttackModifierController
 }

@@ -8,7 +8,7 @@ import { Subs, globalObserver } from '../../utils/Observers';
 
 const StatusReceivedForm = ({
     style,
-    character,
+    activeCharacter,
     scenarioId,
     saveLabel = 'Save Received'
 }) => {
@@ -41,11 +41,11 @@ const StatusReceivedForm = ({
             }
         }, {
             scenario_id: scenarioId,
-            player_id: character?.playerId,
-            character_id: character?.id,
+            player_id: activeCharacter?.playerId,
+            character_id: activeCharacter?.id,
             status_ids: selected
         })
-    }, [character, scenarioId, selected]);
+    }, [activeCharacter, scenarioId, selected]);
 
     const renderEntry = useCallback((id, idx) => {
         const element = statusEffects.find(el => el?.id == id);
@@ -102,7 +102,8 @@ const StatusReceivedForm = ({
             </div>
 
             <div style={{ marginTop: 10 }}>
-                <Button onClick={handleSaveData}>
+                <Button variant='danger'
+                    onClick={handleSaveData}>
                     {saveLabel}
                 </Button>
             </div>

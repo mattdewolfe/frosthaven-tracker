@@ -14,6 +14,11 @@ export default class DamageDealt extends Model {
          */
         this.source_id = props.source_id;
 
+        /** 
+         * @type {number}
+         */
+        this.player_id = props.player_id;
+
         /**
          * @type {number}
          */
@@ -27,37 +32,7 @@ export default class DamageDealt extends Model {
         /**
          * @type {number}
          */
-        this.attack_value = props.attack_value;
-
-        /**
-         * @type {string}
-         */
-        this.modifier_card = props.modifier_card;
-
-        /**
-         * @type {boolean}
-         */
-        this.target_poisoned = props.target_poisoned;
-
-        /**
-         * @type {boolean}
-         */
-        this.target_brittle = props.target_brittle;
-
-        /**
-         * @type {boolean}
-         */
-        this.target_warded = props.target_warded;
-
-        /**
-         * @type {number}
-         */
-        this.target_shield = props.target_shield;
-
-        /**
-         * @type {boolean}
-         */
-        this.burned_card = props.burned_card;
+        this.modifier_id = props.modifier_id;
 
         /**
          * @type {number}
@@ -66,16 +41,6 @@ export default class DamageDealt extends Model {
     }
 
     static checkQueryVariableType(name) {
-        if (name === 'modifier_card') {
-            return QueryVariableType.String;
-        }
-        else if (name === 'target_poisoned'
-            || name === 'target_brittle'
-            || name === 'target_warded'
-            || name === 'burned_card') {
-            return QueryVariableType.Boolean;
-        }
-
         return QueryVariableType.Number;
     }
 }

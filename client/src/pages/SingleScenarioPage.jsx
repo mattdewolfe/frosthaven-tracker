@@ -72,10 +72,15 @@ const SingleScenarioPage = () => {
     }
 
     const commonProps = useMemo(() => {
-        return {
-            style: styles.eventForm,
-            activeCharacter: activeCharacter,
-            scenarioId: scenario?.id
+        if (scenario) {
+            return {
+                style: styles.eventForm,
+                activeCharacter: activeCharacter,
+                scenarioId: scenario?.id
+            }
+        }
+        else {
+            return {}
         }
     }, [scenario, activeCharacter]);
 
@@ -100,7 +105,7 @@ const SingleScenarioPage = () => {
                     <div
                         style={styles.characterForms}
                         className='form-label'>
-                        <EventForms.CharacterTurn {...{ ...commonProps }} />
+                        <EventForms.CharacterTurn {...commonProps} />
 
                         <EventForms.DamageDealt {...commonProps} />
 
@@ -116,6 +121,7 @@ const SingleScenarioPage = () => {
 
                         <EventForms.StatusApplied {...commonProps} />
 
+                        <EventForms.CreatureKilled {...commonProps} />
 
                     </div>
                 </div>
